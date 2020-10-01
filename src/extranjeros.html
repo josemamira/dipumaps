@@ -715,9 +715,9 @@ time.icon:hover, time.icon:focus
 	var start = Date.now();
 
 	//url='data/munali.geojson'; 
-	url='https://gist.githubusercontent.com/josemamira/e3c646c1a3669c528aebaa4406c93014/raw/7c75dddb728e940f2cbbec1114aaf85a4bcb6245/munali.geojson';
+	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'https://gist.githubusercontent.com/josemamira/72d5897d84a1e4292ea4cc739d2207e9/raw/cda5e16702656650b6eabb9f552c6cd4f1a89c1d/munali_extranjeros.csv';
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/extranjeros.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
