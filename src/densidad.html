@@ -166,9 +166,9 @@ html, body, #map {
 	
 	
 // GEOJSON
-	url='data/munali.geojson';
+	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'data/munali_extranjeros.csv';
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/extranjeros.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
