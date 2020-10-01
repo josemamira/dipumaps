@@ -166,9 +166,9 @@ html, body, #map {
 	
 	
 // GEOJSON
-	url='https://gist.githubusercontent.com/josemamira/e3c646c1a3669c528aebaa4406c93014/raw/61327b18b63aba35c43a052c559288d9b9d68ab6/munali.geojson';
+	url='data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'https://gist.githubusercontent.com/josemamira/72d5897d84a1e4292ea4cc739d2207e9/raw/cda5e16702656650b6eabb9f552c6cd4f1a89c1d/munali_extranjeros.csv';
+		urlcsv = 'data/munali_extranjeros.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
