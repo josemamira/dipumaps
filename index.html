@@ -28,15 +28,15 @@
 	  
 	  
 	  
-    <title>COVID-19 interactive maps by josemamira</title>
+    <title>DipuMaps by josemamira</title>
   </head>
 
   <body>
     <header>
       <div class="inner">
-        <h1>COVID-19 interactive maps</h1>
+        <h1>DipuMaps: interactive maps for Alicante  province</h1>
         <h2></h2>
-        <a href="https://github.com/josemamira/covid19maps" class="button"><small>View project on</small> GitHub</a>
+        <a href="https://github.com/josemamira/dipumaps" class="button"><small>View project on</small> GitHub</a>
       </div>
     </header>
 
@@ -45,195 +45,21 @@
         <section id="main-content">
           <h3>
 <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>COVID-19 interactive maps.</h3>
+  <span aria-hidden="true" class="octicon octicon-link"></span></a>DipuMaps</h3>
 
 <a href="index-es.html">Versión en ESPAÑOL</a>
 <p><img src="src/img/portada.png" width="80%"></p>
 		
 		
 		
-<p>If you don't want to read more, you can see this all demos:</p>
-<p>With dinamic maps (choosing date):</p>
+<p>Demos:</p>
+
 <ul>
-   <li><a href="src/demo3_dotmap.html" target="_blank">Custom dot density map (world)</a></li>
-   <li><a href="src/demo4_world.html" target="_blank">Map of infected cases (World)</a></li>
-   <li><a href="src/demo4_world_1000.html" target="_blank">Map of infected cases per 1.000 people (World)</a></li>
-   <li><a href="src/demo4_world_100000.html" target="_blank">Map of infected cases per 100.000 people (World) + TOP10</a></li>
-      <li><a href="src/time.html" target="_blank">Map of infected cases per 100.000 people (World) + TOP10 + video animación</a><img src="src/img/new.png" width="32"></li>
-   <li><a href="src/demo4_world_deaths.html" target="_blank">Map of deaths cases (World)</a></li>
-   <li><a href="src/demo4_world_deaths_millon.html" target="_blank">Deaths map per millon people (World)</a></li>
-   <li><a href="src/demo4_spain.html" target="_blank">Infected map by Autonomous Community (Spain)</a></li>	
-   <li><a href="src/demo5_graduated_symbol_covid.html" target="_blank">Graduated symbol map with infected cases (World)</a></li>	
-</ul>			
+   <li><a href="src/extranjeros.html" target="_blank">Extranjeros por municipios</a></li>
+ </ul>			
 		
 
-<p>Given the world situation in which we find ourselves (April 2020), where the population is confined to their homes (the case of Spain) I have wanted to take advantage of
-the time available to research the possibilities of cartography to offer information in a more attractive way than the cold tables of figures. </p>
-
-		
-		
-<p> The starting point of this project was and is to offer developers the ability to display mapping on their respective portals in an easy and unattended manner. For this reason the cartography had to fulfill the following requirements: </p>
-<ul>
-	<li> Use a 100% free maps API. In this sense I have chosen to use Leaflet as an engine to publish the maps </li>
-	<li> The rest of the Javascript libraries used are also in the public domain, and their use by developers is 
-		very common. 
-		Mainly I have used: D3 and JQuery. The only JS library that is really spatially geoprocessed is the excellent Turf.js tool </li>
-	<li> The geographic data must be in a format that is also free and widespread in the world of geomatics. In this sense, the
-"GeoJSON" format. I have used 2 very simplified data sets, with few vertices, so that their loading is fast </li>
-	<li> Statistical data comes from public and open sources, and is available in CSV format.
-At no time have I downloaded the data to process them. These are connected by AJAX from their respective servers, making a union between columns online (JOIN in GIS terminology).
-The updating of the data is therefore that of these sources. So far (April 18, 2020) this is daily.
-The sources I have used are:
-		<ul>
-			<li><a href="https://github.com/datadista/datasets/tree/master/COVID%2019">Datadista</a></li>
-			<li><a href="https://github.com/CSSEGISandData">CSSE at Johns Hopkins University</a></li>
-		</ul>
-	</li>	
-</ul>
-
-          
-          
-<h2>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Study cases</h2>
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Create a GeoJSON file "on fly" from CSV data with cordinates</h3>
-
-<p> This example does not contain cartography, but shows the capabilities to generate a GeoJSON with all the data "on the fly". </p>
-<p> If you want to see the result you can copy the result to the clipboard and view it in the viewer <a href="http://geojson.io/"> http://geojson.io </a> </p>
-
-<p><a href="src/demo1_create_geojson_from_csv.html" target="_blank"><img src="src/img/geojsoncsv.png"></a></p>
-<p>
-<a href="src/demo1_create_geojson_from_csv.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-| 
-<a href="https://github.com/josemamira/covid19maps/blob/master/src/demo1_create_geojson_from_csv.html" target="_blank"><button type="button" >Source code <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-</p>
-
-
-
-
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Union of 2 CSV files (on the fly) and generation of HTML table</h3>
-
-
-<p> This example also does not contain mapping, but shows the capabilities to perform a two table join (CSV)
-  that have in common the content of a column (which is not the same as the name of the column).
-  For example we have a table with a list of administrative units (for example municipalities), with a column with its code -in the case of Spain it is the INE code -.
-  This table is joined with another that also has a column with that code. </p>
- <p><a href="src/demo2_join_csv.html" target="_blank"><img src="src/img/table.png"></a></p>
-<p><a href="src/demo2_join_csv.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-| 
-<a href="https://github.com/josemamira/covid19maps/blob/master/src/demo2_join_csv.html" target="_blank"><button type="button" >source code <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-</p>
-
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Dot density map </h3>
-
-<p> These types of maps are no longer very common, but it must be recognized that together with their simplicity is the ability to clearly communicate
-a phenomenon. Many of us have seen the typical dot map, where a point represents a certain number of elements (people, votes, ...).
-Well, this example taken to the COVID-19 case gives us an idea of how the same data (cases) changes its interpretation depending on the number of elements that identify a point.
-</p>
-<video src="src/img/dotmap.mp4" width="768" height="576" autoplay muted loop controls></video>		
-<p> Let's see an example from Spain, for values of 200, 1000 and 5000 cases per point. </p>
-<p> <a href="src/demo3_dotmap.html" target="_blank"><img src = "src/img/dotmap_spain.png"></a>  </p>
-<p> This website has a slider control to select the number of cases for each point. It's at the bottom left. </p>
-<p> <img src = "src/img/slider.png"></p>
-<p><a href="src/demo3_dotmap.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-| 
-<a href="https://github.com/josemamira/covid19maps/blob/master/src/demo3_dotmap.html" target="_blank"><button type="button" >código <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-</p>
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Choropetic map of a date chosen by the user </h3>
-   <p> <a href="src/demo4_world.html" target="_blank"><img src = "src/img/coropletico_world.png" width = "400"></a> </p>
-   <p> The idea that inspired me to make this map is again the union of files, in this case a CSV with the cases of COVID-19 with a GeoJSON of polygons with the countries. I wanted to take advantage of that in the CSV file
-   all cases were collected by country from the beginning of the records (January 22) to the present, to add a dropdown combo
-   with the dates so that the user can see the evolution of the pandemic. </p>
-   <p> For the data to be comparative between dates, the legend is fixed, so that in the first days it seems that nothing is happening </p>
-   <p> I also wanted to include a linear graph about the evolution of the pandemic in each country, activating the effect when you position yourself
-   above the element (hover), also making use of the excellent library <a href="https://d3js.org/">D3.js</a>. </p>
-   <p><a href="src/demo4_world.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-	| 
-	<a href="https://github.com/josemamira/covid19maps/blob/master/src/demo4_world.html" target="_blank"><button type="button" >código <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-	</p>
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Choropleth map by Autonomous Communities (Spain). </h3>
-   <p> It is the same example as the previous one, with another local data source and assigned to another corollary level, in this example we refer to those affected by
-   COVID-19 in each Autonomous Community </p>
-   <p> <a href="src/demo4_spain.html" target="_blank"><img src = "src/img/coropletico_spain.png"></a> </p>
-   <p> Unfortunately, as the number of cases continues, the map will be single-color, unless the value of the class intervals changes. </p>
-   <p><a href="src/demo4_spain.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-   | 
-   <a href="https://github.com/josemamira/covid19maps/blob/master/src/demo4_spain.html" target="_blank"><button type="button" >Source code <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-   </p>
-   
-   
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Choropleth map of COVID-19 deaths by country </h3>
-   <p> It is the same example as that of the countries but with deaths. </p>
-   <p> <a href="src/demo4_world_deaths.html" target="_blank"><img src = "src/img/coropletico_world_deaths.png"></a> </p>
-   <p> One aspect to note is that by being able to use the columns of two data sets, you can create calculated fields. In this case, you can see in the graph how the figure of the
-   deaths per million people</p>
-
-
-  <p>This map hava a new utility to list <a href="src/demo4_world_deaths_millon.html">top 10</a> countries with cases every millon of people</p> 
-  <p>Finally I have created an option to see an <a href="src/time.html">animation</a>, in the form of a video <i class="fa fa-play"></i>, 
-  to understand the evolution of the pandemic since we have data</p>		
-		
-  <a href="src/demo4_world_deaths.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a>   |
-  <a href="https://github.com/josemamira/covid19maps/blob/master/src/demo4_world_deaths.html" target="_blank"><button type="button" >Source code <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-<p>
-   <a href="src/demo4_world_100000.html" target="_blank"><button type="button" >demo deaths every millon people <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-|  <a href="https://github.com/josemamia/covid19maps/blob/master/src/demo4_world_100000.html" target="_blank"> <button type="button" >source code<i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-   <p><img src="src/img/top10.png" width="172"></p>
-</p><p>
-   <a href="src/time.html" target="_blank"><button type="button" >demo deaths every millon people + pandemic video <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-|  <a href="https://github.com/josemamira/covid19maps/blob/master/src/time.html" target="_blank">   <button type="button" >source code <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>	
-</p>   
-<p><video src="src/img/evolucionCovid19Fallecidos.mp4" width="858" height="480" autoplay muted loop controls></video></p>
-
-
-
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Graduated symbol map</h3>
-  <video src="src/img/evolucion_covid19.mp4" width="743" height="471" autoplay muted loop controls></video>
-  <p>Undoubtedly this is the most impressive map, where we can see by dates (slider at the bottom) how it is evolving
-   contacts, but displayed as a graduated symbol. </p>
-   <p> I want to thank the interesting article"<a href="https://cartographicperspectives.org/index.php/journal/article/view/cp76-donohue-et-al/1307">Time Series Proportional Symbol Maps with Leaflet and jQuery</a> que me ha permitido realizar este mapa</p>
-
-  <a href="src/demo5_graduated_symbol_covid.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-  | 
- <a href="https://github.com/josemamira/covid19maps/blob/master/src/demo5_graduated_symbol_covid.html" target="_blank"><button type="button" >código <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-
-
-
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true">
-  <span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple bar charts</h3>
-  <p>I am more and more satisfied with the possibilities of the D3.js library. Your ability to do
-     graphics is amazing</p>
-<a href="src/demo6_bar_charts.html" target="_blank"><img src="src/img/graficos.png" width="800"></a>
-  <p>
-In this example I use the data from a CSV with Covid-19 affected by Autonomous Communities (Spain) to
-     obtain a graph for each of them, also including differentiation of bars by color to facilitate
-     interpreting the graph and unifying values.</p>
-  <a href="src/demo6_bar_charts.html" target="_blank"><button type="button" >demo <i class="fa fa-cogs fa-2" aria-hidden="true"></i></button></a> 
-  | 
- <a href="https://github.com/josemamira/covid19maps/blob/master/src/demo6_bar_charts.html" target="_blank"><button type="button" >código <i class="fa fa-github fa-2" aria-hidden="true"></i></button></a>
-		
-		
+	
 		
           
 <h3>
@@ -265,16 +91,16 @@ If code from another free project has been used, it's quoted on source code. </p
         </section>
 
         <aside id="sidebar">
-          <a href="https://github.com/josemamira/covid19maps/archive/master.zip" class="button">
+          <a href="https://github.com/josemamira/dipumaps/archive/master.zip" class="button">
             <small>Download</small>
             .zip file
           </a>
-          <a href="https://github.com/josemamira/covid19maps/tarball/master" class="button">
+          <a href="https://github.com/josemamira/dipumaps/tarball/master" class="button">
             <small>Download</small>
             .tar.gz file
           </a>
 
-          <p class="repo-owner"><a href="https://github.com/josemamira/covid19maps"></a> is maintained by <a href="https://github.com/josemamira">josemamira</a>.</p>
+          <p class="repo-owner"><a href="https://github.com/josemamira/dipumaps"></a> is maintained by <a href="https://github.com/josemamira">josemamira</a>.</p>
 
           <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
