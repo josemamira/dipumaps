@@ -681,10 +681,30 @@ time.icon:hover, time.icon:focus
 	Utiliza la librería js/ckmeans_simple_statistics.js
 	*/
 	function intClass(newArr) {
-		var intClassArr = ssck.ckmeans(newArr.map(function(d) { return +d; }), 6).map(function(cluster) {return cluster[0];})
-		console.log(intClassArr); // con un valor de 6 salen 5 intervalos de clase
+		// obtener el valor más alto del array
+		newArr.sort(function(a, b) {
+		  return a - b;
+		});
+		var ultimo = newArr[newArr.length - 1]
+		//console.log(ultimo);		
+		// Quitar los que son ceros
+		//newArr = newArr.filter(item => !(item == 0));
+		//console.log(newArr) // [1, 2, 3]
+		//var intClassArr = ssck.ckmeans(newArr.map(function(d) { return +d; }), 6).map(function(cluster) {return cluster[0];})
+		var intClassArr = ss.ckmeans(newArr.map(function(d) { return +d; }), 6).map(function(cluster) {return cluster[0];})
+		// con un valor de 6 salen 5 intervalos de clase
+		//if (intClassArr[0] == 0) { console.log('empieza en cero. Sustituir por 0.001'); intClassArr[0] = 0.001;}
+		// Si el último valor de intClassArr no es el valor más elevado de newArr, entonces ponemos el valor más elevado el último.
+		if (intClassArr[intClassArr.length - 1] != ultimo) {
+			console.log('no coinciden últimos valores');
+			intClassArr[intClassArr.length - 1] = ultimo;
+		}
+		
+		console.log(intClassArr);
 		return intClassArr;
+		
 	}	
+		
 	
 	/* Función: Obtiene estadistica de un array de datos.
 	Utiliza la librería js/simple_statistics.js
@@ -759,8 +779,32 @@ time.icon:hover, time.icon:focus
 	// Dibuja la leyenda en función de los intervalos de clase creados
 	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
 	function drawLegend(intClassArr,numSel,titulo) {
+		
+		// LEYENDA VERTICAL
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = intClassArr,
+				labels = [],
+				from, to;
+			div.innerHTML += '<P><center><strong>'+titulo+'</strong></center></P>';
+			for (var i = 0; i < grades.length-1; i++) {
+				from = grades[i];
+				to = grades[i + 1];
 
-		//var legend = L.control({position: 'bottomright'});
+				labels.push(
+					'<i style="background:' + getColor2(grades[i]+1 ,intClassArr, numSel) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML += labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);		
+
+
+		/*
+		// LEYENDA HORIZONTAL	
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
 			// grades = [0, 10, 25, 50,100], Dibuja 5 colores
@@ -789,6 +833,7 @@ time.icon:hover, time.icon:focus
 		};
 
 		legend.addTo(map);	
+		*/
 	}
 		
 	// CONTROL PARA TOP5
