@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div id="dropdowns">
+		  <select id="area_name"></select>
+		  <select id="tru"></select>
+		</div>
+
+		<div id="viz"></div>
+
+		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<script src="https://unpkg.com/arraygeous@0.1.4/build/arraygeous.min.js"></script>
+		<script>
+		  
+		  const width = innerWidth,
+		        height = innerHeight;
+
+		  const svg = d3.select("#viz").append("svg")
+		        .attr("width", width)
+		        .attr("height", height);
+		  
+		  const t = d3.transition()
+		      .duration(750);
+
+		  const xScaleMale = d3.scaleLinear()
+		      .range([0, width /2]),
+		    xScaleFemale = d3.scaleLinear()
+		      .range([0, width / 2]),
+		    yScale = d3.scaleBand()
+		      .rangeRound([height, 0])
+		      .padding(.3);
+
+		  d3.csv("https://gist.githubusercontent.com/josemamira/57e7ddb63832d460635b74ff33769269/raw/e62120a902bfabe20dc0382e11de640dabbca1c2/india.csv").then(ready);
+
+		  function ready(data){
+		    // types
+		    var number_columns = ["age", "rural_females", "rural_males", "rural_persons", "total_females", "total_males", "total_persons", "urban_females", "urban_males", "urban_persons"];
+		    
+		    data.forEach(d => {
+		      number_columns.forEach(c => {
+		        d[c] = +d[c];
+		      });
+		      return d;
+		    });
+
+		    // y domain
+		    yScale.domain(data.map(d => d.age));
+
+		    // dropdowns
+
+		    // unique area names
+		    const area_names = arr.sort(arr.unique(data, d => d.area_name));
+		    const areaDropdown = d3.select("#dropdowns #area_name");
+
+		    areaDropdown.selectAll("option")
+		        .data(area_names)
+		      .enter().append("option")
+		        .text(d => d);
+		    
+		    const truDropdown = d3.select("#dropdowns #tru");
+
+		    truDropdown.selectAll("option")
+		        .data(["Total", "Urban", "Rural"])
+		      .enter().append("option")
+		        .attr("value", d => d.toLowerCase())
+		        .text(d => d);
+
+		    redraw(filterData(data, "India"), "total");
+
+		    d3.selectAll("select").on("change", _ => {
+		      redraw(filterData(data, areaDropdown.property("value")), truDropdown.property("value"));
+		    });
+
+		    // filters the data based on a value from the area dropdown
+		    function filterData(data, value){
+		      return data.filter(d => d.area_name === value);
+		    }
+
+		    // tru must be "total", "rural", or "urban"
+		    function redraw(data, tru){
+		      
+		      // sort data by age
+		      data = arr.sort(data, d => d.age);
+
+		      // update x scales
+		      const maxMale = d3.max(data, d => d[tru + "_males"]),
+		        maxFemale = d3.max(data, d => d[tru + "_females"]),
+		        max = d3.max([maxMale, maxFemale]);
+
+		      xScaleMale.domain([0, max]);
+		      xScaleFemale.domain([0, max]);
+
+		      // JOIN
+		      var maleBar = svg.selectAll(".bar.male")
+		          .data(data, d => d.age);
+
+		      var femaleBar = svg.selectAll(".bar.female")
+		          .data(data, d => d.age);
+
+		      // EXIT
+		      maleBar.exit().remove();
+		      femaleBar.exit().remove();
+
+		      // UPDATE
+		      maleBar
+		        .transition(t)
+		          .attr("width", d => xScaleMale(d[tru + "_males"]));
+
+		      femaleBar
+		        .transition(t)
+		          .attr("x", d => width / 2 - xScaleFemale(d[tru + "_females"]))
+		          .attr("width", d => xScaleFemale(d[tru + "_females"]));
+
+		      // ENTER
+		      maleBar.enter().append("rect")
+		          .attr("class", "bar male")
+		          .attr("x", width / 2)
+		          .attr("y", d => yScale(d.age))
+		          .attr("width", d => xScaleMale(d[tru + "_males"]))
+		          .attr("height", yScale.bandwidth())
+		          .attr("fill", "steelblue");
+
+		      femaleBar.enter().append("rect")
+		          .attr("class", "bar female")
+		          .attr("x", d => width / 2 - xScaleFemale(d[tru + "_females"]))
+		          .attr("y", d => yScale(d.age))
+		          .attr("width", d => xScaleFemale(d[tru + "_females"]))
+		          .attr("height", yScale.bandwidth())
+		          .attr("fill", "tomato");
+		    }
+
+		  }
+		</script>
+	</body>
+</html>
