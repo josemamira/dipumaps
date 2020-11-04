@@ -1,3 +1,44 @@
+/* Función para generar un gráfico tipo pirámide de población
+
+Añadir un style como este:
+#pyramid {
+	width: 500px;
+	height: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+}
+
+Definir data de esta forma:
+                    var data = [{
+                        age: "< 16",
+                        male: 1694,
+                        female: 1634
+                    }, {
+                        age: "16 - 64",
+                        male: 10123,
+                        female: 9478
+                    }, {
+                        age: "> 65",
+                        male: 615,
+                        female: 840
+                    }];
+                    var options = {
+                        height: 150,
+                        width: 500,
+                        style: {
+                            leftBarColor: "#5DADE2",
+                            rightBarColor: "#FF00FF"
+                        }
+                    }
+		    
+Crear un div. Ejemplo <div id="pyramid">
+
+Función para generar el gráfico:
+	pyramidBuilder(exampleData, '#pyramid', options);
+
+*/
+
 function pyramidBuilder(data, target, options) {
     var w = typeof options.width === 'undefined' ? 400  : options.width,
         h = typeof options.height === 'undefined' ? 400  : options.height,
