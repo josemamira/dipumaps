@@ -35,6 +35,8 @@
 	<!-- simple-statistics -->
 	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
 	<script src='js/ckmeans_simple_statistics.js'></script>
+	
+	<script src="js/turf.min.js"></script>
 
 <style>
 body {
@@ -188,7 +190,14 @@ time.icon:hover, time.icon:focus
 /* fin fecha */
 
 
+/* FORMATEO DE TABLA EN TOP5 https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css */
+/* scrolltable rules */
+table  { margin-top:  20px; display: inline-block; overflow: auto; }
+th div { margin-top: -20px; position: absolute; }
 
+/* design */
+table { border-collapse: collapse; }
+tr:nth-child(even) { background: #EEE; }
 
 
 
@@ -304,33 +313,6 @@ if (res == "year=") {
     function cargaVideo(i) {
 		// Fecha del calendario
 		var y = document.getElementById("datesSel").options;
-/*		ano = y[i].text.split('-')[0];
-		mes = y[i].text.split('-')[1];
-		dia = y[i].text.split('-')[2];
-		var months = [
-			'Jan', 'Feb', 'Mar', 'Apr', 'May',
-			'Jun', 'Jul', 'Aug', 'Sep',
-			'Oct', 'Nov', 'Dec'
-			];
-		var meses = [ 'Ene', 'Feb', 'Mar', 'Abr', 'May',
-			'Jun', 'Jul', 'Ago', 'Sep',
-			'Oct', 'Nov', 'Dic'
-			];
-		function monthNumToName(monthnum) {
-			//console.log(monthnum);
-			return months[parseInt(monthnum) - 1] ;
-		}
-		function mesesNum2Nombre(monthnum) {			
-			return meses[parseInt(monthnum) - 1] ;
-		}
-		//console.log(monthNumToName(mes));
-		var newCal = '<time class="icon"><em>'+ano+'</em><strong>'+ mesesNum2Nombre(parseInt(mes)) +'</strong><span>'+parseInt(dia)+'</span></time>';
-		
-		
-		
-		
-		//document.getElementById("labDate").innerHTML = y[i].text;
-		document.getElementById("labDate").innerHTML = newCal*/
 		
 	    restyleLayer(y[i].text);	
 	}  
@@ -475,7 +457,7 @@ if (res == "year=") {
 
 	
 //2008-2019:
-﻿//codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,
+//codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,
 //Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
 	} else if (year > 2007)	{
 		var continentes = {
@@ -520,17 +502,7 @@ if (res == "year=") {
 		}		
 	}
 		
-		
-		
-		
-		
-		
-		
-			
-		//console.log(data);
-		//console.log(obj);
-		//console.log( Object.entries(obj) );
-		
+
 		var keys = Object.keys(obj);
 		//console.log(keys)
 		// filtrado para quedarse solo con keys de fecha
@@ -543,15 +515,7 @@ if (res == "year=") {
 		for (var i = 0; i < keys.length; i++) {
 			values.push( Number(props[keys[i]]) );
 		}
-		/*
-		var casos = [];
-		for (var i = 0; i < keys.length; i++) {
-			//var caso = {  date: keys[i],  value: values[i]	};
-			//var caso = {  date: d3.timeParse("%m/%d/%Y")(keys[i]),  value: values[i]	};
-			var caso = {  date: d3.timeParse("%Y-%m-%d")(keys[i]),  value: values[i]	};
-			casos.push(caso);
-		}
-		*/	
+	
 
 		lastDate = keys[keys.length - 1];
 		this._div.innerHTML = '<center><h4>ORIGEN DE LOS EXTRANJEROS</h4></center>' +  (props ?
@@ -662,62 +626,6 @@ if (res == "year=") {
 	} // fin funcion pieChart
 
 
-
-
-
-
-
-/*  	
-  // gráfico de línea
-  function lineChart(data) {
-	  // set the dimensions and margins of the graph
-		var margin = {top: 10, right: 30, bottom: 60, left: 60},
-			width = 300 - margin.left - margin.right,
-			height = 200 - margin.top - margin.bottom;
-
-		// append the svg object to the body of the page
-		var svg = d3.select("#chart")
-		  .append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-		  .append("g")
-			.attr("transform",
-				  "translate(" + margin.left + "," + margin.top + ")");
-    // Add X axis --> it is a date format
-    var x = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.date; }))
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")            
-      .call(d3.axisBottom(x))   
-       .selectAll("text")
-		.attr("y", 0)
-		.attr("x", 9)
-		.attr("dy", ".35em")
-		.attr("transform", "rotate(90)")
-		.style("text-anchor", "start") ;  
-
-      
-    // Add Y axis
-    var y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.value; })])
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    // Add the line
-    svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return x(d.date) })
-        .y(function(d) { return y(d.value) })
-        )
-
-}
-*/
 	
 	// get color depending on population density value
 	function getColor(d) {
@@ -813,7 +721,8 @@ if (res == "year=") {
 		}			
 
 		else if (year == 2005 || year == 2006) {
-			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
+			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong>'+ 
+			    '<table><tr><td>'+  
 				'Reino Unido: '+ e.sourceTarget.feature.properties['Reino Unido']+'<br>'+
 				'Alemania: '+ e.sourceTarget.feature.properties['Alemania']+'<br>'+
 				'Francia: '+ e.sourceTarget.feature.properties['Francia']+'<br>'+
@@ -822,17 +731,20 @@ if (res == "year=") {
 				'Bulgaria: '+ e.sourceTarget.feature.properties['Bulgaria']+'<br>'+
 				'Marruecos: '+ e.sourceTarget.feature.properties['Marruecos']+'<br>'+
 				'Colombia: '+ e.sourceTarget.feature.properties['Colombia']+'<br>'+
+				'</td><td>'+
 				'Ecuador: '+ e.sourceTarget.feature.properties['Ecuador']+'<br>'+
 				'Argentina: '+ e.sourceTarget.feature.properties['Argentina']+'<br>'+
 				'Bolivia: '+ e.sourceTarget.feature.properties['Bolivia']+'<br>'+
 				'Perú: '+ e.sourceTarget.feature.properties['Perú']+'<br>'+				
 				'Colombia: '+ e.sourceTarget.feature.properties['Colombia']+'<br>'+
 				'Ecuador: '+ e.sourceTarget.feature.properties['Ecuador']+'<br>'+
-				'China: '+ e.sourceTarget.feature.properties['China'];
+				'China: '+ e.sourceTarget.feature.properties['China']+
+				'</td></tr></table>';
 		}			
 
-		else if (year == 2008) {
-			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
+		else if (year == 2007) {
+			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong>'+ 
+			    '<table><tr><td>'+ 
 				'Reino Unido: '+ e.sourceTarget.feature.properties['Reino Unido']+'<br>'+
 				'Alemania: '+ e.sourceTarget.feature.properties['Alemania']+'<br>'+
 				'Francia: '+ e.sourceTarget.feature.properties['Francia']+'<br>'+
@@ -840,6 +752,7 @@ if (res == "year=") {
 				'Rumanía: '+ e.sourceTarget.feature.properties['Rumanía']+'<br>'+
 				'Bulgaria: '+ e.sourceTarget.feature.properties['Bulgaria']+'<br>'+
 				'Rusia: '+ e.sourceTarget.feature.properties['Rusia']+'<br>'+
+				'</td><td>'+
 				'Ucrania: '+ e.sourceTarget.feature.properties['Ucrania']+'<br>'+
 				'Marruecos: '+ e.sourceTarget.feature.properties['Marruecos']+'<br>'+
 				'Colombia: '+ e.sourceTarget.feature.properties['Colombia']+'<br>'+
@@ -847,11 +760,12 @@ if (res == "year=") {
 				'Argentina: '+ e.sourceTarget.feature.properties['Argentina']+'<br>'+
 				'Bolivia: '+ e.sourceTarget.feature.properties['Bolivia']+'<br>'+
 				'Perú: '+ e.sourceTarget.feature.properties['Perú']+'<br>'+
-				'China: '+ e.sourceTarget.feature.properties['China'];
+				'China: '+ e.sourceTarget.feature.properties['China']+
+				'</td></tr></table>';
 		}	
 
 		else if (year > 2007) {
-			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
+			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong>'+  
 				'<table><tr><td>'+
 				'Reino Unido: '+ e.sourceTarget.feature.properties['Reino Unido']+'<br>'+
 				'Alemania: '+ e.sourceTarget.feature.properties['Alemania']+'<br>'+
@@ -860,14 +774,13 @@ if (res == "year=") {
 				'Portugal: '+ e.sourceTarget.feature.properties['Portugal']+'<br>'+
 				'Polonia: '+ e.sourceTarget.feature.properties['Polonia']+'<br>'+			
 				'Rumanía: '+ e.sourceTarget.feature.properties['Rumanía']+'<br>'+
-				//'Bulgaria: '+ e.sourceTarget.feature.properties['Bulgaria']+'<br>'+
 				'Rusia: '+ e.sourceTarget.feature.properties['Rusia']+'<br>'+
 				'Ucrania: '+ e.sourceTarget.feature.properties['Ucrania']+'<br>'+
 				'Marruecos: '+ e.sourceTarget.feature.properties['Marruecos']+'<br>'+
 				'Argelia: '+ e.sourceTarget.feature.properties['Argelia']+'<br>'+
 				'Senegal: '+ e.sourceTarget.feature.properties['Senegal']+'<br>'+
 				'Colombia: '+ e.sourceTarget.feature.properties['Colombia']+
-				'</td></tr><tr><td>'+
+				'</td><td>'+
 				'Ecuador: '+ e.sourceTarget.feature.properties['Ecuador']+'<br>'+
 				'Argentina: '+ e.sourceTarget.feature.properties['Argentina']+'<br>'+
 				'Brasil: '+ e.sourceTarget.feature.properties['Brasil']+'<br>'+
@@ -902,46 +815,13 @@ if (res == "year=") {
 			//mouseout: resetHighlight,
 			click: onMapClick //zoomToFeature
 		});
-		// Etiquetas
-		/*var label = L.marker(layer.getBounds().getCenter(), {
-		  icon: L.divIcon({
-			className: 'label',
-			html: feature.properties.nombre,
-			iconSize: [100, 40]
-		  })
-		}).addTo(map);		*/
-		
-		
-		
-		
 		
 	}
 	
 	//https://stackoverflow.com/questions/25773389/changing-the-style-of-each-feature-in-a-leaflet-geojson-layer
 	function restyleLayer(propertyName) {
 		
-		var newArr= [];
-
-		/*geojson.eachLayer(function(layer) {
-			propertyValue = layer.feature.properties[propertyName];
-			
-			newArr.push(Number(propertyValue));
-			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
-			//console.log(propertyValue);
-
-			// Your function that determines a fill color for a particular
-			// property name and value.
-			//var myFillColor = getColor(propertyName, propertyValue);
-			var myFillColor = getColor(propertyValue);
-			//var myFillColor = getColor2(propertyValue,intClass(newArr));
-
-			layer.setStyle({
-				fillColor: myFillColor,
-				fillOpacity: 0.8,
-				weight: 0.5
-			});
-		});*/
-		
+		var newArr= [];	
 		
 		geojson.eachLayer(function(layer) {
 			propertyValue = layer.feature.properties[propertyName];			
@@ -1019,25 +899,10 @@ if (res == "year=") {
 		});
 	}	
 
-/*	// Pone color a las coropletas. Con nº fijo en 4 intervalos de clase
-	function getColor2(d,intClassArr) {
-		 return d > intClassArr[4]  ? '#440026' :
-				d > intClassArr[3]  ? '#BD0026' :
-				d > intClassArr[2]  ? '#FC4E2A' :
-				d > intClassArr[1]   ? '#FD8D3C' :
-				d > intClassArr[0]   ? '#FED976' :
-						   '#FFEDA0' ;
-	}*/
+
 
 	function getColor2(d,intClassArr,numSel) {
 		// paletas para mapa
-		/*var pal1 = ['#feedde','#fdd0a2','#fdae6b','#fd8d3c','#e6550d','#a63603'];// naranjas
-		var pal2 = ['#edf8fb','#c7e9c0','#a1d99b','#74c476','#31a354','#006d2c'];// verdes 
-		var pal3 = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#3182bd','#08519c'];// azules
-		var pal4 = ['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#de2d26','·a50f15'];// rojos	
-		var pal5 = ['#feebe2','#fcc5c0','#fa9fb5','#f768a1','#c51b8a','#7a0177'];// violetas
-		var pal6 = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'];// morado
-		var paletas = [pal1,pal2,pal3,pal4,pal5,pal6];*/
 		var paletas = [
 			colorbrewer.Purples[5],
 			colorbrewer.Greens[5],
@@ -1145,46 +1010,75 @@ if (res == "year=") {
 		var oneCase = new Object();
 
 		geojson.eachLayer(function(layer) {
-			propertyValue = layer.feature.properties[propertyName];
+			
+			// Obtener la geometria BBOX del poligono
+			var poligono = layer.feature.geometry;
+			//var centroid = turf.centroid(poligono);
+			var bbox = turf.bbox(poligono); //console.log(bbox);
+			
+			
+			// PROPIEDAD % respecto a la población
+			propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
+			//propertyValue = layer.feature.properties[propertyName];
 			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
 			//console.log(propertyValue);
 			//allCases.push(propertyValue);
-			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':layer.feature.properties['ptotal'], 'iso2':layer.feature.properties['codine'] };
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['Total Población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
 			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
 			allCases.push(oneCase);
 		});
-		//console.log(allCases);
+		console.log(allCases);
 
 		// ALASQL		
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
-		var top5 = alasql("SELECT name,cases,pop,iso2 FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 5",[allCases]);
+		//var top5 = alasql("SELECT name,cases,pop,iso2 FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases WHERE cases100m > 0  ORDER BY cases100m DESC LIMIT 5",[allCases]);	 
 		//console.log(top5); 
 		// Definir texto
-		var top5txt = '<h4>TOP 5 MUNICIPIOS</h4><img src="img/pixel.png" height="1" width="150"><ul>';
+		var top5txt = '<h4>TOP 10 MUNICIPIOS (%)</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>%</div>';
+
 		for (i = 0; i < top5.length; i++) {
 			//top10txt += '<li>'+ (i+1)+ '. ' + '<img src="https://www.countryflags.io/'+top10[i]['iso2'].toLowerCase()+'/flat/16.png"> ' + top10[i]['name'] + ' '+ top10[i]['cases100m'] + '</li>';
-		  top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ 
-		  '<button type="button" class="btn btn-primary"> '+ top5[i]['cases'] +' </button></li>';
+		  //top5txt += '<tr> <td><a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ (i+1)+ ' </a><td> ' + top5[i]['name'] + ' <td>'+ top5[i]['cases'] +'';  
+
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td> ' + 		  
+		  '<a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a> <td>'+ top5[i]['cases'] +'';  
+
+
+		
 		  //top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ top5[i]['cases100m'] + '</li>';
 		}
 				
 		// actualizar 
-		to5control.update( top5txt+'</ul>' );	
+		to5control.update( top5txt+'</table>' );	
 	}
 
 	
 	var start = Date.now();
 
 	//url='data/munali.geojson'; 
-	url='https://gist.githubusercontent.com/josemamira/e3c646c1a3669c528aebaa4406c93014/raw/7c75dddb728e940f2cbbec1114aaf85a4bcb6245/munali.geojson';
+	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
 		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/nacionalitat/nacionalitat'+year+'.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
+			
+			// codine,Total Población,Total Extranjeros,Total Europa,Total Africa,Total América,Total Asia,Oceanía y Apátridas
 
-			csv.forEach(function(d, i) {
+			var qry = alasql('SELECT *,'+
+			    //' ROUND(( ([Total Extranjeros]::NUMBER)*100/([Total Población]::NUMBER) ), 1) AS Porcentaje_Extranjeros,'+
+			    ' (CASE WHEN [Total Extranjeros]::NUMBER > 0 THEN ROUND(( ([Total Extranjeros]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Extranjeros,'+		    
+			    ' (CASE WHEN [Total Europa]::NUMBER > 0 THEN ROUND(( ([Total Europa]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Europa,'+
+			    ' (CASE WHEN [Total Africa]::NUMBER > 0 THEN ROUND(( ([Total Africa]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Africa,'+
+			    ' (CASE WHEN [Total América]::NUMBER > 0 THEN ROUND(( ([Total América]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_America,'+
+			    ' (CASE WHEN [Total Asia]::NUMBER > 0 THEN ROUND(( ([Total Asia]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Asia'+			    
+				' FROM ?',[csv]);			
+			
+			//console.log(qry);
+
+			qry.forEach(function(d, i) {
 				//console.log(d);
 				keys = Object.keys(d) ;
 				//console.log(keys);
