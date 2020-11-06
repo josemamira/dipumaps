@@ -1,0 +1,3 @@
+Ficheros CSV de nacidos en el extranjero. Años 2002 a 2019
+Estructura de columnas:
+codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
