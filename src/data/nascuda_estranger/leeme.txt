@@ -1,3 +1,20 @@
-Ficheros CSV de nacidos en el extranjero. Años 2002 a 2019
+Ficheros CSV de nacidos en el extranjero.
+========================================
+Años 2002 a 2019
+
 Estructura de columnas:
-codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
+
+2002-2003:
+codine,Total Población,Total Europa,Total Unión Europea,Alemania,Francia,Reino Unido,Total Africa,Marruecos,Total América,Colombia,Ecuador,Argentina,Total Asia,Oceanía
+
+2004:
+codine,Total Población,Nacidos en el Extranjero,Total Europa,Total Unión Europea (25),Alemania,Francia,Reino Unido,Resto de Europa,Rumanía,Total Africa,Marruecos,Total América,Colombia,Ecuador,Argentina,Total Asia,Oceanía
+
+2005-2006:
+codine,Total Población,Nacidos en el Extranjero,Total Europa,Total Unión Europea (25),Alemania,Francia,Italia,Reino Unido,Resto de Europa,Bulgaria,Rumanía,Total Africa,Marruecos,Total Amrica,Argentina,Bolivia,Colombia,Ecuador,Perú,Total Asia,China,Oceanía
+
+2007:
+codine,Total Población,Nacidos en el Extranjero,Total Europa,Total Unión Europea (27),Alemania,Francia,Italia,Reino Unido,Bulgaria,Rumanía,Resto de Europa,Rusia,Ucrania,Total Africa,Marruecos,Total América,Argentina,Bolivia,Colombia,Ecuador,Perú,Total Asia,China,Oceanía
+
+2008-2019:
+codine,Total Población,Nacidos en España,Nacidos en el Extranjero,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Total Oceanía
