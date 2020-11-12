@@ -751,13 +751,15 @@ if (res == "year=") {
 		// Definir texto
 		//var top5txt = '<h4>TOP 5 MUNICIPIOS (%)</h4><img src="img/pixel.png" height="1" width="150"><ul>';
 		
-		var top5txt = '<h4>TABLA MUNICIPIOS ('+year+')</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>Valor</div>';
+		var top5txt = '<h4>TABLA: '+propertyName+' ('+year+')</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>Valor</div>';
 		
 		
 		for (i = 0; i < top5.length; i++) {
 	
 		  //var caja = [top5[i]['bbox'][0], top5[i]['bbox'][1]],[top5[i]['bbox'][2], top5[i]['bbox'][3]];
-		  top5txt += '<tr> <td><a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ (i+1)+ ' </a><td> ' + top5[i]['name'] + ' <td>'+ top5[i]['cases'] +'';  
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td><a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a><td>'+ top5[i]['cases'] +'';  
+		  //top5txt += '<tr> <td><a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ (i+1)+ ' </a><td> ' + top5[i]['name'] + ' <td>'+ top5[i]['cases'] +'';  
+
 		  //top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ '<button type="button" class="btn btn-primary"> '+ top5[i]['cases'] +' </button></li>';
 		  
 		 
