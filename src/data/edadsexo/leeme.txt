@@ -1,0 +1,31 @@
+Ficheros CSV obtenidos a partir del INE
+Ejemplo 2009: https://www.ine.es/jaxi/Tabla.htm?path=/t20/e245/p05/a2009/l0/&file=00003002.px
+Ficheros desde 2002 a 2019.
+
+El fichero HTML utilizado para ver estos datos es 
+
+https://josemamira.github.io/dipumaps/src/piramide.html?year=2002
+
+Se puede cambiar el año para ver datos del mismo
+
+Las columnas disponibles son:
+
+codine,
+Total varones,	
+Total varones menores de 16 años,	
+Total varones de 16 a 64 años,	
+Total varones de 65 y más años,	
+Total mujeres,	
+Total mujeres menores de 16 años,
+Total mujeres de 16 a 64 años,	
+Total mujeres de 65 y más años,	
+Total extranjeros,	
+Total extranjeros varones menores de 16 años,
+Total extranjeros varones  de 16 a 64 años,	
+Total extranjeros varones de 65 y más años,	
+Total extranjeros mujeres,
+Total extranjeros mujeres menores de 16 años,	
+Total extranjeros mujeres de 16 a 64 años,	
+Total extranjeros mujeres de 65 y más años,	
+Total población
+
