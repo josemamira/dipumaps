@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -243,6 +242,7 @@ if (res == "year=") {
 } else {
 	// no tiene id=codigo en la url. No hacer nada
 	//alert("no hay año");
+	var year=2002; // valor por defecto
 }	
 	
 	
@@ -386,19 +386,20 @@ if (res == "year=") {
 
 	info.update = function (props) {
 		obj = Object(props);
-		
+
+	
                    var data = [{
                         age: "< 16",
-                        male: parseInt(obj['Hombres menores de 16 años']),
-                        female: parseInt(obj['Mujeres menores de 16 años'])
+                        male: parseInt(obj['Total extranjeros varones menores de 16 años']),
+                        female: parseInt(obj['Total extranjeros mujeres menores de 16 años'])
                     }, {
                         age: "16 - 64",
-                        male: parseInt(obj['Hombres de 16 a 64 años']),
-                        female: parseInt(obj['Mujeres de 16 a 64 años'])
+                        male: parseInt(obj['Total extranjeros varones  de 16 a 64 años']),
+                        female: parseInt(obj['Total extranjeros mujeres de 16 a 64 años'])
                     }, {
                         age: "> 65",
-                        male: parseInt(obj['Hombres de 65 y más años']),
-                        female: parseInt(obj['Mujeres de 65 y más años'])
+                        male: parseInt(obj['Total extranjeros varones de 65 y más años']),
+                        female: parseInt(obj['Total extranjeros mujeres de 65 y más años'])
                     }];
                     //console.log(data);
                     var options = {
@@ -429,7 +430,7 @@ if (res == "year=") {
 		}
 
 		lastDate = keys[keys.length - 1];
-		this._div.innerHTML = '<center><h4>GRANDES GRUPOS DE POBLACI&Oacute;N </h4></center>' +  (props ?
+		this._div.innerHTML = '<center><h4>GRANDES GRUPOS DE POBLACI&Oacute;N '+year+'</h4></center>' +  (props ?
 			'<center><strong>'+props.nombre +'</strong>  - Total extranjeros: ' + parseInt(props['total_extranjeros']) + 
 			'</center><br><div id="pyramid"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
@@ -510,13 +511,13 @@ if (res == "year=") {
 	var popup = L.popup();
 
 	function onMapClick(e) {
-		console.log(e);
-		console.log(e.sourceTarget.feature.properties['Hombres de 16 a 64 años'] + ': '+ e.sourceTarget.feature.properties['total_extranjeros']);
+		//console.log(e);
+		//console.log(e.sourceTarget.feature.properties['Hombres de 16 a 64 años'] + ': '+ e.sourceTarget.feature.properties['total_extranjeros']);
 		var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
-						'Poblaci&oacute;n (2019): '+ e.sourceTarget.feature.properties['pop']+'<br>'+
-					    'Total extranjeros: '+ e.sourceTarget.feature.properties['total_extranjeros']+'('+Math.round(e.sourceTarget.feature.properties['total_extranjeros']*100/e.sourceTarget.feature.properties['pop'])+' %)<br>'+
-					    'Total hombres: '+ e.sourceTarget.feature.properties['total_hombres']+' ('+e.sourceTarget.feature.properties['porcentaje_hombres']+' %)<br>'+
-					    'Total mujeres: '+ e.sourceTarget.feature.properties['total_mujeres']+' ('+e.sourceTarget.feature.properties['porcentaje_mujeres']+' %)';	
+						'Poblaci&oacute;n ('+year+'): '+ e.sourceTarget.feature.properties['Total población']+'<br>'+
+					    'Total extranjeros: '+ e.sourceTarget.feature.properties['total_extranjeros']+' ('+Math.round(e.sourceTarget.feature.properties['total_extranjeros']*100/e.sourceTarget.feature.properties['Total población'])+' %)<br>'+
+					    'Total hombres: '+ e.sourceTarget.feature.properties['Total extranjeros varones']+' ('+e.sourceTarget.feature.properties['porcentaje_extranjeros_hombres']+' %)<br>'+
+					    'Total mujeres: '+ e.sourceTarget.feature.properties['Total extranjeros mujeres']+' ('+e.sourceTarget.feature.properties['porcentaje_extranjeros_mujeres']+' %)';	
 					    
 		popup
 			.setLatLng(e.latlng)
@@ -642,9 +643,35 @@ if (res == "year=") {
 	
 	// Dibuja la leyenda en función de los intervalos de clase creados
 	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
 	function drawLegend(intClassArr,numSel,titulo) {
+		
+		// LEYENDA VERTICAL
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = intClassArr,
+				labels = [],
+				from, to;
+			div.innerHTML += '<P><center><strong>'+titulo+' ('+year+')</strong></center></P>';
+			for (var i = 0; i < grades.length-1; i++) {
+				from = grades[i];
+				to = grades[i + 1];
 
-		//var legend = L.control({position: 'bottomright'});
+				labels.push(
+					'<i style="background:' + getColor2(grades[i]+1 ,intClassArr, numSel) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML += labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);		
+
+
+		/*
+		// LEYENDA HORIZONTAL	
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
 			// grades = [0, 10, 25, 50,100], Dibuja 5 colores
@@ -673,6 +700,7 @@ if (res == "year=") {
 		};
 
 		legend.addTo(map);	
+		*/
 	}
 		
 	// CONTROL PARA TOP5
@@ -697,7 +725,7 @@ if (res == "year=") {
 		var oneCase = new Object();
 
 		geojson.eachLayer(function(layer) {
-			//propertyValue = layer.feature.properties[propertyName];
+			propertyValue = layer.feature.properties[propertyName];
 			//console.log(layer.feature.geometry);
 			var poligono = layer.feature.geometry;
 			var centroid = turf.centroid(poligono);
@@ -706,10 +734,10 @@ if (res == "year=") {
 			
 			
 			//map.fitBounds(e.target.getBounds());
-			propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['pop'];
+			//propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['pop'];
 			//console.log(propertyValue);
 			//allCases.push(propertyValue);
-			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['pop']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['Total población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
 			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
 			allCases.push(oneCase);
 		});
@@ -717,13 +745,13 @@ if (res == "year=") {
 
 		// ALASQL		
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
-		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC",[allCases]);
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases WHERE cases100m > 0  ORDER BY cases100m DESC LIMIT 5",[allCases]);	 
 		//console.log(top5); 
 		// Definir texto
 		//var top5txt = '<h4>TOP 5 MUNICIPIOS (%)</h4><img src="img/pixel.png" height="1" width="150"><ul>';
 		
-		var top5txt = '<h4>TOP 10 MUNICIPIOS (%)</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>%</div>';
+		var top5txt = '<h4>TABLA MUNICIPIOS ('+year+')</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>Valor</div>';
 		
 		
 		for (i = 0; i < top5.length; i++) {
@@ -745,19 +773,30 @@ if (res == "year=") {
 	//url='data/munali.geojson'; 
 	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/edatisexegransgrups'+year+'.csv';
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/edadsexo/'+year+'.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
 			
 			// Hombres menores de 16 años,Hombres de 16 a 64 años,Hombres de 65 y más años,Mujeres menores de 16 años,Mujeres de 16 a 64 años,Mujeres de 65 y más años
+
 			var qry = alasql('SELECT *,'+
+			    ' (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) AS total_extranjeros,'+
+			    ' ROUND( ( (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) * 100) / ( [Total población]::NUMBER ) , 1) AS porcentaje_extranjeros, '+
+				' ROUND( ( ( [Total extranjeros varones]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_hombres, '+
+				' ROUND( ( ( [Total extranjeros mujeres]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_mujeres '+
+				' FROM ?',[csv]);
+			console.log(qry);
+
+
+
+/*			var qry = alasql('SELECT *,'+
 			    ' ([Hombres menores de 16 años]::NUMBER) + ([Hombres de 16 a 64 años]::NUMBER) + ([Hombres de 65 y más años]::NUMBER) + ([Mujeres menores de 16 años]::NUMBER) + ([Mujeres de 16 a 64 años]::NUMBER) + ([Mujeres de 65 y más años]::NUMBER) AS total_extranjeros,'+
 				' ([Hombres menores de 16 años]::NUMBER) + ([Hombres de 16 a 64 años]::NUMBER) + ([Hombres de 65 y más años]::NUMBER) AS total_hombres,'+
 				' ([Mujeres menores de 16 años]::NUMBER) + ([Mujeres de 16 a 64 años]::NUMBER) + ([Mujeres de 65 y más años]::NUMBER) AS total_mujeres,'+
 				' ROUND( ( ( ([Hombres menores de 16 años]::NUMBER) + ([Hombres de 16 a 64 años]::NUMBER) + ([Hombres de 65 y más años]::NUMBER) ) * 100) / ( ([Hombres menores de 16 años]::NUMBER) + ([Hombres de 16 a 64 años]::NUMBER) + ([Hombres de 65 y más años]::NUMBER) + ([Mujeres menores de 16 años]::NUMBER) + ([Mujeres de 16 a 64 años]::NUMBER) + ([Mujeres de 65 y más años]::NUMBER) ) , 1) AS porcentaje_hombres, '+
 				' ROUND( ( ( ([Mujeres menores de 16 años]::NUMBER) + ([Mujeres de 16 a 64 años]::NUMBER) + ([Mujeres de 65 y más años]::NUMBER) ) * 100) / ( ([Hombres menores de 16 años]::NUMBER) + ([Hombres de 16 a 64 años]::NUMBER) + ([Hombres de 65 y más años]::NUMBER) + ([Mujeres menores de 16 años]::NUMBER) + ([Mujeres de 16 a 64 años]::NUMBER) + ([Mujeres de 65 y más años]::NUMBER) ) , 1) AS porcentaje_mujeres'+
-				' FROM ?',[csv]);
+				' FROM ?',[csv]);*/
 			//console.log(qry);
 
 			qry.forEach(function(d, i) {
@@ -766,7 +805,15 @@ if (res == "year=") {
 				//console.log(keys);
 				// rellenar el combo quitando los que no son fecha
 				//cols = keys.filter(key => key.substring(key.length - 3, key.length) == '/20'   );	
-				cols = keys.filter( key => key != 'nombre' && key != 'codine' );         //key => key.indexOf("2020") == 0 && key.substring(0,5)== '2020-');
+				cols = keys.filter( key => key != 'nombre' && key != 'codine' && key != 'Total mujeres' && key != 'Total mujeres de 16 a 64 años' && key != 'Total mujeres de 65 y más años' && key != 'Total mujeres menores de 16 años' && key != 'Total varones' && key != 'Total varones de 16 a 64 años' && key != 'Total varones de 65 y más años' && key != 'Total varones menores de 16 años' );         //key => key.indexOf("2020") == 0 && key.substring(0,5)== '2020-');
+				
+				
+
+
+ 
+
+				
+				
 				//console.log(cols);	
 				//console.log(cols[cols.length-1]);
 				//lastField = cols[cols.length-1].toString();		
@@ -823,4 +870,3 @@ if (res == "year=") {
 
 </body>
 </html>
-
