@@ -36,6 +36,7 @@
 	<!-- simple-statistics -->
 	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
 	<script src='js/ckmeans_simple_statistics.js'></script>
+	<script src="js/turf.min.js"></script>
 
 <style>
 body {
@@ -189,7 +190,14 @@ time.icon:hover, time.icon:focus
 /* fin fecha */
 
 
+/* FORMATEO DE TABLA EN TOP5 https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css */
+/* scrolltable rules */
+table  { margin-top:  20px; display: inline-block; overflow: auto; }
+th div { margin-top: -20px; position: absolute; }
 
+/* design */
+table { border-collapse: collapse; }
+tr:nth-child(even) { background: #EEE; }
 
 
 
@@ -282,8 +290,10 @@ time.icon:hover, time.icon:focus
     function cargaVideo(i) {
 		// Fecha del calendario
 		var y = document.getElementById("datesSel").options;
-/*		ano = y[i].text.split('-')[0];
-		mes = y[i].text.split('-')[1];
+		
+		ano = y[i].text.split('-')[0];
+		//console.log(ano);
+/*		mes = y[i].text.split('-')[1];
 		dia = y[i].text.split('-')[2];
 		var months = [
 			'Jan', 'Feb', 'Mar', 'Apr', 'May',
@@ -301,16 +311,13 @@ time.icon:hover, time.icon:focus
 		function mesesNum2Nombre(monthnum) {			
 			return meses[parseInt(monthnum) - 1] ;
 		}
-		//console.log(monthNumToName(mes));
-		var newCal = '<time class="icon"><em>'+ano+'</em><strong>'+ mesesNum2Nombre(parseInt(mes)) +'</strong><span>'+parseInt(dia)+'</span></time>';
-		
-		
-		
-		
-		//document.getElementById("labDate").innerHTML = y[i].text;
-		document.getElementById("labDate").innerHTML = newCal*/
-		
-	    restyleLayer(y[i].text);	
+		//console.log(monthNumToName(mes));*/
+		if (ano.length == 4) { // si es un año. Si es otra cosa no hace nada
+			var newCal = '<time class="icon"><strong>'+ 'AÑO' +'</strong><span>'+ ano +'</span></time>';
+			document.getElementById("labDate").innerHTML = newCal
+			restyleLayer(y[i].text);
+			top5(y[i].text)
+		}
 	}  
             
 	$('#datesSel').on('change', function() {
@@ -626,19 +633,20 @@ time.icon:hover, time.icon:focus
 		var pal5 = ['#feebe2','#fcc5c0','#fa9fb5','#f768a1','#c51b8a','#7a0177'];// violetas
 		var pal6 = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'];// morado
 		var paletas = [pal1,pal2,pal3,pal4,pal5,pal6];*/
+		var numCol = 6;
 		var paletas = [
-			colorbrewer.Purples[5],
-			colorbrewer.Greens[5],
-			colorbrewer.Oranges[5],
-			colorbrewer.Reds[5],
-			colorbrewer.Greys[5],
-			colorbrewer.Blues[5],
-			colorbrewer.RdPu[5],
-			colorbrewer.PuRd[5],
-			colorbrewer.YlGn[5],
-			colorbrewer.YlGnBu[5],
-			colorbrewer.YlOrBr[5],
-			colorbrewer.YlOrRd[5]
+			colorbrewer.Purples[numCol],
+			colorbrewer.Greens[numCol],
+			colorbrewer.Oranges[numCol],
+			colorbrewer.Reds[numCol],
+			colorbrewer.Greys[numCol],
+			colorbrewer.Blues[numCol],
+			colorbrewer.RdPu[numCol],
+			colorbrewer.PuRd[numCol],
+			colorbrewer.YlGn[numCol],
+			colorbrewer.YlGnBu[numCol],
+			colorbrewer.YlOrBr[numCol],
+			colorbrewer.YlOrRd[numCol]
 		];
 
 
@@ -654,11 +662,35 @@ time.icon:hover, time.icon:focus
 	// Dibuja la leyenda en función de los intervalos de clase creados
 	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
 	function drawLegend(intClassArr,numSel,titulo) {
-
-		//var legend = L.control({position: 'bottomright'});
+		
+		// LEYENDA VERTICAL
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
-			    //grades = [0, 1500, 5000, 12000,24000,38000], //Dibuja 5 colores
+				grades = intClassArr,
+				labels = [],
+				from, to;
+			div.innerHTML += '<P><center><strong>'+titulo+'</strong></center></P>';
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+
+				labels.push(
+					'<i style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML += labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);		
+
+
+		/*
+		// LEYENDA HORIZONTAL	
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+			// grades = [0, 10, 25, 50,100], Dibuja 5 colores
 				grades = intClassArr,
 				labels = [];
 			div.innerHTML += '<P><center>'+titulo+'</center></P>';
@@ -668,7 +700,7 @@ time.icon:hover, time.icon:focus
 			for (var i = 0; i < grades.length-1; i++) {
 				div.innerHTML +=
 					//'<span style="background:' + getColor(grades[i] + 1) + '"></span> ';
-					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></span> ';
+					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, numSel) + '"></span> ';
 			}
 
 			// a line break
@@ -684,6 +716,7 @@ time.icon:hover, time.icon:focus
 		};
 
 		legend.addTo(map);	
+		*/
 	}
 		
 	// CONTROL PARA TOP5
@@ -701,6 +734,7 @@ time.icon:hover, time.icon:focus
 	};	
 	to5control.addTo(map);
 
+/*
 	// Cambiar top5 en función de la fecha seleccionada
 	function top5(propertyName) {
 		//to10control.innerHTML = '';	
@@ -735,7 +769,61 @@ time.icon:hover, time.icon:focus
 		// actualizar 
 		to5control.update( top5txt+'</ul>' );	
 	}
+*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// Cambiar top5 en función de la fecha seleccionada
+	function top5(propertyName) {
+		//to10control.innerHTML = '';	
+		var allCases = [];
+		var oneCase = new Object();
 
+		geojson.eachLayer(function(layer) {
+			
+			// Obtener la geometria BBOX del poligono
+			var poligono = layer.feature.geometry;
+			//var centroid = turf.centroid(poligono);
+			var bbox = turf.bbox(poligono); //console.log(bbox);
+			// PROPIEDAD % respecto a la población
+			//propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
+			propertyValue = layer.feature.properties[propertyName];
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['pop']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
+			allCases.push(oneCase);
+		});
+		//console.log(allCases);
+
+		// ALASQL		
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
+		// Definir texto
+		var top5txt = '<h4>TABLA MUNICIPIOS</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>VALOR</div>';
+
+		for (i = 0; i < top5.length; i++) {
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td> ' + 		  
+		  '<a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a> <td>'+ top5[i]['cases'] +'';  
+		}
+				
+		// actualizar 
+		to5control.update( top5txt+'</table>' );	
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	var start = Date.now();
 
