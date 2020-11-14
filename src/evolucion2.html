@@ -479,10 +479,10 @@ tr:nth-child(even) { background: #EEE; }
 		var layer = e.target;
 
 		layer.setStyle({
-			//weight: 2,
-			color: '#666', // color borde cuando el mouse está encima
+			weight: 2,
+			//color: 'white', // color borde cuando el mouse está encima
 			//dashArray: '',
-			fillOpacity: 0.7
+			//fillOpacity: 0.7
 		});
 
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -496,7 +496,7 @@ tr:nth-child(even) { background: #EEE; }
 
 	function resetHighlight(e) {
 		layer.setStyle({
-			//weight: 2,
+			weight: 2,
 			color: 'white', // color borde cuando el mouse está encima
 			//dashArray: '',
 			//fillOpacity: 0.7
@@ -509,11 +509,38 @@ tr:nth-child(even) { background: #EEE; }
 		map.fitBounds(e.target.getBounds());
 	}
 
+
+	var popup = L.popup();
+
+	function onMapClick(e) {
+		var anoSel = document.getElementById("datesSel").value;
+		//console.log ('anoSel es : '+ anoSel + 'length es '+ anoSel.length);
+		if (anoSel == 'nothing') {
+		// se ejecutan estas instrucciones
+				var contenido = 'Selecciona un año para ver información';	
+		}
+		else {
+		   // si tiene año seleccionado se ejecutan estas instrucciones
+		   		var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
+						'Total extranjeros en '+anoSel+': '+ e.sourceTarget.feature.properties[anoSel]+'<br>'+
+					    'Total población (2019): '+ e.sourceTarget.feature.properties['pop'];	
+		}		
+					    
+		popup
+			.setLatLng(e.latlng)
+			//.setContent("You clicked the map at " + e.latlng.toString())
+			.setContent(contenido)
+			.openOn(map);
+	}
+
+
+
 	function onEachFeature(feature, layer) {
 		layer.on({
 			mouseover: highlightFeature,
 			//mouseout: resetHighlight,
-			click: zoomToFeature
+			//click: zoomToFeature
+			click: onMapClick
 		});
 		// Etiquetas
 		/*var label = L.marker(layer.getBounds().getCenter(), {
@@ -606,10 +633,12 @@ tr:nth-child(even) { background: #EEE; }
 			propertyValue = layer.feature.properties[propertyName];	
 			//var myFillColor = getColor(propertyValue);
 			var myFillColor = getColor2(propertyValue,intClassArr,11);
-			layer.setStyle({
+			layer.setStyle({				
 				fillColor: myFillColor,
 				fillOpacity: 0.8,
-				weight: 0.5
+				weight: 2,
+				opacity: 1,
+				color: 'white'
 			});
 		});
 	}	
