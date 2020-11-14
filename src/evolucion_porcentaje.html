@@ -1,9 +1,11 @@
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
 	
-	<title>Evolución de los extranjeros (2000-2019)</title>
+	<title>Evolución de los extranjeros en porcentaje (2002-2019)</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +37,7 @@
 	<!-- simple-statistics -->
 	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
 	<script src='js/ckmeans_simple_statistics.js'></script>
+	<script src="js/turf.min.js"></script>
 
 <style>
 body {
@@ -187,7 +190,14 @@ time.icon:hover, time.icon:focus
 }
 /* fin fecha */
 
+/* FORMATEO DE TABLA EN TOP5 https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css */
+/* scrolltable rules */
+table  { margin-top:  20px; display: inline-block; overflow: auto; }
+th div { margin-top: -20px; position: absolute; }
 
+/* design */
+table { border-collapse: collapse; }
+tr:nth-child(even) { background: #EEE; }
 
 
 
@@ -281,8 +291,10 @@ time.icon:hover, time.icon:focus
     function cargaVideo(i) {
 		// Fecha del calendario
 		var y = document.getElementById("datesSel").options;
-/*		ano = y[i].text.split('-')[0];
-		mes = y[i].text.split('-')[1];
+		
+		ano = y[i].text.split('-')[0];
+		//console.log(ano);
+/*		mes = y[i].text.split('-')[1];
 		dia = y[i].text.split('-')[2];
 		var months = [
 			'Jan', 'Feb', 'Mar', 'Apr', 'May',
@@ -300,17 +312,14 @@ time.icon:hover, time.icon:focus
 		function mesesNum2Nombre(monthnum) {			
 			return meses[parseInt(monthnum) - 1] ;
 		}
-		//console.log(monthNumToName(mes));
-		var newCal = '<time class="icon"><em>'+ano+'</em><strong>'+ mesesNum2Nombre(parseInt(mes)) +'</strong><span>'+parseInt(dia)+'</span></time>';
-		
-		
-		
-		
-		//document.getElementById("labDate").innerHTML = y[i].text;
-		document.getElementById("labDate").innerHTML = newCal*/
-		
-	    restyleLayer(y[i].text);	
-	}  
+		//console.log(monthNumToName(mes));*/
+		if (ano.length == 4) { // si es un año. Si es otra cosa no hace nada
+			var newCal = '<time class="icon"><strong>'+ 'AÑO' +'</strong><span>'+ ano +'</span></time>';
+			document.getElementById("labDate").innerHTML = newCal
+			restyleLayer(y[i].text);
+			top5(y[i].text)
+		}
+	}   
             
 	$('#datesSel').on('change', function() {
 	  //alert( this.value );
@@ -435,21 +444,20 @@ time.icon:hover, time.icon:focus
 }	
 	
 	
-	
+
+
+
+ 	
 
 
 	
 	// get color depending on population density value
 	function getColor(d) {
-		 return d > 500  ? '#440026' :
-		        d > 400  ? '#800026' :
-				d > 300  ? '#BD0026' :
-				d > 200  ? '#E31A1C' :
-				d > 100  ? '#FC4E2A' :
-				d > 50   ? '#FD8D3C' :
-				d > 25   ? '#FEB24C' :
-				d > 10   ? '#FED976' :
-						   '#FFEDA0' ;
+		 return d > 38000  ? '#bd0026' :
+				d > 13000   ? '#f03b20' :
+				d > 5000   ? '#fd8d3c' :
+				d > 1500   ? '#fecc5c' :
+						   '#ffffb2' ;
 	}
 
 
@@ -559,6 +567,7 @@ time.icon:hover, time.icon:focus
 		// Obtener un numero aleatorio entre 0 y 12 para elegir la paleta de colores
 		var lista = [0,1,2,3,4,5,6,7,8,9,10,11];
 		var numSel = lista.random(); 
+		//var numSel = 11
 		console.log(numSel);		
 		
 		//console.log(newArr);
@@ -577,6 +586,7 @@ time.icon:hover, time.icon:focus
 		var intClassArr = ssck.ckmeans(newArr.map(function(d) { return +d; }), 6).map(function(cluster) {return cluster[0];})
 		console.log(intClassArr); // con un valor de 6 salen 5 intervalos de clase
 		return intClassArr;
+		//return [0, 1500, 5000, 1200, 24000, 38000];   
 	}	
 	
 	/* Función: Obtiene estadistica de un array de datos.
@@ -596,7 +606,7 @@ time.icon:hover, time.icon:focus
 		geojson.eachLayer(function(layer) {
 			propertyValue = layer.feature.properties[propertyName];	
 			//var myFillColor = getColor(propertyValue);
-			var myFillColor = getColor2(propertyValue,intClassArr,numSel);
+			var myFillColor = getColor2(propertyValue,intClassArr,11);
 			layer.setStyle({
 				fillColor: myFillColor,
 				fillOpacity: 0.8,
@@ -624,19 +634,20 @@ time.icon:hover, time.icon:focus
 		var pal5 = ['#feebe2','#fcc5c0','#fa9fb5','#f768a1','#c51b8a','#7a0177'];// violetas
 		var pal6 = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'];// morado
 		var paletas = [pal1,pal2,pal3,pal4,pal5,pal6];*/
+		var numCol = 6;
 		var paletas = [
-			colorbrewer.Purples[5],
-			colorbrewer.Greens[5],
-			colorbrewer.Oranges[5],
-			colorbrewer.Reds[5],
-			colorbrewer.Greys[5],
-			colorbrewer.Blues[5],
-			colorbrewer.RdPu[5],
-			colorbrewer.PuRd[5],
-			colorbrewer.YlGn[5],
-			colorbrewer.YlGnBu[5],
-			colorbrewer.YlOrBr[5],
-			colorbrewer.YlOrRd[5]
+			colorbrewer.Purples[numCol],
+			colorbrewer.Greens[numCol],
+			colorbrewer.Oranges[numCol],
+			colorbrewer.Reds[numCol],
+			colorbrewer.Greys[numCol],
+			colorbrewer.Blues[numCol],
+			colorbrewer.RdPu[numCol],
+			colorbrewer.PuRd[numCol],
+			colorbrewer.YlGn[numCol],
+			colorbrewer.YlGnBu[numCol],
+			colorbrewer.YlOrBr[numCol],
+			colorbrewer.YlOrRd[numCol]
 		];
 
 
@@ -648,12 +659,83 @@ time.icon:hover, time.icon:focus
 						   paletas[numSel][0] ;
 	}
 
-	
+/*	
 	// Dibuja la leyenda en función de los intervalos de clase creados
 	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
 	function drawLegend(intClassArr,numSel,titulo) {
 
 		//var legend = L.control({position: 'bottomright'});
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+			    //grades = [0, 1500, 5000, 12000,24000,38000], //Dibuja 5 colores
+				grades = intClassArr,
+				labels = [];
+			div.innerHTML += '<P><center>'+titulo+'</center></P>';
+
+			// loop through our density intervals and generate a label with a colored square for each interval
+			// first loop for colored legend boxes
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					//'<span style="background:' + getColor(grades[i] + 1) + '"></span> ';
+					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></span> ';
+			}
+
+			// a line break
+			div.innerHTML += '<br>';
+
+			// second loop for text
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					'<label>' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] : '+') + '</label>';
+			}
+			div.innerHTML += '<p><img src="img/pixel.png"></p>';
+			return div;
+		};
+
+		legend.addTo(map);	
+	}
+
+*/
+
+
+
+
+
+
+
+
+
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	function drawLegend(intClassArr,numSel,titulo) {
+		
+		// LEYENDA VERTICAL
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = intClassArr,
+				labels = [],
+				from, to;
+			div.innerHTML += '<P><center><strong>'+titulo+'</strong></center></P>';
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+
+				labels.push(
+					'<i style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML += labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);		
+
+
+		/*
+		// LEYENDA HORIZONTAL	
 		legend.onAdd = function (map) {
 			var div = L.DomUtil.create('div', 'info legend'),
 			// grades = [0, 10, 25, 50,100], Dibuja 5 colores
@@ -682,7 +764,19 @@ time.icon:hover, time.icon:focus
 		};
 
 		legend.addTo(map);	
+		*/
 	}
+
+
+
+
+
+
+
+
+
+
+
 		
 	// CONTROL PARA TOP5
 	var to5control = L.control({position: 'topright'});	
@@ -699,6 +793,8 @@ time.icon:hover, time.icon:focus
 	};	
 	to5control.addTo(map);
 
+
+
 	// Cambiar top5 en función de la fecha seleccionada
 	function top5(propertyName) {
 		//to10control.innerHTML = '';	
@@ -706,33 +802,36 @@ time.icon:hover, time.icon:focus
 		var oneCase = new Object();
 
 		geojson.eachLayer(function(layer) {
+			
+			// Obtener la geometria BBOX del poligono
+			var poligono = layer.feature.geometry;
+			//var centroid = turf.centroid(poligono);
+			var bbox = turf.bbox(poligono); //console.log(bbox);
+			// PROPIEDAD % respecto a la población
+			//propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
 			propertyValue = layer.feature.properties[propertyName];
-			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
-			//console.log(propertyValue);
-			//allCases.push(propertyValue);
-			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':layer.feature.properties['ptotal'], 'iso2':layer.feature.properties['codine'] };
-			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['pop']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
 			allCases.push(oneCase);
 		});
 		//console.log(allCases);
 
 		// ALASQL		
-		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
-		var top5 = alasql("SELECT name,cases,pop,iso2 FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 5",[allCases]);
-		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases WHERE cases100m > 0  ORDER BY cases100m DESC LIMIT 5",[allCases]);	 
-		//console.log(top5); 
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC",[allCases]);
 		// Definir texto
-		var top5txt = '<h4>TOP 5 MUNICIPIOS</h4><img src="img/pixel.png" height="1" width="150"><ul>';
+		var top5txt = '<h4>TABLA MUNICIPIOS </h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>%</div>';
+
 		for (i = 0; i < top5.length; i++) {
-			//top10txt += '<li>'+ (i+1)+ '. ' + '<img src="https://www.countryflags.io/'+top10[i]['iso2'].toLowerCase()+'/flat/16.png"> ' + top10[i]['name'] + ' '+ top10[i]['cases100m'] + '</li>';
-		  top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ 
-		  '<button type="button" class="btn btn-primary"> '+ top5[i]['cases'] +' </button></li>';
-		  //top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ top5[i]['cases100m'] + '</li>';
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td> ' + 		  
+		  '<a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a> <td>'+ top5[i]['cases'] +'';  
 		}
 				
 		// actualizar 
-		to5control.update( top5txt+'</ul>' );	
-	}
+		to5control.update( top5txt+'</table>' );	
+	}	
+	
+
+
+
 
 	
 	var start = Date.now();
@@ -787,12 +886,12 @@ time.icon:hover, time.icon:focus
 		
     });//.addTo(map);
     
-	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/covid19maps">Jose Manuel Mira</a> | Covid-19 data &copy; <a href="https://github.com/CSSEGISandData">CSSE at Johns Hopkins University</a>');
+	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/covid19maps">Jose Manuel Mira</a> | Data &copy; <a href="https://www.ine.es">INE</a>');
 
 	var legend = L.control({position: 'bottomright'});
 	legend.onAdd = function (map) {
 		var div = L.DomUtil.create('div', 'info legend'),
-			grades = [0, 10, 25, 50,100],
+			grades = [0, 1500, 5000, 12000,24000,38000],
 			labels = [];
 			div.innerHTML = '<P><center>Leyenda</center></P><p><img src="img/pixel.png"></p>';
 
