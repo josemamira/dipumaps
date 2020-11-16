@@ -1192,11 +1192,11 @@ if (res == "year=") {
 		// ALASQL		
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
 		//var top5 = alasql("SELECT name,cases,pop,iso2 FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
-		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 10",[allCases]);
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC",[allCases]);
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases WHERE cases100m > 0  ORDER BY cases100m DESC LIMIT 5",[allCases]);	 
 		//console.log(top5); 
 		// Definir texto
-		var top5txt = '<h4>TOP 10 MUNICIPIOS (%)</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>VALOR</div>';
+		var top5txt = '<h4>TABLA MUNICIPIOS</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>VALOR</div>';
 
 		for (i = 0; i < top5.length; i++) {
 			//top10txt += '<li>'+ (i+1)+ '. ' + '<img src="https://www.countryflags.io/'+top10[i]['iso2'].toLowerCase()+'/flat/16.png"> ' + top10[i]['name'] + ' '+ top10[i]['cases100m'] + '</li>';
