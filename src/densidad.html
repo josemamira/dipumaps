@@ -23,6 +23,7 @@
 	<!-- simple-statistics -->
 	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
 	<script src='js/ckmeans_simple_statistics.js'></script>
+	<script src="js/turf.min.js"></script>
 
 
 	<style>
@@ -47,6 +48,33 @@ html, body, #map {
 
 
 <script type="text/javascript">
+
+
+/*
+ Funcion para comprobar si en la URL se pasa el cÃ³digo sÃ­gua de la forma:
+ url + ?id= + codigo
+*/
+
+// Analizar la URL
+//comprueba si hay una url con el codigo del tipo http://localhost/bootleaf2/websigua2/index.html?id=0037P1013
+var laURL = window.location.href;
+var patron = /year=/i;
+var res = laURL.match(patron);
+
+var popupContent = '';
+
+if (res == "year=") {
+	var year = window.location.href.split( '?year=' )[1].substr(0, 4);
+	//alert("Hay año y es " + year);
+
+
+	
+} else {
+	// no tiene id=codigo en la url. No hacer nada
+	//alert("no hay año");
+	var year=2019; // valor por defecto
+}	
+
 
 	var map = L.map('map').setView([38.35, -0.5], 9);
 
@@ -83,20 +111,28 @@ html, body, #map {
 		return this._div;
 	};
 
+/*
+			    ' (([Total varones]::NUMBER) + ([Total mujeres]::NUMBER)) AS total_poblacion,'+
+			    ' (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) AS total_extranjeros,'+
+			    ' ROUND( ( (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) * 100) / ( [Total población]::NUMBER ) , 1) AS porcentaje_extranjeros, '+
+				' ROUND( ( ( [Total extranjeros varones]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_hombres, '+
+				' ROUND( ( ( [Total extranjeros mujeres]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_mujeres '+
+*/
+
+
+
 	info.update = function (props) {
 		this._div.innerHTML = '<h4>Datos municipales</h4>' +  (props ?
 			'<b>' + props.nombre + '</b><br />' + 
-			'Total población: ' + props.ptotal + '<br>'+
-			'Total extranjeros: ' + props.pext + '<br>'+
+			'Total población: ' + props['total_poblacion'] + '<br>'+
+			'Total extranjeros: ' +  parseInt(props['total_extranjeros']) + '<br>'+
 			// Calculo densidad redondeada a 1 decimal
-			'Densidad extranjeros: ' +  Math.round( (props.pext/props.km2) * 10) / 10  + '<br>'+
-			'% extranjeros: ' + props.porcext + '<br>'+
-			'Hombres extranjeros: ' + props.hext + '<br>'+
-			'Mujeres extranjeras: ' + props.mext + '<br>'+
-			'% Hombres extranjeros: ' + props.porhext + '<br>'+
-			'% Mujeres extranjeras: ' + props.pormext 
-			//codine,ptotal,pext,porcext,hext,porhext,mext,pormext
-			//props.pext + ' extranjeros<sup>2</sup>'
+			'Densidad extranjeros: ' +  Math.round( (props['total_extranjeros']/props.km2) * 10) / 10  + '<br>'+
+			'% extranjeros: ' +  Math.round( (props['total_extranjeros']*100)/props['total_poblacion'])+ '<br>'+
+			'Hombres extranjeros: ' + props['Total extranjeros varones'] + '<br>'+
+			'Mujeres extranjeras: ' + props['Total extranjeros mujeres'] + '<br>'+
+			'% Hombres extranjeros: ' + Math.round( (props['Total extranjeros varones']*100)/props['total_extranjeros'])+ '<br>'+
+			'% Mujeres extranjeras: ' + Math.round( (props['Total extranjeros mujeres']*100)/props['total_extranjeros'])
 			: '+info sobre municipio');
 	};
 
@@ -122,7 +158,7 @@ html, body, #map {
 			// Campo que se va a colorear
 			//fillColor: getColor(feature.properties.pext)
 			// Densidad
-			fillColor: getColor(feature.properties.pext/feature.properties.km2)
+			fillColor: getColor(feature.properties['total_extranjeros']/feature.properties.km2)
 		};
 	}
 
@@ -168,12 +204,28 @@ html, body, #map {
 // GEOJSON
 	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/extranjeros.csv';
+		//urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/densidad2019.csv';
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/edadsexo/'+year+'.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
+			
+			// Hombres menores de 16 años,Hombres de 16 a 64 años,Hombres de 65 y más años,Mujeres menores de 16 años,Mujeres de 16 a 64 años,Mujeres de 65 y más años
 
-			csv.forEach(function(d, i) {
+			var qry = alasql('SELECT *,'+
+			    ' (([Total varones]::NUMBER) + ([Total mujeres]::NUMBER)) AS total_poblacion,'+
+			    ' (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) AS total_extranjeros,'+
+			    ' ROUND( ( (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) * 100) / ( [Total población]::NUMBER ) , 1) AS porcentaje_extranjeros, '+
+				' ROUND( ( ( [Total extranjeros varones]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_hombres, '+
+				' ROUND( ( ( [Total extranjeros mujeres]::NUMBER ) * 100) / (([Total extranjeros varones]::NUMBER) + ([Total extranjeros mujeres]::NUMBER)) , 1) AS porcentaje_extranjeros_mujeres '+
+				' FROM ?',[csv]);
+			//console.log(qry);			
+			
+			
+			
+			
+
+			qry.forEach(function(d, i) {
 				//console.log(d);
 				keys = Object.keys(d) ;
 			
@@ -213,7 +265,7 @@ html, body, #map {
 			grades = [0,30, 80, 160, 300],
 			labels = [],
 			from, to;
-		div.innerHTML = '<b>Densidad de extranjeros (hab/km<sup>2</sup>)</b><BR>';
+		div.innerHTML = '<b>Densidad de extranjeros en '+year+' (hab/km<sup>2</sup>)</b><BR>';
 		for (var i = 0; i < grades.length; i++) {
 			from = grades[i];
 			to = grades[i + 1];
