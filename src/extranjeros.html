@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +36,7 @@
 	<!-- simple-statistics -->
 	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
 	<script src='js/ckmeans_simple_statistics.js'></script>
+	<script src="js/turf.min.js"></script>
 
 <style>
 body {
@@ -187,6 +189,14 @@ time.icon:hover, time.icon:focus
 }
 /* fin fecha */
 
+/* FORMATEO DE TABLA EN TOP5 https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css */
+/* scrolltable rules */
+table  { margin-top:  20px; display: inline-block; overflow: auto; }
+th div { margin-top: -20px; position: absolute; }
+
+/* design */
+table { border-collapse: collapse; }
+tr:nth-child(even) { background: #EEE; }
 
 
 
@@ -204,6 +214,35 @@ time.icon:hover, time.icon:focus
 
 
 <script type="text/javascript">
+	
+	/*
+	 Funcion para comprobar si en la URL se pasa el cÃ³digo sÃ­gua de la forma:
+	 url + ?id= + codigo
+	*/
+
+	// Analizar la URL
+	//comprueba si hay una url con el codigo del tipo http://localhost/bootleaf2/websigua2/index.html?id=0037P1013
+	var laURL = window.location.href;
+	var patron = /year=/i;
+	var res = laURL.match(patron);
+
+	var popupContent = '';
+
+	if (res == "year=") {
+		var year = window.location.href.split( '?year=' )[1].substr(0, 4);
+		//alert("Hay año y es " + year);
+
+
+		
+	} else {
+		// no tiene id=codigo en la url. No hacer nada
+		//alert("no hay año");
+		var year=2019; // valor por defecto
+	}	
+		
+	
+	
+	
 	
 	// funcion para obtener un elemento aleatorio de un array
 	Array.prototype.random = function () {
@@ -345,14 +384,22 @@ time.icon:hover, time.icon:focus
 	info.update = function (props) {
 		obj = Object(props);
 
+
+		// codine,Total varones,Total varones menores de 16 años,Total varones de 16 a 64 años,Total varones de 65 y más años,
+		//Total mujeres,Total mujeres menores de 16 años,Total mujeres de 16 a 64 años,Total mujeres de 65 y más años,
+		//Total extranjeros varones,Total extranjeros varones menores de 16 años,Total extranjeros varones  de 16 a 64 años,Total extranjeros varones de 65 y más años,
+		//Total extranjeros mujeres,Total extranjeros mujeres menores de 16 años,Total extranjeros mujeres de 16 a 64 años,Total extranjeros mujeres de 65 y más años,Total población
+
+
+
 		var data = {
-			'Extran.': parseInt(obj['Población extranjera']),
-			'Resto': parseInt(obj['Población total']) - parseInt(obj['Población extranjera'])			
+			'Extran.': parseInt(obj['Total extranjeros varones']) + parseInt(obj['Total extranjeros mujeres']),
+			'Resto': (parseInt(obj['Total varones'])+parseInt(obj['Total mujeres']) ) - ( parseInt(obj['Total extranjeros varones']) + parseInt(obj['Total extranjeros mujeres']) )			
 		}
 
 		var data2 = {
-			'Hombres': parseInt(obj['Porcentaje hombres extranjeros']),
-			'Mujeres': parseInt(obj['Porcentaje mujeres extranjeras'])		
+			'Hombres': (parseInt(obj['Total extranjeros varones'])*100)/ (parseInt(obj['Total extranjeros varones']) + parseInt(obj['Total extranjeros mujeres'])),
+			'Mujeres': (parseInt(obj['Total extranjeros mujeres'])*100)/ (parseInt(obj['Total extranjeros varones']) + parseInt(obj['Total extranjeros mujeres']))	
 		}
 		//console.log(data);
 		//console.log(obj);
@@ -382,8 +429,8 @@ time.icon:hover, time.icon:focus
 
 		lastDate = keys[keys.length - 1];
 		this._div.innerHTML = '<center><h4>PORCENTAJE DE EXTRANJEROS</h4></center>' +  (props ?
-			'<strong><center>'+props.nombre +'</strong>   Total extranjeros: ' + parseInt(props['Población extranjera']) + 
-			' ('+ Number(parseInt(props['Población extranjera'])*100/parseInt(props['Población total'])).toFixed(1) +' %)</center>'+
+			'<strong><center>'+props.nombre +'</strong>   Total extranjeros: ' + ( parseInt(props['Total extranjeros varones']) + parseInt(props['Total extranjeros mujeres']) ) + 
+			' ('+ Number(parseInt( props['Total extranjeros varones'] + props['Total extranjeros mujeres'] )*100/parseInt( props['Total varones']+ props['Total mujeres']       )).toFixed(1) +' %)</center>'+
 			'<div id="chart"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
 		//chart(values);
@@ -786,7 +833,7 @@ time.icon:hover, time.icon:focus
 				grades = intClassArr,
 				labels = [],
 				from, to;
-			div.innerHTML += '<P><center><strong>'+titulo+'</strong></center></P>';
+			div.innerHTML += '<P><center><strong>'+titulo+' ('+year+')</strong></center></P>';
 			for (var i = 0; i < grades.length-1; i++) {
 				from = grades[i];
 				to = grades[i + 1];
@@ -858,28 +905,22 @@ time.icon:hover, time.icon:focus
 		var oneCase = new Object();
 
 		geojson.eachLayer(function(layer) {
+			// Obtener la geometria BBOX del poligono
+			var poligono = layer.feature.geometry;
+			var bbox = turf.bbox(poligono); //console.log(bbox);
 			propertyValue = layer.feature.properties[propertyName];
-			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
-			//console.log(propertyValue);
-			//allCases.push(propertyValue);
-			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':layer.feature.properties['ptotal'], 'iso2':layer.feature.properties['codine'] };
-			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'iso2':layer.feature.properties['codine'],'bbox': bbox };
 			allCases.push(oneCase);
 		});
-		//console.log(allCases);
+		console.log(allCases);
 
 		// ALASQL		
-		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
-		var top5 = alasql("SELECT name,cases,pop,iso2 FROM ? allCases WHERE cases > 0  ORDER BY cases DESC LIMIT 5",[allCases]);
-		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases WHERE cases100m > 0  ORDER BY cases100m DESC LIMIT 5",[allCases]);	 
-		//console.log(top5); 
+		var top5 = alasql('SELECT distinct name,cases,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC',[allCases]);
 		// Definir texto
-		var top5txt = '<h4>TOP 5 MUNICIPIOS</h4><img src="img/pixel.png" height="1" width="150"><ul>';
+		var top5txt = '<h4>TABLA MUNICIPIOS</h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>VALOR</div>';
 		for (i = 0; i < top5.length; i++) {
-			//top10txt += '<li>'+ (i+1)+ '. ' + '<img src="https://www.countryflags.io/'+top10[i]['iso2'].toLowerCase()+'/flat/16.png"> ' + top10[i]['name'] + ' '+ top10[i]['cases100m'] + '</li>';
-		  top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ 
-		  '<button type="button" class="btn btn-primary"> '+ top5[i]['cases'] +' </button></li>';
-		  //top5txt += '<li>'+ (i+1)+ '. ' + top5[i]['name'] + ' '+ top5[i]['cases100m'] + '</li>';
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td> ' + 		  
+		  '<a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a> <td>'+ top5[i]['cases'] +'';  
 		}
 				
 		// actualizar 
@@ -890,9 +931,16 @@ time.icon:hover, time.icon:focus
 	var start = Date.now();
 
 	//url='data/munali.geojson'; 
-	url='https://gist.githubusercontent.com/josemamira/e3c646c1a3669c528aebaa4406c93014/raw/7c75dddb728e940f2cbbec1114aaf85a4bcb6245/munali.geojson';
+	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
 	d3.json(url).then( function(data) {	
-		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/extranjeros2.csv';
+		//urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/extranjeros2.csv';
+		// codine,Total varones,Total varones menores de 16 años,Total varones de 16 a 64 años,Total varones de 65 y más años,
+		//Total mujeres,Total mujeres menores de 16 años,Total mujeres de 16 a 64 años,Total mujeres de 65 y más años,
+		//Total extranjeros varones,Total extranjeros varones menores de 16 años,Total extranjeros varones  de 16 a 64 años,Total extranjeros varones de 65 y más años,
+		//Total extranjeros mujeres,Total extranjeros mujeres menores de 16 años,Total extranjeros mujeres de 16 a 64 años,Total extranjeros mujeres de 65 y más años,Total población
+
+
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/edadsexo/'+year+'.csv';
 		d3.csv(urlcsv).then( function(csv) {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
@@ -939,7 +987,7 @@ time.icon:hover, time.icon:focus
 		
     });//.addTo(map);
     
-	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/covid19maps">Jose Manuel Mira</a> | Covid-19 data &copy; <a href="https://github.com/CSSEGISandData">CSSE at Johns Hopkins University</a>');
+	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/dipumaps">Jose Manuel Mira</a> | Data &copy; <a href="https://www.ine.es">INE</a>');
 
 	var legend = L.control({position: 'bottomright'});
 	legend.onAdd = function (map) {
