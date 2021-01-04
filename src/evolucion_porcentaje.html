@@ -199,18 +199,17 @@ th div { margin-top: -20px; position: absolute; }
 table { border-collapse: collapse; }
 tr:nth-child(even) { background: #EEE; }
 
-
-
-
-
-
-
-
+	#logoContainer {
+		position: absolute;
+		z-index: 1000;		
+		bottom: 25px;
+		right: 200px;
+	}
 </style>
 </head>
 <body>
 <div id='loader' class='loader'></div>
-<div id='map'></div>
+<div id='map'><div id='logoContainer'><img src='img/logoua.png' width='30'></div></div>
 
 
 <script type="text/javascript">
