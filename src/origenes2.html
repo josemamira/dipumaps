@@ -203,7 +203,7 @@ tr:nth-child(even) { background: #EEE; }
 		position: absolute;
 		z-index: 1000;		
 		bottom: 25px;
-		right: 200px;
+		right: 50%;
 	}	
 
 
@@ -216,7 +216,7 @@ tr:nth-child(even) { background: #EEE; }
 <body>
 <div id='loader' class='loader'></div>
 <div id='map'>
-	<div id='logoContainer'><img src='img/logoua.png' width='30'></div>
+	<div id='logoContainer'><img src='img/logoua.svg' height='30'></div>
 </div>
 
 
@@ -1128,7 +1128,7 @@ if (res == "year=") {
 		
     });//.addTo(map);
     
-	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/covid19maps">Jose Manuel Mira</a>');
+	map.attributionControl.addAttribution('Develop by Jose Manuel Mira @<a href="https://josemamira.github.io/dipumaps/index.html"> Universidad de Alicante</a>');
 
 	var legend = L.control({position: 'bottomright'});
 	legend.onAdd = function (map) {

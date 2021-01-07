@@ -202,13 +202,13 @@ tr:nth-child(even) { background: #EEE; }
 		position: absolute;
 		z-index: 1000;		
 		bottom: 25px;
-		right: 200px;
+		right: 30%;
 	}
 </style>
 </head>
 <body>
 <div id='loader' class='loader'></div>
-<div id='map'><div id='logoContainer'><img src='img/logoua.png' width='30'></div></div>
+<div id='map'><div id='logoContainer'><img src='img/logoua.svg' height='30'></div></div>
 
 
 <script type="text/javascript">
@@ -985,7 +985,7 @@ tr:nth-child(even) { background: #EEE; }
 		
     });//.addTo(map);
     
-	map.attributionControl.addAttribution('Develop by <a href="https://github.com/josemamira.io/dipumaps">Jose Manuel Mira</a> | Data &copy; <a href="https://www.ine.es">INE</a>');
+	map.attributionControl.addAttribution('Develop by Jose Manuel Mira @ <a href="https://josemamira.github.io/dipumaps/index.html">Universidad de Alicante</a> | Data &copy; <a href="https://www.ine.es">INE</a>');
 
 	var legend = L.control({position: 'bottomright'});
 	legend.onAdd = function (map) {
