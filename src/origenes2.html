@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -466,7 +465,7 @@ if (res == "year=") {
 	
 //2008-2019:
 //codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,
-//Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
+//Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,República Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
 	} else if (year > 2007)	{
 		var continentes = {
 			'Oceanía': parseInt(obj['Oceanía y Apátridas']),
@@ -500,7 +499,7 @@ if (res == "year=") {
 			'Cuba': parseInt(obj['Cuba']),
 			'Chile': parseInt(obj['Chile']),
 			'Paraguay': parseInt(obj['Paraguay']),
-			'Rep. Dominicana': parseInt(obj['Rep. Dominicana']),
+			'República Dominicana': parseInt(obj['República Dominicana']),
 			'Uruguay': parseInt(obj['Uruguay']),
 			'Venezuela': parseInt(obj['Venezuela']),
 			'Bolivia': parseInt(obj['Bolivia']),
@@ -773,6 +772,7 @@ if (res == "year=") {
 		}	
 
 		else if (year > 2007) {
+			//if (e.sourceTarget.feature.properties['República Dominicana'] == undefined) { e.sourceTarget.feature.properties['República Dominicana'] = 0;} 
 			var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
 				'<table><tr><td>'+
 				'Reino Unido: '+ e.sourceTarget.feature.properties['Reino Unido']+'<br>'+
@@ -795,7 +795,7 @@ if (res == "year=") {
 				'Cuba: '+ e.sourceTarget.feature.properties['Cuba']+'<br>'+
 				'Chile: '+ e.sourceTarget.feature.properties['Chile']+'<br>'+
 				'Paraguay: '+ e.sourceTarget.feature.properties['Paraguay']+'<br>'+
-				'Rep. Dominicana: '+ e.sourceTarget.feature.properties['Rep. Dominicana']+'<br>'+
+				'República Dominicana: '+ e.sourceTarget.feature.properties['República Dominicana']+'<br>'+
 				'Uruguay: '+ e.sourceTarget.feature.properties['Uruguay']+'<br>'+
 				'Venezuela: '+ e.sourceTarget.feature.properties['Venezuela']+'<br>'+
 				'Bolivia: '+ e.sourceTarget.feature.properties['Bolivia']+'<br>'+
@@ -971,7 +971,6 @@ if (res == "year=") {
 				grades = intClassArr,
 				labels = [];
 			div.innerHTML += '<P><center>'+titulo+'</center></P>';
-
 			// loop through our density intervals and generate a label with a colored square for each interval
 			// first loop for colored legend boxes
 			for (var i = 0; i < grades.length-1; i++) {
@@ -979,10 +978,8 @@ if (res == "year=") {
 					//'<span style="background:' + getColor(grades[i] + 1) + '"></span> ';
 					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, numSel) + '"></span> ';
 			}
-
 			// a line break
 			div.innerHTML += '<br>';
-
 			// second loop for text
 			for (var i = 0; i < grades.length-1; i++) {
 				div.innerHTML +=
@@ -991,7 +988,6 @@ if (res == "year=") {
 			div.innerHTML += '<p><img src="img/pixel.png"></p>';
 			return div;
 		};
-
 		legend.addTo(map);	
 		*/
 	}
