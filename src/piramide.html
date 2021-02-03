@@ -469,7 +469,7 @@ if (res == "year=") {
 			weight: 2,
 			opacity: 1,
 			color: 'white',
-			//dashArray: '3',
+			//dashArray: '',
 			fillOpacity: 0.7,
 			//fillColor: getColor(feature.properties.ptotal)
 			fillColor: '#FFEDA0'
@@ -480,8 +480,9 @@ if (res == "year=") {
 		var layer = e.target;
 
 		layer.setStyle({
-			//weight: 2,
-			color: '#666', // color borde cuando el mouse está encima
+			weight: 2,
+			opacity: 1,
+			color: 'red',
 			//dashArray: '',
 			fillOpacity: 0.7
 		});
@@ -496,14 +497,16 @@ if (res == "year=") {
 	//var geojson;
 
 	function resetHighlight(e) {
+		var layer = e.target;
+
 		layer.setStyle({
-			//weight: 2,
-			color: 'white', // color borde cuando el mouse está encima
+			weight: 2,
+			opacity: 1,
+			color: 'white',
 			//dashArray: '',
-			//fillOpacity: 0.7
-		});
-		geojson.resetStyle(e.target);
-		info.update();
+			fillOpacity: 0.7,
+		});	
+		info.update();	
 	}
 
 	function zoomToFeature(e) {
@@ -533,7 +536,7 @@ if (res == "year=") {
 	function onEachFeature(feature, layer) {
 		layer.on({
 			mouseover: highlightFeature,
-			//mouseout: resetHighlight,
+			mouseout: resetHighlight,
 			click: onMapClick //zoomToFeature
 		});
 		// Etiquetas
