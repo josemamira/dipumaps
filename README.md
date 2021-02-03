@@ -5,7 +5,7 @@ Mapas interactivos sobre extranjeros en la provincia de Alicante
 Screenshot:
 ![alt text](https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/images/portada.png "Foreigners interactive maps")
 
-covid19maps
+DipuMaps
 =============
 
 Created by [José Manuel Mira Martínez](https://github.com/josemamira/)
