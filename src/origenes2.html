@@ -250,7 +250,7 @@ if (res == "year=") {
 	}	
 	
 	// ColorBrewer
-	console.log(colorbrewer.YlGn[5]);
+	//console.log(colorbrewer.YlGn[5]);
 
 
 // Opción una sola capa
@@ -845,7 +845,7 @@ if (res == "year=") {
 		// Obtener un numero aleatorio entre 0 y 12 para elegir la paleta de colores
 		var lista = [0,1,2,3,4,5,6,7,8,9,10,11];
 		var numSel = lista.random(); 
-		console.log(numSel);		
+		//console.log(numSel);		
 		
 		//console.log(newArr);
 		//intClass(newArr);// calcula intervalos de clae
@@ -879,7 +879,7 @@ if (res == "year=") {
 			intClassArr[intClassArr.length - 1] = ultimo;
 		}
 		
-		console.log(intClassArr);
+		//console.log(intClassArr);
 		return intClassArr;
 		
 	}	
@@ -1013,8 +1013,10 @@ if (res == "year=") {
 
 	// Cambiar top5 en función de la fecha seleccionada
 	function top5(propertyName) {
+		//console.log(propertyName);
 		//to10control.innerHTML = '';	
 		var allCases = [];
+		//console.log(allCases);
 		var oneCase = new Object();
 
 		geojson.eachLayer(function(layer) {
@@ -1026,16 +1028,25 @@ if (res == "year=") {
 			
 			
 			// PROPIEDAD % respecto a la población
-			propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
+			// Sí el parámetro es un porcentaje no se hace nada, y si es otra cosa se calcula el %
+			//if ( propertyName.substring(0,10) == 'Porcentaje' )  {
+			if (propertyName.match(/^Porcentaje.*$/)) {
+			  propertyValue = layer.feature.properties[propertyName];
+			} else {
+				propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
+			}
+			//console.log(propertyValue);
 			//propertyValue = layer.feature.properties[propertyName];
 			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
 			//console.log(propertyValue);
 			//allCases.push(propertyValue);
+			//oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['Total Población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
 			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['Total Población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
+
 			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
 			allCases.push(oneCase);
 		});
-		console.log(allCases);
+		//console.log(allCases);
 
 		// ALASQL		
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
@@ -1078,10 +1089,10 @@ if (res == "year=") {
 			var qry = alasql('SELECT *,'+
 			    //' ROUND(( ([Total Extranjeros]::NUMBER)*100/([Total Población]::NUMBER) ), 1) AS Porcentaje_Extranjeros,'+
 			    ' (CASE WHEN [Total Extranjeros]::NUMBER > 0 THEN ROUND(( ([Total Extranjeros]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Extranjeros,'+		    
-			    ' (CASE WHEN [Total Europa]::NUMBER > 0 THEN ROUND(( ([Total Europa]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Europa,'+
-			    ' (CASE WHEN [Total Africa]::NUMBER > 0 THEN ROUND(( ([Total Africa]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Africa,'+
-			    ' (CASE WHEN [Total América]::NUMBER > 0 THEN ROUND(( ([Total América]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_America,'+
-			    ' (CASE WHEN [Total Asia]::NUMBER > 0 THEN ROUND(( ([Total Asia]::NUMBER)*100/([Total Extranjeros]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Asia'+			    
+			    ' (CASE WHEN      [Total Europa]::NUMBER > 0 THEN ROUND(( ([Total Europa]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Europa,'+
+			    ' (CASE WHEN      [Total Africa]::NUMBER > 0 THEN ROUND(( ([Total Africa]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Africa,'+
+			    ' (CASE WHEN     [Total América]::NUMBER > 0 THEN ROUND((([Total América]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_America,'+
+			    ' (CASE WHEN        [Total Asia]::NUMBER > 0 THEN ROUND((   ([Total Asia]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Asia'+			    
 				' FROM ?',[csv]);			
 			
 			//console.log(qry);
