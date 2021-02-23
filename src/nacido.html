@@ -245,7 +245,7 @@ if (res == "year=") {
 	}	
 	
 	// ColorBrewer
-	console.log(colorbrewer.YlGn[5]);
+	//console.log(colorbrewer.YlGn[5]);
 
 
 // Opción una sola capa
@@ -381,14 +381,14 @@ if (res == "year=") {
 
 
 // Estructura 2002-2003
-// codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea,Reino Unido,Alemania,Total Africa,Marruecos,Total América,Colombia,Ecuador,Total Asia,Resto
+// codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea,Reino Unido,Alemania,Total África,Marruecos,Total América,Colombia,Ecuador,Total Asia,Resto
 
 	if (year == 2002 || year== 2003)	{
 		var continentes = {
 			//'Oceanía': parseInt(obj['Oceanía y Apátridas']),
 			'UE': parseInt(obj['Total Unión Europea']), 
 			'Resto EU': parseInt(obj['Total Europa'])-parseInt(obj['Total Unión Europea']), 
-			'África': parseInt(obj['Total Africa']), 
+			'África': parseInt(obj['Total África']), 
 			'Ámérica': parseInt(obj['Total América']),  
 			'Asia': parseInt(obj['Total Asia'])			
 		}
@@ -402,13 +402,13 @@ if (res == "year=") {
 		}
 
 // estructura 2004: 
-// codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea (25),Alemania,Francia,Reino Unido,Resto de Europa,Rumanía,Total Africa,Marruecos,Total América,Colombia,Ecuador,Argentina,Total Asia,Resto
+// codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea (25),Alemania,Francia,Reino Unido,Resto de Europa,Rumanía,Total África,Marruecos,Total América,Colombia,Ecuador,Argentina,Total Asia,Resto
 	} else if (year == 2004)	{
 		var continentes = {
 			//'Oceanía': parseInt(obj['Oceanía y Apátridas']),
 			'UE': parseInt(obj['Total Unión Europea (25)']), 
 			'Resto EU': parseInt(obj['Total Europa'])-parseInt(obj['Total Unión Europea (25)']), 
-			'África': parseInt(obj['Total Africa']), 
+			'África': parseInt(obj['Total África']), 
 			'Ámérica': parseInt(obj['Total América']),  
 			'Asia': parseInt(obj['Total Asia'])			
 		}
@@ -426,13 +426,13 @@ if (res == "year=") {
 
 // 2005-2006:
 //codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea (25),Alemania,Francia,Italia,Reino Unido,Resto de Europa,Bulgaria,Rumanía,
-// Total Africa,Marruecos,Total América,Argentina,Bolivia,Colombia,Ecuador,Perú,Total Asia,China,Oceanía y Apátridas
+// Total África,Marruecos,Total América,Argentina,Bolivia,Colombia,Ecuador,Perú,Total Asia,China,Oceanía y Apátridas
 	} else if  (year == 2005 || year==2006)	{
 		var continentes = {
 			'Oceanía': parseInt(obj['Oceanía y Apátridas']),
 			'UE': parseInt(obj['Total Unión Europea (25)']), 
 			'Resto EU': parseInt(obj['Total Europa'])-parseInt(obj['Total Unión Europea (25)']), 
-			'África': parseInt(obj['Total Africa']), 
+			'África': parseInt(obj['Total África']), 
 			'Ámérica': parseInt(obj['Total América']),  
 			'Asia': parseInt(obj['Total Asia'])			
 		}
@@ -454,14 +454,14 @@ if (res == "year=") {
 	
 		
 // 2007:
-﻿//codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea (27),Alemania,Francia,Italia,Reino Unido,Bulgaria,Rumanía,Resto de Europa,Rusia,Ucrania,Total Africa,Marruecos,
+﻿//codine,Total Población,Total Extranjeros,Total Europa,Total Unión Europea (27),Alemania,Francia,Italia,Reino Unido,Bulgaria,Rumanía,Resto de Europa,Rusia,Ucrania,Total África,Marruecos,
 //Total América,Argentina,Bolivia,Colombia,Ecuador,Perú,Total Asia,China,Oceanía y Apátridas
 	} else if (year == 2007)	{
 		var continentes = {
 			'Oceanía': parseInt(obj['Oceanía y Apátridas']),
 			'UE': parseInt(obj['Total Unión Europea (27)']), 
 			'Resto EU': parseInt(obj['Total Europa'])-parseInt(obj['Total Unión Europea (27)']), 
-			'África': parseInt(obj['Total Africa']), 
+			'África': parseInt(obj['Total África']), 
 			'Ámérica': parseInt(obj['Total América']),  
 			'Asia': parseInt(obj['Total Asia'])			
 		}
@@ -487,13 +487,13 @@ if (res == "year=") {
 	
 //2008-2019:
 ﻿//codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,
-//Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
+//Rusia,Ucrania,Total África,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,Rep. Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
 	} else if (year > 2007)	{
 		var continentes = {
 			'Oceanía': parseInt(obj['Oceanía y Apátridas']),
 			'UE': parseInt(obj['Total Unión Europea']), 
 			'Europa No Comunitaria': parseInt(obj['Europa No Comunitaria']), 
-			'África': parseInt(obj['Total Africa']), 
+			'África': parseInt(obj['Total África']), 
 			'Ámérica': parseInt(obj['Total América']),  
 			'Asia': parseInt(obj['Total Asia'])			
 		}
@@ -509,6 +509,7 @@ if (res == "year=") {
 			'Rumanía': parseInt(obj['Rumanía']),
 			'Rusia': parseInt(obj['Rusia']),			
 			'Ucrania': parseInt(obj['Ucrania']),
+			
 			'Marruecos': parseInt(obj['Marruecos']),
 			'Argelia': parseInt(obj['Argelia']),
 			'Nigeria': parseInt(obj['Nigeria']),
@@ -526,6 +527,7 @@ if (res == "year=") {
 			'Venezuela': parseInt(obj['Venezuela']),
 			'Bolivia': parseInt(obj['Bolivia']),
 			'Perú': parseInt(obj['Perú']),
+			
 			'China': parseInt(obj['China']),
 			'Pakistán': parseInt(obj['Pakistán'])
 		}		
@@ -539,7 +541,7 @@ if (res == "year=") {
 		//console.log(keys)
 		// filtrado para quedarse solo con keys de fecha
 		//keys = keys.filter(key => key.substring(key.length - 3, key.length) == '/20'   );
-		keys = keys.filter(key => key.indexOf("2020",0) == 0 && key.substring(0,5) == '2020-');
+		//keys = keys.filter(key => key.indexOf("2020",0) == 0 && key.substring(0,5) == '2020-');
 		
 		//console.log(keys);
 		// obtener un array de valores de las fechas
@@ -560,10 +562,10 @@ if (res == "year=") {
 		lastDate = keys[keys.length - 1];
 		
 		if (year == 2002 || year== 2003)	{
-			//var TotalNacidosExtranjero = parseInt(props['Total Europa'])+parseInt(props['Total Africa'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía']);
+			//var TotalNacidosExtranjero = parseInt(props['Total Europa'])+parseInt(props['Total África'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía']);
 			this._div.innerHTML = '<center><h4>NACIDOS EN EL EXTRANJERO ('+year+')</h4></center>' +  (props ?
-			'<strong>'+props.nombre +'</strong>   Total nacidos en el extranjero: ' + parseInt((parseInt(props['Total Europa'])+parseInt(props['Total Africa'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía']))) + 
-			' ('+ Number(parseInt((parseInt(props['Total Europa'])+parseInt(props['Total Africa'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía'])))*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
+			'<strong>'+props.nombre +'</strong>   Total nacidos en el extranjero: ' + parseInt((parseInt(props['Total Europa'])+parseInt(props['Total África'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía']))) + 
+			' ('+ Number(parseInt((parseInt(props['Total Europa'])+parseInt(props['Total África'])+parseInt(props['Total América'])+parseInt(props['Total Asia'])+parseInt(props['Oceanía'])))*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
 			'<div id="chart"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
 			
@@ -1018,7 +1020,7 @@ if (res == "year=") {
 			intClassArr[intClassArr.length - 1] = ultimo;
 		}
 		
-		console.log(intClassArr);
+		//console.log(intClassArr);
 		return intClassArr;
 		
 	}	
@@ -1189,11 +1191,11 @@ if (res == "year=") {
 			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
 			//console.log(propertyValue);
 			//allCases.push(propertyValue);
-			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['Total Población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases':   Number(propertyValue)  , 'pop':Math.floor(layer.feature.properties['Total Población']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
 			//oneCase = { 'name': layer.feature.properties['name'], 'cases100m': Math.floor(propertyValue), 'pop':layer.feature.properties['pop'] };
 			allCases.push(oneCase);
 		});
-		console.log(allCases);
+		//console.log(allCases);
 
 		// ALASQL		
 		//var top5 = alasql("SELECT name,cases100m,pop FROM ? allCases ORDER BY cases100m DESC LIMIT 10",[allCases]);
@@ -1231,17 +1233,29 @@ if (res == "year=") {
 		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
 			var geo = data.features;
 			
-			// codine,Total Población,Total Extranjeros,Total Europa,Total Africa,Total América,Total Asia,Oceanía y Apátridas
+			// codine,Total Población,Total Extranjeros,Total Europa,Total África,Total América,Total Asia,Oceanía y Apátridas
 			if (year == 2002 || year== 2003) {
 				var qry = alasql('SELECT * FROM ?',[csv]);			
 			} else {
+				/*var qry = alasql('SELECT *,'+
+			    ' (CASE WHEN [Nacidos en el Extranjero] > 0 THEN  ([Nacidos en el Extranjero])*100/[Total Población]  ELSE 0 END) AS Porcentaje_Nacidos_Extranjero,'+		    
+			    ' (CASE WHEN [Total Europa] > 0 THEN ([Total Europa])*100/[Total Población] ELSE 0 END) AS Porcentaje_Europa,'+
+			    ' (CASE WHEN [Total África] > 0 THEN ([Total África])*100/[Total Población] ELSE 0 END) AS Porcentaje_Africa,'+
+			    ' (CASE WHEN [Total América] > 0 THEN ([Total América])*100/[Total Población] ELSE 0 END) AS Porcentaje_America,'+
+			    ' (CASE WHEN [Total Asia] > 0 THEN ([Total Asia])*100/[Total Población] ELSE 0 END) AS Porcentaje_Asia'+			    
+				' FROM ?',[csv]);	*/
+				
 				var qry = alasql('SELECT *,'+
-			    ' (CASE WHEN [Nacidos en el Extranjero]::NUMBER > 0 THEN ROUND(( ([Nacidos en el Extranjero]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Nacidos_Extranjero,'+		    
-			    ' (CASE WHEN [Total Europa]::NUMBER > 0 THEN ROUND(( ([Total Europa]::NUMBER)*100/([Nacidos en el Extranjero]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Europa,'+
-			    ' (CASE WHEN [Total Africa]::NUMBER > 0 THEN ROUND(( ([Total Africa]::NUMBER)*100/([Nacidos en el Extranjero]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Africa,'+
-			    ' (CASE WHEN [Total América]::NUMBER > 0 THEN ROUND(( ([Total América]::NUMBER)*100/([Nacidos en el Extranjero]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_America,'+
-			    ' (CASE WHEN [Total Asia]::NUMBER > 0 THEN ROUND(( ([Total Asia]::NUMBER)*100/([Nacidos en el Extranjero]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Asia'+			    
-				' FROM ?',[csv]);				
+			    ' (CASE WHEN [Nacidos en el Extranjero]::NUMBER > 0 THEN ROUND(( ([Nacidos en el Extranjero]::NUMBER)*100/([Total Población]::NUMBER) )::number, 2) ELSE 0 END) AS Porcentaje_Nacidos_Extranjero,'+		    
+			    ' (CASE WHEN [Total Europa]::NUMBER > 0 THEN ROUND(( ([Total Europa]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Europa,'+
+			    ' (CASE WHEN [Total África]::NUMBER > 0 THEN ROUND(( ([Total África]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Africa,'+
+			    ' (CASE WHEN [Total América]::NUMBER > 0 THEN ROUND(( ([Total América]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_America,'+
+			    ' (CASE WHEN [Total Asia]::NUMBER > 0 THEN ROUND(( ([Total Asia]::NUMBER)*100/([Total Población]::NUMBER) ), 1) ELSE 0 END) AS Porcentaje_Asia'+			    
+				' FROM ?',[csv]);					
+				
+				
+				
+							
 			}
 			//console.log(qry);
 
