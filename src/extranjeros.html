@@ -428,7 +428,8 @@ tr:nth-child(even) { background: #EEE; }
 		lastDate = keys[keys.length - 1];
 		this._div.innerHTML = '<center><h4>PORCENTAJE DE EXTRANJEROS</h4></center>' +  (props ?
 			'<strong><center>'+props.nombre +'</strong>   Total extranjeros: ' + ( parseInt(props['Total extranjeros varones']) + parseInt(props['Total extranjeros mujeres']) ) + 
-			' ('+ Number(parseInt( props['Total extranjeros varones'] + props['Total extranjeros mujeres'] )*100/parseInt( props['Total varones']+ props['Total mujeres']       )).toFixed(1) +' %)</center>'+
+			' ('+ (     ( ( parseInt(props['Total extranjeros varones']) + parseInt(props['Total extranjeros mujeres']) ) * 100 ) / ( parseInt(props['Total varones']) + parseInt(props['Total mujeres']) ) ).toFixed(1) +' %)</center>'+									
+			//' ('+ Number(parseInt( props['Total extranjeros varones'] + props['Total extranjeros mujeres'] )*100/parseInt( props['Total varones']+ props['Total mujeres']       )).toFixed(1) +' %)</center>'+
 			'<div id="chart"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
 		//chart(values);
