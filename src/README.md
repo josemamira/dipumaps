@@ -1,10 +1,12 @@
 # Source files, data and years
 
 Los datos en CSV utilizan como separador de columnas una ",", y de fila un retorno de carro. El separador decimal es el "."
+
 CSV data uses a "," as a column separator and a carriage return as a row separator. The decimal separator is the "."
 
 
 Las tablas CSV utilizan en la primera columna los códigos INE de cada municipio. Ejemplo: Alicante es el 03014
+
 The CSV tables use in the first column the INE codes of each municipality. Example: Alicante is 03014
 
 ## Densidad de extranjeros por municipios: 
