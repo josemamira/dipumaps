@@ -14,6 +14,9 @@ The CSV tables use in the first column the INE codes of each municipality. Examp
 - Años: 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019
 - Datos: data/edadsexo/`<year>`.csv
 
+Ver los datos en forma de [tabla 2019](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/edadsexo/2019.csv)
+
+
 Example data edadsexo/2019.csv (first 10 rows):
 > codine,Total varones,Total varones menores de 16 años,Total varones de 16 a 64 años,Total varones de 65 y más años,Total mujeres,Total mujeres menores de 16 años,Total mujeres de 16 a 64 años,Total mujeres de 65 y más años,Total extranjeros varones,Total extranjeros varones menores de 16 años,Total extranjeros varones  de 16 a 64 años,Total extranjeros varones de 65 y más años,Total extranjeros mujeres,Total extranjeros mujeres menores de 16 años,Total extranjeros mujeres de 16 a 64 años,Total extranjeros mujeres de 65 y más años,Total población
 > 03002,2357,368,1561,428,2401,380,1511,510,174,30,126,18,195,32,141,22,4758
@@ -32,15 +35,21 @@ Example data edadsexo/2019.csv (first 10 rows):
 - Años:2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019
 - Datos: data/edadsexo/`<year>`.csv
 
+Ver los datos en forma de [tabla 2019](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/edadsexo/2019.csv)
+
 ## Gráficos con porcentaje y sexo de extranjeros por municipios: 
 - Fichero html: extranjeros.html
 - Años: 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019
 - Datos: data/edadsexo/`<year>`.csv
 
+Ver los datos en forma de [tabla 2019](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/edadsexo/2019.csv)
+
 ## Orígenes de los extranjeros por municipios: 
 - Fichero html: origenes2.html
 - Años: 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019
 - Datos: data/nacionalitat/nacionalitat`<year>`.csv
+
+Ver los datos en forma de [tabla 2019](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/nacionalitat/nacionalitat2019.csv)
 
 Example data nacionalitat2019.csv (first 10 rows)
 > codine,Total Población,Españoles,Total Extranjeros,Total Europa,Total Unión Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,Rusia,Ucrania,Total Africa,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,República Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Oceanía y Apátridas
@@ -60,6 +69,8 @@ Example data nacionalitat2019.csv (first 10 rows)
 - Fichero html: evolucion2.html
 - Datos: data/evolucion_extranjeros_2000_2019.csv
 
+Ver los datos en forma de [tabla](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/evolucion_extranjeros_2000-2019.csv)
+
 Example data evolucion_extranjeros_2000_2019.csv (first 10 rows)
 > codine,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019
 > 03001,179,167,214,213,229,262,286,313,318,337,348,359,238,248,309,278,279,250
@@ -76,6 +87,8 @@ Example data evolucion_extranjeros_2000_2019.csv (first 10 rows)
 ## Evolución del nº de extranjeros en porcentajes (2002-2019):
 - Fichero html: evolucion_porcentaje.html
 - Datos: data/evolucion_porcentaje.csv
+
+Ver los datos en forma de [tabla](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/evolucion_porcentaje.csv)
 
 Example data evolucion_porcentaje.csv (first 10 rows)
 > codine,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019
@@ -100,6 +113,8 @@ Example data evolucion_porcentaje.csv (first 10 rows)
 - Fichero html: nacido.html
 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
 - Datos: data/nascuda_estranger/nascuda_estranger`<year>`.csv
+
+Ver los datos en forma de [tabla 2019](https://github.com/josemamira/dipumaps/blob/gh-pages/src/data/nascuda_estranger/nascuda_estranger2019.csv)
 
 Example data nascuda_estranger2019.csv (first 10 rows)
 > codine,Total Población,Nacidos en España,Nacidos en el Extranjero,Total Europa,Total Unión > Europea,Alemania,Bulgaria,Francia,Italia,Polonia,Portugal,Reino Unido,Rumanía,Total Europa No Comunitaria,Rusia,Ucrania,Total África,Argelia,Marruecos,Nigeria,Senegal,Total América,Argentina,Bolivia,Brasil,Colombia,Cuba,Chile,Ecuador,Paraguay,Perú,República Dominicana,Uruguay,Venezuela,Total Asia,China,Pakistán,Total Oceanía
