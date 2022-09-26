@@ -10,7 +10,7 @@ The CSV tables use in the first column the INE codes of each municipality. Examp
 ## Densidad de extranjeros por municipios: 
 - Fichero html: densidad.html
 - Años: 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019
-- Datos: data/edadsexo/`--<year>`.csv
+- Datos: data/edadsexo/`<year>`.csv
 
 Example data (first 10 rows:
 > codine,Total varones,Total varones menores de 16 años,Total varones de 16 a 64 años,Total varones de 65 y más años,Total mujeres,Total mujeres menores de 16 años,Total mujeres de 16 a 64 años,Total mujeres de 65 y más años,Total extranjeros varones,Total extranjeros varones menores de 16 años,Total extranjeros varones  de 16 a 64 años,Total extranjeros varones de 65 y más años,Total extranjeros mujeres,Total extranjeros mujeres menores de 16 años,Total extranjeros mujeres de 16 a 64 años,Total extranjeros mujeres de 65 y más años,Total población
