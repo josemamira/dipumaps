@@ -4,7 +4,7 @@
 <html>
 <head>
 	
-	<title>Evolución de los extranjeros (2000-2019)</title>
+	<title>Evolución de los extranjeros (2002-2021)</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -382,8 +382,8 @@ tr:nth-child(even) { background: #EEE; }
 
 		lastDate = keys[keys.length - 1];
 		this._div.innerHTML = '<center><h4>ORIGEN DE LOS EXTRANJEROS</h4></center>' +  (props ?
-			'<strong>'+props.nombre +'</strong>   Total extranjeros: ' + parseInt(props['2019']) + 
-			//' ('+ Number(parseInt(props['2019'])*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
+			'<strong>'+props.nombre +'</strong>   Total extranjeros: ' + parseInt(props['2021']) + 
+			//' ('+ Number(parseInt(props['2021'])*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
 			'<div id="chart"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
 		//chart(values);
@@ -531,7 +531,7 @@ tr:nth-child(even) { background: #EEE; }
 		   // si tiene año seleccionado se ejecutan estas instrucciones
 		   		var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
 						'Total extranjeros en '+anoSel+': '+ e.sourceTarget.feature.properties[anoSel]+'<br>'+
-					    'Total población (2019): '+ e.sourceTarget.feature.properties['pop'];	
+					    'Total población (2021): '+ e.sourceTarget.feature.properties['pop'];	
 		}		
 					    
 		popup
