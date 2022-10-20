@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Migration Layer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+	
+    <style>
+    html,body{
+        margin: 0;
+        padding: 0;
+    }
+    #map{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+    #event{
+        position: absolute;
+        top: 50px;
+        right: 600px;
+        height: 100px;
+        width: 400px;
+        z-index: 10000;
+    }
+    .btn{
+        border-color:gray;
+        border-width: 2px;
+        background-color:white;
+   }
+   <!-- leyenda -->
+   .legend { text-align: left; line-height: 18px; color: #555; } 
+   .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+	<!--.legend {
+	    padding: 6px 8px;    
+	    background: white;
+	    background: rgba(255,255,255,0.8);
+	    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	    border-radius: 5px;		
+	}
+	.legend i {
+		width: 18px;
+		height: 18px;
+		float: left;
+		margin-right: 8px;
+		opacity: 0.7;
+	}   -->
+   
+   
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id='event'>
+		<input type="button" value="Orihuela" class="btn" onclick="getData1()">
+        <input type="button" value="Torrevieja" class="btn" onclick="getData2()">
+        <input type="button" value="Rojales" class="btn" onclick="getData3()">
+        <input type="button" value="Elche/Elx" class="btn" onclick="getData4()">
+        <input type="button" value="Hondón" class="btn" onclick="getData5()">
+        <input type="button" value="ocultar" class="btn" onclick="hide()">
+        <input type="button" value="mostrar" class="btn" onclick="show()">
+        <input type="button" value="pausa" class="btn" onclick="pause()">
+        <input type="button" value="play" class="btn" onclick="play()">
+        
+    </div>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <script src='./js/leaflet.migrationLayer.js'></script>
+    <script>
+        var map = L.map('map').setView([30, 0], 3);
+	// layers xyz    
+	var light = L.tileLayer('http://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.pn',{
+	   attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	   subdomains: 'abcd',
+	   maxZoom: 20,
+	   minZoom: 0
+	 });   
+	light.addTo(map);    
+	    
+	var dark = L.tileLayer('http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+	   attribution:'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	   subdomains: 'abcd',
+	   maxZoom: 20,
+	   minZoom: 0
+	 });   
+	 dark.addTo(map);  
+        
+    // Control de capas    
+	var baseLayers = {
+		"Carto Light": light,
+		"Carto base": dark
+	};
+	L.control.layers(baseLayers).addTo(map); 
+	
+	// Leyenda
+	var legend = L.control({position: 'bottomright'});
+	legend.onAdd = function (map) {
+
+		var div = L.DomUtil.create('div', 'info legend');
+		div.innerHTML =	
+			/*'<i style="background:#610B0B"></i>&nbsp; Muchísimo<br>'+
+			'<i style="background:#FF0000"></i>&nbsp; Mucho<br>'+
+			'<i style="background:#FE9A2E"></i>&nbsp; Medio<br>'+
+			'<i style="background:#F3F781"></i>&nbsp; Poco<br>';*/
+			
+			'<i style="background:#ffffb2"></i>&nbsp; menos de  500<br>'+
+			'<i style="background:#fecc5c"></i>&nbsp; 500 - 2.000<br>'+
+			'<i style="background:#fd8d3c"></i>&nbsp; 2.000 - 4.000<br>'+
+			'<i style="background:#f03b20"></i>&nbsp; 4.000-5.000<br>'+
+			'<i style="background:#ff0000"></i>&nbsp; 5.000-10.000<br>';
+			
+			
+			
+			
+			
+		return div;
+	};
+	legend.addTo(map);       
+        
+  
+  
+  
+        
+        
+        
+		// Orihuela
+        var data1 = [{"from":[10.19,50.98],"to":[-0.74,37.93],"labels":["Alemania (650)","Orihuela"],"color":"#fecc5c","value":650},{"from":[2.19,46.62],"to":[-0.74,37.93],"labels":["Francia (220)","Orihuela"],"color":"#ffffb2","value":220},{"from":[25.15,42.45],"to":[-0.74,37.93],"labels":["Bulgaria (950)","Orihuela"],"color":"#fecc5c","value":950},{"from":[12.39,43.08],"to":[-0.74,37.93],"labels":["Italia (285)","Orihuela"],"color":"#ffffb2","value":285},{"from":[18.54,52.91],"to":[-0.74,37.93],"labels":["Polonia (355)","Orihuela"],"color":"#ffffb2","value":355},{"from":[-8.32,39.74],"to":[-0.74,37.93],"labels":["Portugal (92)","Orihuela"],"color":"#ffffb2","value":92},{"from":[24.82,45.81],"to":[-0.74,37.93],"labels":["Rumanía (873)","Orihuela"],"color":"#fecc5c","value":873},{"from":[37.46,55.64],"to":[-0.74,37.93],"labels":["Rusia (1305)","Orihuela"],"color":"#fecc5c","value":1305},{"from":[30.43,50.36],"to":[-0.74,37.93],"labels":["Ucrania (743)","Orihuela"],"color":"#fecc5c","value":220},{"from":[3.12,36.69],"to":[-0.74,37.93],"labels":["Argelia (809)","Orihuela"],"color":"#fecc5c","value":809},{"from":[-6.84,33.91],"to":[-0.74,37.93],"labels":["Marruecos (2227)","Orihuela"],"color":"#fd8d3c","value":2227},{"from":[7.74,9.20],"to":[-0.74,37.93],"labels":["Nigeria (57)","Orihuela"],"color":"#ffffb2","value":57},{"from":[-59.03,-34.33],"to":[-0.74,37.93],"labels":["Argentina (127)","Orihuela"],"color":"#ffffb2","value":127},{"from":[-64.57,-16.66],"to":[-0.74,37.93],"labels":["Bolivia (262)","Orihuela"],"color":"#ffffb2","value":262},{"from":[-47.74,-15.77],"to":[-0.74,37.93],"labels":["Brasil (101)","Orihuela"],"color":"#ffffb2","value":101},{"from":[-74.15,4.79],"to":[-0.74,37.93],"labels":["Colombia (514)","Orihuela"],"color":"#fecc5c","value":514},{"from":[-78.66,21.93],"to":[-0.74,37.93],"labels":["Cuba (60)","Orihuela"],"color":"#ffffb2","value":60},{"from":[-78.50,-0.19],"to":[-0.74,37.93],"labels":["Ecuador (333)","Orihuela"],"color":"#ffffb2","value":333},{"from":[-56.02,-32.78],"to":[-0.74,37.93],"labels":["Uruguay (75)","Orihuela"],"color":"#ffffb2","value":75},{"from":[-66.95,10.27],"to":[-0.74,37.93],"labels":["Venezuela (118)","Orihuela"],"color":"#ffffb2","value":118},{"from":[116.38,40.31],"to":[-0.74,37.93],"labels":["China (482)","Orihuela"],"color":"#ffffb2","value":482},{"from":[68.56,29.88],"to":[-0.74,37.93],"labels":["Pakistán (115)","Orihuela"],"color":"#ffffb2","value":115},{"from":[-1.82,52.10],"to":[-0.74,37.93],"labels":["Reino_Unido (10025)","Orihuela"],"color":"#ff0000","value":10025}];
+		// Torrevieja      
+        var data2 = [{"from":[10.19,50.98],"to":[-0.7,38],"labels":["Alemania (871)","Torrevieja"],"color":"#fecc5c","value":871},{"from":[2.19,46.62],"to":[-0.7,38],"labels":["Francia (435)","Torrevieja"],"color":"#ffffb2","value":435},{"from":[25.15,42.45],"to":[-0.7,38],"labels":["Bulgaria (1391)","Torrevieja"],"color":"#fecc5c","value":1391},{"from":[12.39,43.08],"to":[-0.7,38],"labels":["Italia (908)","Torrevieja"],"color":"#fecc5c","value":908},{"from":[18.54,52.91],"to":[-0.7,38],"labels":["Polonia (472)","Torrevieja"],"color":"#ffffb2","value":472},{"from":[-8.32,39.74],"to":[-0.7,38],"labels":["Portugal (213)","Torrevieja"],"color":"#ffffb2","value":213},{"from":[24.82,45.81],"to":[-0.7,38],"labels":["Rumanía (1410)","Torrevieja"],"color":"#fecc5c","value":1410},{"from":[37.46,55.64],"to":[-0.7,38],"labels":["Rusia (3764)","Torrevieja"],"color":"#fd8d3c","value":3764},{"from":[30.43,50.36],"to":[-0.7,38],"labels":["Ucrania (2967)","Torrevieja"],"color":"#fd8d3c","value":435},{"from":[3.12,36.69],"to":[-0.7,38],"labels":["Argelia (663)","Torrevieja"],"color":"#fecc5c","value":663},{"from":[-6.84,33.91],"to":[-0.7,38],"labels":["Marruecos (2079)","Torrevieja"],"color":"#fd8d3c","value":2079},{"from":[7.74,9.20],"to":[-0.7,38],"labels":["Nigeria (140)","Torrevieja"],"color":"#ffffb2","value":140},{"from":[-14.76,14.31],"to":[-0.7,38],"labels":["Senegal (334)","Torrevieja"],"color":"#ffffb2","value":334},{"from":[-59.03,-34.33],"to":[-0.7,38],"labels":["Argentina (461)","Torrevieja"],"color":"#ffffb2","value":461},{"from":[-47.74,-15.77],"to":[-0.7,38],"labels":["Brasil (551)","Torrevieja"],"color":"#fecc5c","value":551},{"from":[-74.15,4.79],"to":[-0.7,38],"labels":["Colombia (2048)","Torrevieja"],"color":"#fd8d3c","value":2048},{"from":[-78.66,21.93],"to":[-0.7,38],"labels":["Cuba (292)","Torrevieja"],"color":"#ffffb2","value":292},{"from":[-70.74,-33.45],"to":[-0.7,38],"labels":["Chile (246)","Torrevieja"],"color":"#ffffb2","value":246},{"from":[-78.50,-0.19],"to":[-0.7,38],"labels":["Ecuador (348)","Torrevieja"],"color":"#ffffb2","value":348},{"from":[-57.51,-25.28],"to":[-0.7,38],"labels":["Paraguay (94)","Torrevieja"],"color":"#ffffb2","value":94},{"from":[-75.79,-10.66],"to":[-0.7,38],"labels":["Perú (113)","Torrevieja"],"color":"#ffffb2","value":113},{"from":[-69.92,18.50],"to":[-0.7,38],"labels":["República Dominicana (82)","Torrevieja"],"color":"#ffffb2","value":82},{"from":[-56.02,-32.78],"to":[-0.7,38],"labels":["Uruguay (253)","Torrevieja"],"color":"#ffffb2","value":253},{"from":[-66.95,10.27],"to":[-0.7,38],"labels":["Venezuela (354)","Torrevieja"],"color":"#ffffb2","value":354},{"from":[116.38,40.31],"to":[-0.7,38],"labels":["China (879)","Torrevieja"],"color":"#fecc5c","value":879},{"from":[68.56,29.88],"to":[-0.7,38],"labels":["Pakistán (198)","Torrevieja"],"color":"#ffffb2","value":198},{"from":[-1.82,52.10],"to":[-0.7,38],"labels":["Reino_Unido (4743)","Torrevieja"],"color":"#fd8d3c","value":4743}];
+        // Rojales
+        var data3 = [{"from":[10.19,50.98],"to":[-0.71,38.07],"labels":["Alemania (505)","Rojales"],"color":"#fecc5c","value":505},{"from":[2.19,46.62],"to":[-0.71,38.07],"labels":["Francia (130)","Rojales"],"color":"#ffffb2","value":130},{"from":[25.15,42.45],"to":[-0.71,38.07],"labels":["Bulgaria (81)","Rojales"],"color":"#ffffb2","value":81},{"from":[12.39,43.08],"to":[-0.71,38.07],"labels":["Italia (68)","Rojales"],"color":"#ffffb2","value":68},{"from":[24.82,45.81],"to":[-0.71,38.07],"labels":["Rumanía (55)","Rojales"],"color":"#ffffb2","value":55},{"from":[37.46,55.64],"to":[-0.71,38.07],"labels":["Rusia (418)","Rojales"],"color":"#ffffb2","value":418},{"from":[30.43,50.36],"to":[-0.71,38.07],"labels":["Ucrania (81)","Rojales"],"color":"#ffffb2","value":130},{"from":[-6.84,33.91],"to":[-0.71,38.07],"labels":["Marruecos (615)","Rojales"],"color":"#fecc5c","value":615},{"from":[-74.15,4.79],"to":[-0.71,38.07],"labels":["Colombia (51)","Rojales"],"color":"#ffffb2","value":51},{"from":[-78.50,-0.19],"to":[-0.71,38.07],"labels":["Ecuador (76)","Rojales"],"color":"#ffffb2","value":76},{"from":[116.38,40.31],"to":[-0.71,38.07],"labels":["China (131)","Rojales"],"color":"#ffffb2","value":131},{"from":[-1.82,52.10],"to":[-0.71,38.07],"labels":["Reino_Unido (5511)","Rojales"],"color":"#ff0000","value":5511}];
+		// Elche
+		var data4 = [{"from":[10.19,50.98],"to":[-0.66,38.25],"labels":["Alemania (244)","Elche/Elx"],"color":"#ffffb2","value":244},{"from":[2.19,46.62],"to":[-0.66,38.25],"labels":["Francia (483)","Elche/Elx"],"color":"#ffffb2","value":483},{"from":[25.15,42.45],"to":[-0.66,38.25],"labels":["Bulgaria (315)","Elche/Elx"],"color":"#ffffb2","value":315},{"from":[12.39,43.08],"to":[-0.66,38.25],"labels":["Italia (789)","Elche/Elx"],"color":"#fecc5c","value":789},{"from":[18.54,52.91],"to":[-0.66,38.25],"labels":["Polonia (140)","Elche/Elx"],"color":"#ffffb2","value":140},{"from":[-8.32,39.74],"to":[-0.66,38.25],"labels":["Portugal (180)","Elche/Elx"],"color":"#ffffb2","value":180},{"from":[24.82,45.81],"to":[-0.66,38.25],"labels":["Rumanía (3329)","Elche/Elx"],"color":"#fd8d3c","value":3329},{"from":[37.46,55.64],"to":[-0.66,38.25],"labels":["Rusia (381)","Elche/Elx"],"color":"#ffffb2","value":381},{"from":[30.43,50.36],"to":[-0.66,38.25],"labels":["Ucrania (274)","Elche/Elx"],"color":"#ffffb2","value":483},{"from":[3.12,36.69],"to":[-0.66,38.25],"labels":["Argelia (1409)","Elche/Elx"],"color":"#fecc5c","value":1409},{"from":[-6.84,33.91],"to":[-0.66,38.25],"labels":["Marruecos (4683)","Elche/Elx"],"color":"#fd8d3c","value":4683},{"from":[7.74,9.20],"to":[-0.66,38.25],"labels":["Nigeria (204)","Elche/Elx"],"color":"#ffffb2","value":204},{"from":[-14.76,14.31],"to":[-0.66,38.25],"labels":["Senegal (631)","Elche/Elx"],"color":"#fecc5c","value":631},{"from":[-59.03,-34.33],"to":[-0.66,38.25],"labels":["Argentina (541)","Elche/Elx"],"color":"#fecc5c","value":541},{"from":[-64.57,-16.66],"to":[-0.66,38.25],"labels":["Bolivia (113)","Elche/Elx"],"color":"#ffffb2","value":113},{"from":[-47.74,-15.77],"to":[-0.66,38.25],"labels":["Brasil (326)","Elche/Elx"],"color":"#ffffb2","value":326},{"from":[-74.15,4.79],"to":[-0.66,38.25],"labels":["Colombia (2377)","Elche/Elx"],"color":"#fd8d3c","value":2377},{"from":[-78.66,21.93],"to":[-0.66,38.25],"labels":["Cuba (194)","Elche/Elx"],"color":"#ffffb2","value":194},{"from":[-70.74,-33.45],"to":[-0.66,38.25],"labels":["Chile (115)","Elche/Elx"],"color":"#ffffb2","value":115},{"from":[-78.50,-0.19],"to":[-0.66,38.25],"labels":["Ecuador (648)","Elche/Elx"],"color":"#fecc5c","value":648},{"from":[-57.51,-25.28],"to":[-0.66,38.25],"labels":["Paraguay (787)","Elche/Elx"],"color":"#fecc5c","value":787},{"from":[-75.79,-10.66],"to":[-0.66,38.25],"labels":["Perú (126)","Elche/Elx"],"color":"#ffffb2","value":126},{"from":[-69.92,18.50],"to":[-0.66,38.25],"labels":["República Dominicana (67)","Elche/Elx"],"color":"#ffffb2","value":67},{"from":[-56.02,-32.78],"to":[-0.66,38.25],"labels":["Uruguay (184)","Elche/Elx"],"color":"#ffffb2","value":184},{"from":[-66.95,10.27],"to":[-0.66,38.25],"labels":["Venezuela (632)","Elche/Elx"],"color":"#fecc5c","value":632},{"from":[116.38,40.31],"to":[-0.66,38.25],"labels":["China (2252)","Elche/Elx"],"color":"#fd8d3c","value":2252},{"from":[68.56,29.88],"to":[-0.66,38.25],"labels":["Pakistán (216)","Elche/Elx"],"color":"#ffffb2","value":216},{"from":[-1.82,52.10],"to":[-0.66,38.25],"labels":["Reino_Unido (757)","Elche/Elx"],"color":"#fecc5c","value":757}];
+		// Hondón de los Frailes
+		var data5 = [{"from":[-1.82,52.10],"to":[-0.93,38.27],"labels":["Reino_Unido (474)","Hondón de los Frailes"],"color":"#edf8fb","value":474}];
+
+
+
+        var migrationLayer = new L.migrationLayer({
+            map: map,
+            data: data1,
+            pulseRadius:30,
+            pulseBorderWidth:3,
+            arcWidth:1,
+            arcLabel:true,
+            arcLabelFont:'10px sans-serif',
+            }
+        );
+        migrationLayer.addTo(map);
+
+        function getData1(){
+            migrationLayer.setData(data1);
+        } 
+        function getData2(){
+            migrationLayer.setData(data2);
+        }
+        function getData3() {
+            migrationLayer.setData(data3);
+        }
+        function getData4() {
+            migrationLayer.setData(data4);
+        }        
+        function getData5() {
+            migrationLayer.setData(data5);
+        }  
+        function hide(){
+            migrationLayer.hide();
+        }
+        function show(){
+            migrationLayer.show();
+        }
+        function play(){
+            migrationLayer.play();
+        }
+        function pause(){
+            migrationLayer.pause();
+        }
+
+
+    </script>
+</body>
+
+</html>
