@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Evolución de los extranjeros (2000-2019)</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="js/alasql.min.js"></script>
+
+
+	
+
+	
+
+<style>
+	.axis {
+	  font: 10px sans-serif;
+	}
+
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
+
+	.axis text {
+	  font: 10px sans-serif;
+	}
+</style>
+</head>
+<body>
+
+<script>
+/*
+ Funcion para comprobar si en la URL se pasa el codine:
+ url + ?codine= + codigo del ine 
+*/
+
+// Analizar la URL
+//comprueba si hay una url con el codigo del tipo <url>.html?codine=03099 
+/*
+Ejemplos codine:
+
+03014 Alicante
+03018 Altea
+03031 Benidorm
+03047 Calp
+03063 Denia
+03065 Elx
+03078 Hondón
+03082 Javea
+03099 Orihuela
+03113 Rojales
+
+*/
+var laURL = window.location.href;
+var patron = /codine=/i;
+var res = laURL.match(patron);
+var codine;	
+if (res == "codine=") {
+	var codine = window.location.href.split( '?codine=' )[1].substr(0, 5);
+} else {
+	// no tiene id=codigo en la url. No hacer nada. Pongo un valor por defecto 2019
+	codine = 03014;	
+}
+//console.log(codine);
+
+</script>
+<script>
+// set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 70, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+var margin = {top: 20, right: 20, bottom: 70, left: 40},
+    width = 350 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+
+
+// append the svg object to the body of the page
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+urlcsv ="https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/brexit/britanicos_2002-2019_full.csv";
+d3.csv(urlcsv, function(csv) {
+//d3.csv(urlcsv, function(csv) { //v3
+	var data = alasql("SELECT * FROM ("+
+	"SELECT 2002 AS fecha, T2002::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2003 AS fecha, T2003::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2004 AS fecha, T2004::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2005 AS fecha, T2005::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2006 AS fecha, T2006::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2007 AS fecha, T2007::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2008 AS fecha, T2008::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2009 AS fecha, T2009::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2010 AS fecha, T2010::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2011 AS fecha, T2011::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2012 AS fecha, T2012::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+		
+	"SELECT 2013 AS fecha, T2013::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2014 AS fecha, T2014::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2015 AS fecha, T2015::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2016 AS fecha, T2016::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2017 AS fecha, T2017::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2018 AS fecha, T2018::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2019 AS fecha, T2019::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2020 AS fecha, T2020::number AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2021 AS fecha, T2021::number AS valor FROM ? WHERE codine = '"+codine+"' "+
+	") As tmp ORDER BY fecha",[csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv,csv]);
+	console.log(data);
+	
+
+
+// Parse the Data
+//d3.csv("https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/brexit/britanicos_2002-2019.csv", function(data) {
+
+// X axis
+var x = d3.scaleBand()
+  .range([ 0, width ])
+  .domain(data.map(function(d) { return d.fecha; }))
+  .padding(0.2);
+svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(x))
+  .selectAll("text")
+    //.attr("transform", "rotate(-90)")
+    .attr("transform", "translate(-10,10)rotate(-90)")
+    .style("text-anchor", "end");
+
+// Add Y axis
+var y = d3.scaleLinear()
+  //.domain([8000, 21000])
+  .domain([d3.min(data, function(d) { return d.valor; }), d3.max(data, function(d) { return d.valor; })])
+  .range([ height, 0]);
+svg.append("g")
+  .call(d3.axisLeft(y));
+
+// Bars
+svg.selectAll("mybar")
+  .data(data)
+  .enter()
+  .append("rect")
+    .attr("x", function(d) { return x(d.fecha); })
+    .attr("y", function(d) { return y(d.valor); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.valor); })
+    //.attr("fill", "#69b3a2")
+    .attr("fill", function(d) {
+		if ( d.valor == d3.max(data, function(d) { return d.valor; }) ) {
+		  return "red";
+		} else {
+		  return "steelblue";
+		}
+		return "yellow";
+	  })
+
+});
+
+</script>
+</body>
+</html>	
+	
+	
+	
+
+
+

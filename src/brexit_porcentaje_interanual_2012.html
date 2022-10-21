@@ -1,0 +1,965 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Evolución de los extranjeros en porcentaje (2002-2019)</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-173008932-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-173008932-1');
+</script>
+	
+	
+	
+	<!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/d3.v5.js" charset="utf-8"></script>
+    <script src="js/alasql.min.js"></script>
+    <!-- control -->
+	<script src="js/Leaflet.Control.Custom.js"></script>
+    <!-- colorbrewer -->
+	<script src="js/colorbrewer.js"></script>	
+	<!-- simple-statistics -->
+	<script src='https://unpkg.com/simple-statistics@7.3.0/dist/simple-statistics.min.js'></script>
+	<script src='js/ckmeans_simple_statistics.js'></script>
+	<script src="js/turf.min.js"></script>
+
+<style>
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100vw;
+}
+.info { width: auto !important; 
+	padding: 6px 8px; 
+	font: 14px/16px Arial, Helvetica, sans-serif; 
+	background: white; 
+	background: rgba(255,255,255,0.8); 
+	box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+	border-radius: 5px; } 
+.info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } 
+.legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+
+/* loader icon  */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index:2;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* fin loader icon */
+
+/* css */
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  padding: 5px 10px;
+  background-color: #EEEEEE;
+  border: 1px solid #DDDDDD;
+}
+
+
+/* legend */
+.legend span, .legend label {
+  display: block;
+  width: 50px;
+  height: 18px;
+  float: left;
+  opacity: 0.7;
+  text-align: center;
+  font-size: 80%
+}
+
+
+/* fecha (https://cssdeck.com/labs/calendar-icon) */
+time.icon
+{
+  font-size: 0.8em; /* change icon size */
+  font-family: "Helvetica Neue Bold", arial, helvetica, sans-serif;
+  display: block;
+  position: relative;
+  width: 7em;
+  height: 7em;
+  background-color: #fff;
+  margin: 2em auto;
+  border-radius: 0.6em;
+  box-shadow: 0 1px 0 #bdbdbd, 0 2px 0 #fff, 0 3px 0 #bdbdbd, 0 4px 0 #fff, 0 5px 0 #bdbdbd, 0 0 0 1px #bdbdbd;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: rotate(0deg) skewY(0deg);
+  -webkit-transform-origin: 50% 10%;
+  transform-origin: 50% 10%;
+}
+
+time.icon *
+{
+  display: block;
+  width: 100%;
+  font-size: 1em;
+  font-weight: bold;
+  font-style: normal;
+  text-align: center;
+}
+
+time.icon strong
+{
+  position: absolute;
+  top: 0;
+  padding: 0.4em 0;
+  color: #fff;
+  background-color: #fd9f1b;
+  border-bottom: 1px dashed #f37302;
+  box-shadow: 0 2px 0 #fd9f1b;
+}
+
+time.icon em
+{
+  position: absolute;
+  bottom: 0.3em;
+  color: #fd9f1b;
+}
+
+time.icon span
+{
+  width: 100%;
+  font-size: 3.2em;
+  letter-spacing: -0.05em;
+  padding-top: 0.6em;
+  color: #2f2f2f;
+}
+
+time.icon:hover, time.icon:focus
+{
+  -webkit-animation: swing 0.6s ease-out;
+  animation: swing 0.6s ease-out;
+}
+
+@-webkit-keyframes swing {
+  0%   { -webkit-transform: rotate(0deg)  skewY(0deg); }
+  20%  { -webkit-transform: rotate(12deg) skewY(4deg); }
+  60%  { -webkit-transform: rotate(-9deg) skewY(-3deg); }
+  80%  { -webkit-transform: rotate(6deg)  skewY(-2deg); }
+  100% { -webkit-transform: rotate(0deg)  skewY(0deg); }
+}
+
+@keyframes swing {
+  0%   { transform: rotate(0deg)  skewY(0deg); }
+  20%  { transform: rotate(12deg) skewY(4deg); }
+  60%  { transform: rotate(-9deg) skewY(-3deg); }
+  80%  { transform: rotate(6deg)  skewY(-2deg); }
+  100% { transform: rotate(0deg)  skewY(0deg); }
+}
+/* fin fecha */
+
+/* FORMATEO DE TABLA EN TOP5 https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css */
+/* scrolltable rules */
+table  { margin-top:  20px; display: inline-block; overflow: auto; }
+th div { margin-top: -20px; position: absolute; }
+
+/* design */
+table { border-collapse: collapse; }
+tr:nth-child(even) { background: #EEE; }
+
+	#logoContainer {
+		position: absolute;
+		z-index: 1000;		
+		bottom: 25px;
+		right: 50%;
+	}
+</style>
+</head>
+<body>
+<div id='loader' class='loader'></div>
+<div id='map'><div id='logoContainer'><img src='img/logoua.svg' height='30'></div></div>
+
+
+<script type="text/javascript">
+	var coolHotPal = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'];
+	// funcion para obtener un elemento aleatorio de un array
+	Array.prototype.random = function () {
+		  return this[Math.floor((Math.random()*this.length))];
+	}	
+	
+	// ColorBrewer
+	console.log(colorbrewer.YlGn[5]);
+
+
+// Opción una sola capa
+	var map = L.map('map').setView([38.5, 0], 9);
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/light-v9',
+		tileSize: 512,
+		zoomOffset: -1
+	}).addTo(map);
+	
+	
+	// ETIQUETAS
+	map.createPane('labels');
+	// This pane is above markers but below popups
+	map.getPane('labels').style.zIndex = 650;
+	// Layers in this pane are non-interactive and do not obscure mouse/touch events
+	map.getPane('labels').style.pointerEvents = 'none';	
+	var cartodbAttribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attribution">CARTO</a>';
+	var positronLabels = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png', {
+		attribution: cartodbAttribution,
+		pane: 'labels'
+	}).addTo(map);
+
+
+	
+	// Select fechas
+	L.control.custom({
+		position: 'topleft',
+		content : '<div class="input-group">'+
+					'<label for="exampleFormControlSelect1">Selecciona un dato: </label>'+
+						'<select class="form-control" id="datesSel"><option>SELECCIONA UN DATO</option></select>'+
+						'<button type="button" id="playVideo" class="btn btn-default">'+
+                          '    <i class="fa fa-play"></i></button>'+
+                        '<div id="labDate"></div>'+
+					'</div>',
+		classes : '',
+		style   :
+		{
+			position: 'absolute',
+			left: '50px',
+			top: '0px',
+			width: '200px',
+		},
+	}).addTo(map);
+            
+      
+	$('#playVideo').click(function() {
+		var numDias = document.getElementById('datesSel').length;
+		//console.log(numDias);
+		tiempo = 30000; // 20 segundos = 20.000 milisegundos
+		tFrame = parseInt(tiempo/numDias);
+
+		let i = 0;
+		setTimeout(function run() {
+			cargaVideo(i++);
+			setTimeout(run, tFrame);
+		}, tFrame);	
+		
+
+	});      
+      
+    function cargaVideo(i) {
+		// Fecha del calendario
+		var y = document.getElementById("datesSel").options;
+		
+		ano = y[i].text.split('-')[0];
+		//console.log(ano);
+/*		mes = y[i].text.split('-')[1];
+		dia = y[i].text.split('-')[2];
+		var months = [
+			'Jan', 'Feb', 'Mar', 'Apr', 'May',
+			'Jun', 'Jul', 'Aug', 'Sep',
+			'Oct', 'Nov', 'Dec'
+			];
+		var meses = [ 'Ene', 'Feb', 'Mar', 'Abr', 'May',
+			'Jun', 'Jul', 'Ago', 'Sep',
+			'Oct', 'Nov', 'Dic'
+			];
+		function monthNumToName(monthnum) {
+			//console.log(monthnum);
+			return months[parseInt(monthnum) - 1] ;
+		}
+		function mesesNum2Nombre(monthnum) {			
+			return meses[parseInt(monthnum) - 1] ;
+		}
+		//console.log(monthNumToName(mes));*/
+		if (ano.length == 4) { // si es un año. Si es otra cosa no hace nada
+			var newCal = '<time class="icon"><strong>'+ 'AÑO' +'</strong><span>'+ ano +'</span></time>';
+			document.getElementById("labDate").innerHTML = newCal
+			restyleLayer(y[i].text);
+			top5(y[i].text)
+		}
+	}   
+            
+	$('#datesSel').on('change', function() {
+	  //alert( this.value );
+	  restyleLayer(this.value);
+	  top5(this.value)
+	  
+	});
+	
+	// delete duplicates
+	$( '#datesSel').focus(function() {
+		var optionValues =[];
+		$('#datesSel option').each(function(){
+		   if($.inArray(this.value, optionValues) >-1){
+			  $(this).remove()
+		   }else{
+			  optionValues.push(this.value);
+		   }
+		});
+	});
+
+
+
+	// control that shows state info on hover
+	var info = L.control({position: 'bottomleft'});
+
+	info.onAdd = function (map) {
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	};
+
+	info.update = function (props) {
+		obj = Object(props);
+		var keys = Object.keys(obj);
+		//console.log(keys)
+		// filtrado para quedarse solo con keys de fecha
+		//keys = keys.filter(key => key.substring(key.length - 3, key.length) == '/20'   );
+		keys = keys.filter(key => key.substring(0,2) == '20');
+		
+		//console.log(keys);
+		// obtener un array de valores de las fechas
+		values =[]
+		for (var i = 0; i < keys.length; i++) {
+			values.push( Number(props[keys[i]]) );
+		}
+		//console.log(values);
+		
+		var casos = [];
+		for (var i = 0; i < keys.length; i++) {
+			//var caso = {  date: keys[i],  value: values[i]	};
+			//var caso = {  date: d3.timeParse("%m/%d/%Y")(keys[i]),  value: values[i]	};
+			var caso = {  date: keys[i],  value: values[i]	};
+			casos.push(caso);
+		}
+			
+
+		lastDate = keys[keys.length - 1];
+		this._div.innerHTML = '<center><h4>BREXIT</h4></center>' +  (props ?
+			'<strong>'+props.nombre +'</strong>   Total británicos (2021): ' + parseInt(props['2021']) + 
+			//' ('+ Number(parseInt(props['2019'])*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
+			'<div id="chart"></div>'
+			: '+ Info: Rat&oacute;n encima de cada municipio');
+		//chart(values);
+		//console.log(casos);
+
+		lineChart(casos);
+		//pieChart(data);
+		
+	};
+
+	info.addTo(map);
+	
+  // gráfico de línea
+  function lineChart(data) {
+	  //console.log(data);
+	  // set the dimensions and margins of the graph
+		var margin = {top: 10, right: 30, bottom: 60, left: 60},
+			width = 300 - margin.left - margin.right,
+			height = 200 - margin.top - margin.bottom;
+
+		// append the svg object to the body of the page
+		var svg = d3.select("#chart")
+		  .append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+			.attr("transform",
+				  "translate(" + margin.left + "," + margin.top + ")");
+    // Add X axis --> it is a date format
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return d.date; }))
+      .range([ 0, width ]);
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")            
+      .call(d3.axisBottom(x))   
+       .selectAll("text")
+		.attr("y", 0)
+		.attr("x", 9)
+		.attr("dy", ".35em")
+		.attr("transform", "rotate(90)")
+		.style("text-anchor", "start") ;  
+
+      
+    // Add Y axis
+    var y = d3.scaleLinear()
+      .domain([0, d3.max(data, function(d) { return +d.value; })])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add the line
+    svg.append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 1.5)
+      .attr("d", d3.line()
+        .x(function(d) { return x(d.date) })
+        .y(function(d) { return y(d.value) })
+        )
+
+}	
+	
+	
+
+
+
+ 	
+
+
+	
+	// get color depending on population density value
+	function getColor(d) {
+		 return d > 38000  ? '#bd0026' :
+				d > 13000   ? '#f03b20' :
+				d > 5000   ? '#fd8d3c' :
+				d > 1500   ? '#fecc5c' :
+						   '#ffffb2' ;
+	}
+
+
+
+
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'LightGray',
+			//dashArray: '',
+			fillOpacity: 0.7,
+			//fillColor: getColor(feature.properties.ptotal)
+			fillColor: '#FFEDA0'
+		};
+	}
+
+	function highlightFeature(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 2,
+			opacity: 1,
+			color: 'red',
+			//dashArray: '',
+			fillOpacity: 0.7
+		});
+
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+
+		info.update(layer.feature.properties);
+	}
+
+	//var geojson;
+
+	function resetHighlight(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 2,
+			opacity: 1,
+			color: 'LightGray',
+			//dashArray: '',
+			fillOpacity: 0.7,
+		});	
+		info.update();	
+	}
+
+	function zoomToFeature(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+
+	var popup = L.popup();
+
+	function onMapClick(e) {
+		var anoSel = document.getElementById("datesSel").value;
+		//console.log ('anoSel es : '+ anoSel + 'length es '+ anoSel.length);
+		if (anoSel == 'nothing') {
+		// se ejecutan estas instrucciones
+				var contenido = 'Selecciona un año para ver información';	
+		}
+		else {
+		   // si tiene año seleccionado se ejecutan estas instrucciones
+		   		var contenido = '<strong>'+ e.sourceTarget.feature.properties['nombre'] +'</strong><br>'+  
+						'Porcentaje extranjeros en '+anoSel+' : '+ e.sourceTarget.feature.properties[anoSel]+' %<br>'+
+					    'Total población (2019): '+ e.sourceTarget.feature.properties['pop'];	
+		}		
+					    
+		popup
+			.setLatLng(e.latlng)
+			//.setContent("You clicked the map at " + e.latlng.toString())
+			.setContent(contenido)
+			.openOn(map);
+	}
+
+
+	function onEachFeature(feature, layer) {
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			//click: zoomToFeature
+			click: onMapClick
+		});
+		// Etiquetas
+		/*var label = L.marker(layer.getBounds().getCenter(), {
+		  icon: L.divIcon({
+			className: 'label',
+			html: feature.properties.nombre,
+			iconSize: [100, 40]
+		  })
+		}).addTo(map);		*/
+		
+		
+		
+		
+		
+	}
+	
+	//https://stackoverflow.com/questions/25773389/changing-the-style-of-each-feature-in-a-leaflet-geojson-layer
+	function restyleLayer(propertyName) {
+		
+		var newArr= [];
+
+		/*geojson.eachLayer(function(layer) {
+			propertyValue = layer.feature.properties[propertyName];
+			
+			newArr.push(Number(propertyValue));
+			//propertyValue = (layer.feature.properties[propertyName]*100000)/layer.feature.properties['pop'];
+			//console.log(propertyValue);
+
+			// Your function that determines a fill color for a particular
+			// property name and value.
+			//var myFillColor = getColor(propertyName, propertyValue);
+			var myFillColor = getColor(propertyValue);
+			//var myFillColor = getColor2(propertyValue,intClass(newArr));
+
+			layer.setStyle({
+				fillColor: myFillColor,
+				fillOpacity: 0.8,
+				weight: 0.5
+			});
+		});*/
+		
+		
+		
+		geojson.eachLayer(function(layer) {				
+			propertyValue = layer.feature.properties[propertyName];			
+			newArr.push(Number(propertyValue));
+		});		
+		
+		
+
+		// Obtener un numero aleatorio entre 0 y 12 para elegir la paleta de colores
+		var lista = [0,1,2,3,4,5,6,7,8,9,10,11];
+		var numSel = lista.random(); 
+		//var numSel = 11
+		console.log(numSel);		
+		
+		//console.log(newArr);
+		//intClass(newArr);// calcula intervalos de clase
+		stats(newArr);// calcula estadistica
+		drawLegend( intClass(newArr),numSel, propertyName); // dibuja leyenda
+		drawChoroplets(propertyName, intClass(newArr),numSel);
+	}
+	
+	/* Función: Genera intervalos de clase a partir de un array de datos.
+	El numero de intervalos está fijado en 5 (osea, que sale un array de 6 números), 
+	pero se pueden poner los que se quieran. Poner el nº int + 1
+	Utiliza la librería js/ckmeans_simple_statistics.js
+	*/
+	function intClass(newArr) {
+		var intClassArr = ssck.ckmeans(newArr.map(function(d) { return +d; }), 11).map(function(cluster) {return cluster[0];})
+		console.log(intClassArr); // con un valor de 6 salen 5 intervalos de clase
+		// Para que los valores del intClass se calculen automáticamente descomentar la linea siguiente
+		//return intClassArr;
+		// Para poner valores fijos utilizar la línea siguiente
+		//return [0, 20, 30, 40, 50, 60]; 
+		//return [-50, -25, -15, 0, 25, 50]; 
+		return [-100, -50, -30, -20, -10, 0,10,20,30,50,100]; 
+		  
+	}	
+	
+	/* Función: Obtiene estadistica de un array de datos.
+	Utiliza la librería js/simple_statistics.js
+	*/	
+	function stats(newArr) {
+		// operacios a realizar con el array de datos de la columna seleccionada
+		// Measures of central tendency
+		console.log('Media (mean) = ' + ss.mean(newArr));
+		console.log('Moda (mode) = ' + ss.mode(newArr));
+		console.log('Mediana (median) = ' + ss.median(newArr));
+	}
+	
+	// Dibuja coropletas con el color correspondiente
+	// variables: el campo y el array con los intervalos de clase, y el nº para la paleta
+	function drawChoroplets(propertyName, intClassArr, numSel) {
+		geojson.eachLayer(function(layer) {
+			propertyValue = layer.feature.properties[propertyName];	
+			//var myFillColor = getColor(propertyValue);
+			var myFillColor = getColor2(propertyValue,intClassArr,11);
+			layer.setStyle({
+				fillColor: myFillColor,
+				fillOpacity: 0.8,
+				weight: 2
+			});
+		});
+	}	
+
+/*	// Pone color a las coropletas. Con nº fijo en 4 intervalos de clase
+	function getColor2(d,intClassArr) {
+		 return d > intClassArr[4]  ? '#440026' :
+				d > intClassArr[3]  ? '#BD0026' :
+				d > intClassArr[2]  ? '#FC4E2A' :
+				d > intClassArr[1]   ? '#FD8D3C' :
+				d > intClassArr[0]   ? '#FED976' :
+						   '#FFEDA0' ;
+	}*/
+
+	function getColor2(d,intClassArr,numSel) {
+		// paletas para mapa
+		/*var pal1 = ['#feedde','#fdd0a2','#fdae6b','#fd8d3c','#e6550d','#a63603'];// naranjas
+		var pal2 = ['#edf8fb','#c7e9c0','#a1d99b','#74c476','#31a354','#006d2c'];// verdes 
+		var pal3 = ['#eff3ff','#c6dbef','#9ecae1','#6baed6','#3182bd','#08519c'];// azules
+		var pal4 = ['#fee5d9','#fcbba1','#fc9272','#fb6a4a','#de2d26','·a50f15'];// rojos	
+		var pal5 = ['#feebe2','#fcc5c0','#fa9fb5','#f768a1','#c51b8a','#7a0177'];// violetas
+		var pal6 = ['#f2f0f7','#dadaeb','#bcbddc','#9e9ac8','#756bb1','#54278f'];// morado
+		var paletas = [pal1,pal2,pal3,pal4,pal5,pal6];*/
+		var numCol = 6;
+		var paletas = [
+			colorbrewer.Purples[numCol],
+			colorbrewer.Greens[numCol],
+			colorbrewer.Oranges[numCol],
+			colorbrewer.Reds[numCol],
+			colorbrewer.Greys[numCol],
+			colorbrewer.Blues[numCol],
+			colorbrewer.RdPu[numCol],
+			colorbrewer.PuRd[numCol],
+			colorbrewer.YlGn[numCol],
+			colorbrewer.YlGnBu[numCol],
+			colorbrewer.YlOrBr[numCol],
+			colorbrewer.YlOrRd[numCol]
+		];
+		// paleta de cálidos a frios de 10 intervalos
+		var coolHotPal = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'];
+		//console.log(coolHotPal[2]);
+          
+/*
+		return  d > intClassArr[5]  ? paletas[numSel][5] :
+				d > intClassArr[4]  ? paletas[numSel][4] :
+				d > intClassArr[3]  ? paletas[numSel][3] :
+				d > intClassArr[2]   ? paletas[numSel][2] :
+				d > intClassArr[1]   ? paletas[numSel][1] :
+						   paletas[numSel][0] ;
+*/
+		return  d > intClassArr[10]  ? coolHotPal[10] :
+				d > intClassArr[9]  ? coolHotPal[9] :
+				d > intClassArr[8]  ? coolHotPal[8] :
+				d > intClassArr[7]  ? coolHotPal[7] :
+				d > intClassArr[6]  ? coolHotPal[6] :
+				d > intClassArr[5]  ? coolHotPal[5] :
+				d > intClassArr[4]  ? coolHotPal[4] :
+				d > intClassArr[3]  ? coolHotPal[3] :
+				d > intClassArr[2]  ? coolHotPal[2] :
+				d > intClassArr[1]  ? coolHotPal[1] :
+						   coolHotPal[0] ;
+
+
+
+	}
+
+/*	
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	function drawLegend(intClassArr,numSel,titulo) {
+
+		//var legend = L.control({position: 'bottomright'});
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+			    //grades = [0, 1500, 5000, 12000,24000,38000], //Dibuja 5 colores
+				grades = intClassArr,
+				labels = [];
+			div.innerHTML += '<P><center>'+titulo+'</center></P>';
+
+			// loop through our density intervals and generate a label with a colored square for each interval
+			// first loop for colored legend boxes
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					//'<span style="background:' + getColor(grades[i] + 1) + '"></span> ';
+					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></span> ';
+			}
+
+			// a line break
+			div.innerHTML += '<br>';
+
+			// second loop for text
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					'<label>' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] : '+') + '</label>';
+			}
+			div.innerHTML += '<p><img src="img/pixel.png"></p>';
+			return div;
+		};
+
+		legend.addTo(map);	
+	}
+
+*/
+
+
+
+
+
+
+
+
+
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	// Dibuja la leyenda en función de los intervalos de clase creados
+	// Parámetros: intervalos de clase, nº del 0-11 que es la paleta de colores, titulo
+	function drawLegend(intClassArr,numSel,titulo) {
+		
+		// LEYENDA VERTICAL
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+				grades = intClassArr,
+				labels = [],
+				from, to;
+			div.innerHTML += '<P><center><strong>'+titulo+'</strong></center></P>';
+			for (var i = 0; i < grades.length; i++) {
+				from = grades[i];
+				to = grades[i + 1];
+
+				labels.push(
+					'<i style="background:' + getColor2(grades[i]+1 ,intClassArr, 11) + '"></i> ' +
+					from + (to ? '&ndash;' + to : '+'));
+			}
+
+			div.innerHTML += labels.join('<br>');
+			return div;
+		};
+
+		legend.addTo(map);		
+
+
+		/*
+		// LEYENDA HORIZONTAL	
+		legend.onAdd = function (map) {
+			var div = L.DomUtil.create('div', 'info legend'),
+			// grades = [0, 10, 25, 50,100], Dibuja 5 colores
+				grades = intClassArr,
+				labels = [];
+			div.innerHTML += '<P><center>'+titulo+'</center></P>';
+
+			// loop through our density intervals and generate a label with a colored square for each interval
+			// first loop for colored legend boxes
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					//'<span style="background:' + getColor(grades[i] + 1) + '"></span> ';
+					'<span style="background:' + getColor2(grades[i]+1 ,intClassArr, numSel) + '"></span> ';
+			}
+
+			// a line break
+			div.innerHTML += '<br>';
+
+			// second loop for text
+			for (var i = 0; i < grades.length-1; i++) {
+				div.innerHTML +=
+					'<label>' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] : '+') + '</label>';
+			}
+			div.innerHTML += '<p><img src="img/pixel.png"></p>';
+			return div;
+		};
+
+		legend.addTo(map);	
+		*/
+	}
+
+
+
+
+
+
+
+
+
+
+
+		
+	// CONTROL PARA TOP5
+	var to5control = L.control({position: 'topright'});	
+
+	to5control.onAdd = function (map) {			
+		this._div = L.DomUtil.create('div', 'info'); 
+		//this.update();
+		return this._div;
+	};
+
+
+	to5control.update = function (texto) {
+		this._div.innerHTML = texto;		
+	};	
+	to5control.addTo(map);
+
+
+
+	// Cambiar top5 en función de la fecha seleccionada
+	function top5(propertyName) {
+		//to10control.innerHTML = '';	
+		var allCases = [];
+		var oneCase = new Object();
+
+		geojson.eachLayer(function(layer) {
+			
+			// Obtener la geometria BBOX del poligono
+			var poligono = layer.feature.geometry;
+			//var centroid = turf.centroid(poligono);
+			var bbox = turf.bbox(poligono); //console.log(bbox);
+			// PROPIEDAD % respecto a la población
+			//propertyValue = (layer.feature.properties[propertyName]*100)/layer.feature.properties['Total Población'];
+			propertyValue = layer.feature.properties[propertyName];
+			oneCase = { 'name': layer.feature.properties['nombre'], 'cases': Math.floor(propertyValue), 'pop':Math.floor(layer.feature.properties['pop']), 'iso2':layer.feature.properties['codine'], 'bbox': bbox };
+			allCases.push(oneCase);
+		});
+		//console.log(allCases);
+
+		// ALASQL		
+		var top5 = alasql("SELECT name,cases,pop,iso2,bbox FROM ? allCases WHERE cases > 0  ORDER BY cases DESC",[allCases]);
+		// Definir texto
+		var top5txt = '<h4>TABLA MUNICIPIOS </h4><table style="height: 150px"><tr>  <th><div>#</div>  <th><div>MUNICIPIO</div> <th><div>%</div>';
+
+		for (i = 0; i < top5.length; i++) {
+		  top5txt += '<tr> <td>'+ (i+1)+ ' </a><td> ' + 		  
+		  '<a href="#" onclick="map.fitBounds([['+top5[i]['bbox'][1]+','+top5[i]['bbox'][0] +'],['+top5[i]['bbox'][3] +','+ top5[i]['bbox'][2] +']]);">'+ top5[i]['name']+ ' </a> <td>'+ top5[i]['cases'] +'';  
+		}
+				
+		// actualizar 
+		to5control.update( top5txt+'</table>' );	
+	}	
+	
+
+
+
+
+	
+	var start = Date.now();
+
+	//url='data/munali.geojson'; 
+	url='https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/munali.geojson';
+	d3.json(url).then( function(data) {	
+		//urlcsv = 'http://localhost/dipumaps-gh-pages/src/data/brexit/brexit_2002-2021.csv';
+		urlcsv = 'https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/brexit/brexit_2002-2021.csv';
+
+		d3.csv(urlcsv).then( function(csv) {
+		//d3.csv("data/covid19.csv", function(error, csv) {  /d3.v5
+			var geo = data.features;
+
+			csv.forEach(function(d, i) {
+				//console.log(d);
+				keys = Object.keys(d) ;
+				//console.log(keys);
+				// rellenar el combo quitando los que no son fecha
+				//cols = keys.filter(key => key.substring(key.length - 3, key.length) == '/20'   );	
+				cols = keys.filter( key => key != 'nombre' && key != 'codine' && key.substring(0,1) !== 'P' && key.substring(0,1) == 'V' );         //key => key.indexOf("2020") == 0 && key.substring(0,5)== '2020-');
+				//console.log(cols);	
+				//console.log(cols[cols.length-1]);
+				//lastField = cols[cols.length-1].toString();		
+				$('#datesSel').empty().append('<option selected="selected" value="nothing">(Seleccionar dato)</option>');
+				cols.forEach(function(col) {
+					//console.log(col);
+					//if ( col.substring(0, 5) == '2020-'   ) {	
+						$('#datesSel').append($('<option><option/>').val(col).text(col)); 
+					//}
+				});	
+				
+				// Join entre tablas por key codigo
+				geo.forEach(function(e, j) {
+					if(e.properties.codine === d.codine ) {
+						//console.log('coinciden');
+						//e.properties= d;
+						Object.assign(e.properties, d); // suma a las propiedades del geojson las del csv
+					}
+				})
+			});
+	
+			geojson = L.geoJson(data, {
+				style: style,
+				onEachFeature: onEachFeature
+			});
+			geojson.addTo(map);
+			//console.log(geojson);		
+			console.log('terminado');
+			$('#loader').hide();
+			
+
+		})
+		
+    });//.addTo(map);
+    
+	map.attributionControl.addAttribution('Develop by Jose Manuel Mira @ <a href="https://josemamira.github.io/dipumaps/index.html">Universidad de Alicante</a> | Data &copy; <a href="https://www.ine.es">INE</a>');
+
+	var legend = L.control({position: 'bottomright'});
+	legend.onAdd = function (map) {
+		var div = L.DomUtil.create('div', 'info legend'),
+			//grades = [0, 1500, 5000, 12000,24000,38000],
+			grades = [-100, -50, -30, -20, -10, 0,10,20,30,50,100],
+			labels = [];
+			div.innerHTML = '<P><center>Leyenda</center></P><p><img src="img/pixel.png"></p>';
+
+
+		return div;
+	};
+
+	//legend.addTo(map);
+
+
+
+</script>
+
+</body>
+</html>

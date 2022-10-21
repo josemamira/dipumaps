@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<script src="js/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+	
+	
+<!--	
+<p>Evolución de los extranjeros británicos en la provincia de alicante</p>
+<iframe height=350 width=400 style="border:none;" src="http://localhost/dipumaps-gh-pages/src/d3_ej2.html" title="Gráfico Orihuela"></iframe>
+
+<p>Ganancia o perdida porcentual de británicos desde 2012 en Orihuela</p>
+<iframe height=350 width=400 style="border:none;" src="http://localhost/dipumaps-gh-pages/src/d3_ej3.html" title="Gráfico Orihuela"></iframe>
+
+
+<p>Ganancia o perdida interanual porcentual de británicos desde 2012 en Orihuela </p>
+<iframe height=350 width=400 style="border:none;" src="http://localhost/dipumaps-gh-pages/src/d3_ej4b.html" title="Gráfico Orihuela"></iframe>
+-->
+
+
+
+
+<h2>BREXIT</h2>
+<p>
+<select id="munis" name="munis">
+	<option selected>Selecciona un municipio</option>
+
+<option value='03099'>03099 Orihuela</option>
+<option value='03133'>03133 Torrevieja</option>
+<option value='03113'>03113 Rojales</option>
+<option value='03082'>03082 Jávea/Xàbia</option>
+<option value='03118'>03118 San Fulgencio</option>
+<option value='03031'>03031 Benidorm</option>
+<option value='03902'>03902 Pilar de la Horadada</option>
+<option value='03047'>03047 Calp</option>
+<option value='03128'>03128 Teulada</option>
+<option value='03121'>03121 Santa Pola</option>
+<option value='03011'>03011 Alfàs del Pi, l\'</option>
+<option value='03120'>03120 San Miguel de Salinas</option>
+<option value='03012'>03012 Algorfa</option>
+<option value='03076'>03076 Guardamar del Segura</option>
+<option value='03042'>03042 Benitachell/Poble Nou de Benitatxell, el</option>
+<option value='03094'>03094 Nucia, la</option>
+<option value='03041'>03041 Benissa</option>
+<option value='03063'>03063 Dénia</option>
+<option value='03055'>03055 Catral</option>
+<option value='03018'>03018 Altea</option>
+<option value='03034'>03034 Benijófar</option>
+<option value='03069'>03069 Finestrat</option>
+<option value='03903'>03903 Montesinos, Los</option>
+<option value='03050'>03050 Campello, el</option>
+<option value='03070'>03070 Formentera del Segura</option>
+<option value='03053'>03053 Castalla</option>
+<option value='03065'>03065 Elche/Elx</option>
+<option value='03081'>03081 Xaló</option>
+<option value='03014'>03014 Alicante/Alacant</option>
+<option value='03097'>03097 Orba</option>
+<option value='03077'>03077 Fondó de les Neus, el/Hondón de las Nieves</option>
+<option value='03046'>03046 Busot</option>
+<option value='03101'>03101 Pedreguer</option>
+<option value='03015'>03015 Almoradí</option>
+<option value='03102'>03102 Pego</option>
+<option value='03107'>03107 Polop</option>
+<option value='03139'>03139 Villajoyosa/Vila Joiosa, la</option>
+<option value='03105'>03105 Pinós, el/Pinoso</option>
+<option value='03006'>03006 Alcalalí</option>
+<option value='03090'>03090 Mutxamel</option>
+<option value='03071'>03071 Gata de Gorgos</option>
+<option value='03123'>03123 Sax</option>
+<option value='03078'>03078 Hondón de los Frailes</option>
+<option value='03085'>03085 Llíber</option>
+<option value='03061'>03061 Daya Nueva</option>
+<option value='03005'>03005 Albatera</option>
+<option value='03901'>03901 Poblets, els</option>
+<option value='03030'>03030 Benidoleig</option>
+<option value='03112'>03112 Relleu</option>
+<option value='03064'>03064 Dolores</option>
+<option value='03062'>03062 Daya Vieja</option>
+<option value='03114'>03114 Romana, la</option>
+<option value='03019'>03019 Aspe</option>
+<option value='03089'>03089 Monóvar/Monòver</option>
+<option value='03059'>03059 Crevillent</option>
+<option value='03100'>03100 Parcent</option>
+<option value='03080'>03080 Jacarilla</option>
+<option value='03044'>03044 Bigastro</option>
+<option value='03088'>03088 Monforte del Cid</option>
+<option value='03048'>03048 Callosa d'en Sarrià</option>
+<option value='03056'>03056 Cocentaina</option>
+<option value='03029'>03029 Benigembla</option>
+<option value='03110'>03110 Ràfol d'Almúnia, el</option>
+<option value='03091'>03091 Murla</option>
+<option value='03001'>03001 Atzúbia, l\'</option>
+<option value='03140'>03140 Villena</option>
+<option value='03119'>03119 Sant Joan d'Alacant</option>
+<option value='03098'>03098 Orxeta</option>
+<option value='03083'>03083 Jijona/Xixona</option>
+<option value='03129'>03129 Tibi</option>
+<option value='03026'>03026 Beniarbeig</option>
+<option value='03131'>03131 Tormos</option>
+<option value='03004'>03004 Aigües</option>
+<option value='03117'>03117 Sanet y Negrals</option>
+<option value='03092'>03092 Muro de Alcoy</option>
+<option value='03025'>03025 Benferri</option>
+<option value='03096'>03096 Onil</option>
+<option value='03116'>03116 Salinas</option>
+<option value='03024'>03024 Benejúzar</option>
+<option value='03045'>03045 Bolulla</option>
+<option value='03049'>03049 Callosa de Segura</option>
+<option value='03127'>03127 Tàrbena</option>
+<option value='03115'>03115 Sagra</option>
+<option value='03125'>03125 Senija</option>
+<option value='03138'>03138 Verger, el</option>
+<option value='03095'>03095 Ondara</option>
+<option value='03122'>03122 San Vicente del Raspeig/Sant Vicent del Raspeig</option>
+<option value='03137'>03137 Vall de Laguar, la</option>
+<option value='03040'>03040 Benimeli</option>
+<option value='03136'>03136 Vall de Gallinera, la</option>
+<option value='03054'>03054 Castell de Castells</option>
+<option value='03093'>03093 Novelda</option>
+<option value='03106'>03106 Planes</option>
+<option value='03009'>03009 Alcoi/Alcoy</option>
+<option value='03084'>03084 Lorcha/Orxa, l\'</option>
+<option value='03904'>03904 San Isidro</option>
+<option value='03072'>03072 Gaianes</option>
+<option value='03086'>03086 Millena</option>
+<option value='03037'>03037 Benimantell</option>
+<option value='03104'>03104 Petrer</option>
+<option value='03111'>03111 Redován</option>
+<option value='03066'>03066 Elda</option>
+<option value='03058'>03058 Cox</option>
+<option value='03013'>03013 Algueña</option>
+<option value='03124'>03124 Sella</option>
+<option value='03043'>03043 Biar</option>
+<option value='03002'>03002 Agost</option>
+<option value='03109'>03109 Rafal</option>
+<option value='03007'>03007 Alcosser</option>
+<option value='03132'>03132 Torremanzanas/Torre de les Maçanes, la</option>
+<option value='03035'>03035 Benilloba</option>
+<option value='03027'>03027 Beniardá</option>
+<option value='03020'>03020 Balones</option>
+<option value='03038'>03038 Benimarfull</option>
+<option value='03057'>03057 Confrides</option>
+<option value='03003'>03003 Agres</option>
+<option value='03016'>03016 Almudaina</option>
+<option value='03075'>03075 Castell de Guadalest, el</option>
+<option value='03028'>03028 Beniarrés</option>
+<option value='03021'>03021 Banyeres de Mariola</option>
+<option value='03033'>03033 Benifato</option>
+<option value='03135'>03135 Vall d\'Ebo, la</option>
+<option value='03023'>03023 Beneixama</option>
+<option value='03039'>03039 Benimassot</option>
+<option value='03017'>03017 Alqueria d'Asnar, l'</option>
+<option value='03079'>03079 Ibi</option>
+<option value='03130'>03130 Tollos</option>
+<option value='03134'>03134 Vall d\'Alcalà, la</option>
+<option value='03010'>03010 Alfafara</option>
+<option value='03103'>03103 Penàguila</option>
+<option value='03068'>03068 Famorca</option>
+<option value='03073'>03073 Gorga</option>
+<option value='03074'>03074 Granja de Rocamora</option>
+<option value='03008'>03008 Alcoleja</option>
+<option value='03022'>03022 Benasau</option>
+<option value='03060'>03060 Quatretondeta</option>
+<option value='03067'>03067 Fageca</option>
+<option value='03051'>03051 Campo de Mirra/ Camp de Mirra, el</option>
+<option value='03052'>03052 Cañada</option>
+<option value='03032'>03032 Benifallim</option>
+<option value='03036'>03036 Benillup</option>
+
+</select>
+</p> 
+Total población británica (2002-2021) <br>  
+<iframe id="grafico1" src="about:blank" width="350" height="400" style="border:none;"  frameborder="0" scrolling="no"></iframe>
+Ganancia o pérdida porcentual de británicos desde 2012 <br>
+<iframe id="grafico2" src="about:blank" width="350" height="400" style="border:none;"  frameborder="0" scrolling="no"></iframe>
+Ganancia o pérdida porcentual interanual de británicos<br>
+<iframe id="grafico3" src="about:blank" width="350" height="400" style="border:none;"  frameborder="0" scrolling="no"></iframe>
+  
+  
+  
+  
+ <script>
+ $('#munis').on('change', function (e) {
+    $('select option').prop('disabled', false);
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;    
+    //alert(valueSelected);    
+    document.getElementById('grafico1').setAttribute('src', "http://localhost/dipumaps-gh-pages/src/brexit_grafico_total.html?codine="+valueSelected);
+    document.getElementById('grafico2').setAttribute('src', "http://localhost/dipumaps-gh-pages/src/brexit_grafico_p.html?codine="+valueSelected);
+    document.getElementById('grafico3').setAttribute('src', "http://localhost/dipumaps-gh-pages/src/brexit_grafico_via.html?codine="+valueSelected);
+    
+});
+ </script> 
+
+</body>

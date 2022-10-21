@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Evolución de los extranjeros (2000-2019)</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-173008932-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-173008932-1');
+</script>
+	
+	
+	
+	<!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!--<script src="js/d3.v5.js" charset="utf-8"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="js/alasql.min.js"></script>
+
+	
+
+<style>
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+</style>
+</head>
+<body>
+<script>
+	
+	
+/*
+ Funcion para comprobar si en la URL se pasa el codine:
+ url + ?codine= + codigo del ine 
+*/
+
+// Analizar la URL
+//comprueba si hay una url con el codigo del tipo <url>.html?codine=03099 
+/*
+Ejemplos codine:
+
+03014 Alicante
+03018 Altea
+03031 Benidorm
+03047 Calp
+03063 Denia
+03065 Elx
+03078 Hondón
+03082 Javea
+03099 Orihuela
+03113 Rojales
+
+*/
+var laURL = window.location.href;
+var patron = /codine=/i;
+var res = laURL.match(patron);
+var codine;	
+if (res == "codine=") {
+	var codine = window.location.href.split( '?codine=' )[1].substr(0, 5);
+} else {
+	// no tiene id=codigo en la url. No hacer nada. Pongo un valor por defecto 2019
+	codine = 03014;	
+}
+//console.log(codine);	
+	
+	
+// pre grafico
+var margin = {top: 20, right: 30, bottom: 40, left: 30},
+    width = 350 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.ordinal()
+    .rangeRoundBands([0, height], 0.1);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickSize(0)
+    .tickPadding(6);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// fin pre grafico	
+	
+
+urlcsv ="https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/brexit/britanicos_2002-2019_full.csv";
+d3.csv(urlcsv, function(csv) { //v3
+//d3.csv(urlcsv).then( function(csv) { //v5
+	//console.log(csv); // objeto con arrays [{...},{...},{...},{...},{...},{...}]
+	// Filtrado. Ej quedarse con los VIA2013, VIA2014 ...
+	//var res = alasql("SELECT VIA2013 AS 2013, VIA2014 AS 2014, VIA2015 AS 2015, VIA2016 AS 2016, VIA2017 AS 2017, VIA2018 AS 2018, VIA2019 AS 2019, VIA2020 AS 2020, VIA2021 AS 2021  FROM ? WHERE codine = '"+codine+"'",[data]);
+	var res = alasql(
+	"SELECT 2013 AS fecha, VIA2013::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2014 AS fecha, VIA2014::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2015 AS fecha, VIA2015::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2016 AS fecha, VIA2016::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2017 AS fecha, VIA2017::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2018 AS fecha, VIA2018::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2019 AS fecha, VIA2019::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2020 AS fecha, VIA2020::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' UNION "+
+	"SELECT 2021 AS fecha, VIA2021::NUMBER AS valor FROM ? WHERE codine = '"+codine+"' "+
+	"ORDER BY fecha",[csv,csv,csv,csv,csv,csv,csv,csv,csv]);
+	console.log(res);
+	
+	// Grafico
+	x.domain(d3.extent(res, function(d) { return d.valor; })).nice();
+	y.domain(res.map(function(d) { return d.fecha; }));
+	
+	svg.selectAll(".bar")
+		.data(res)
+		.enter().append("rect")
+		.attr("fill", function(d) {
+			// color positivos
+			if (d.valor >= 0 && d.valor < 25) {	  return "PaleTurquoise";} 
+			else if (d.valor >= 25 && d.valor < 50) {  return "Turquoise";} 
+			else if (d.valor >= 50) {  return "CadetBlue";} 
+			// color negativos
+			else if (d.valor < 0 && d.valor > -25) {  return "Pink";} 
+			else if (d.valor < -25 && d.valor > -50) {  return "HotPink";} 
+			else if (d.valor < -50 ) {  return "MediumVioletRed";} 
+			else {	return "yellow"; }
+			
+		})
+		
+		.attr("x", function(d) { return x(Math.min(0, d.valor)); })
+		.attr("y", function(d) { return y(d.fecha); })
+		.attr("width", function(d) { return Math.abs(x(d.valor) - x(0)); })
+		.attr("height", y.rangeBand());
+
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis);
+
+	svg.append("g")
+		.attr("class", "y axis")
+		.attr("transform", "translate(" + x(0) + ",0)")
+		.call(yAxis);	
+	// Grafico fin
+
+	
+
+});	
+
+
+
+
+
+
+
+function type(d) {
+  d.valor = +d.valor;
+  return d;
+}
+
+</script>
+
+
