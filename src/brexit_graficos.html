@@ -9,8 +9,8 @@
 <h2>BREXIT</h2>
 <p>
 <select id="munis" name="munis">
-	<option selected>Selecciona un municipio</option>
-
+<option selected>Selecciona un municipio</option>
+<option value='03000'>PROVINCIA DE ALICANTE</option>
 <option value='03099'>03099 Orihuela</option>
 <option value='03133'>03133 Torrevieja</option>
 <option value='03113'>03113 Rojales</option>
@@ -166,7 +166,12 @@ Ganancia o pérdida porcentual interanual de británicos<br>
   
   
  <script>
- $('#munis').on('change', function (e) {
+ var valueSelected = '03000';
+document.getElementById('grafico1').setAttribute('src', "https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine="+valueSelected);
+document.getElementById('grafico2').setAttribute('src', "https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine="+valueSelected);
+document.getElementById('grafico3').setAttribute('src', "https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine="+valueSelected);	 
+
+$('#munis').on('change', function (e) {
     $('select option').prop('disabled', false);
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;    
