@@ -94,7 +94,7 @@ var svg = d3.select("body").append("svg")
           "translate(" + margin.left + "," + margin.top + ")");
 
 
-urlcsv ="https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/brexit/britanicos_2002-2019_full.csv";
+urlcsv ="https://raw.githubusercontent.com/josemamira/dipumaps/gh-pages/src/data/brexit/britanicos_2002-2021_full.csv";
 d3.csv(urlcsv, function(csv) {
 //d3.csv(urlcsv, function(csv) { //v3
 	var data = alasql("SELECT * FROM ("+
