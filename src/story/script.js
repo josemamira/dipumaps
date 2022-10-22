@@ -43,7 +43,7 @@ var map = L.map('map', {
 
 var myStyle = {
     "color": "#ff7800",
-    "weight": 5,
+    "weight": 1,
     "opacity": 0.65
 };
 
@@ -52,7 +52,7 @@ var ruta = L.geoJson(null, { style: myStyle
     //onEachFeature: popup
     });
 
-$.getJSON("ruta_ua.geojson", function (data) {
+$.getJSON("../data/munali.geojson", function (data) {
     ruta.addData(data);
 });
 
