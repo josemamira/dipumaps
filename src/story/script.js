@@ -43,10 +43,11 @@ var map = L.map('map', {
 
 var myStyle = {
     "color": "#ff7800",
+    "fillColor": "#00000000",
     "weight": 1,
-    "opacity": 0.65
+    "fill-opacity": 0.001
+    //"opacity": 0.65
 };
-
 // Cargar GeoJSON desde un archivo externo
 var ruta = L.geoJson(null, { style: myStyle
     //onEachFeature: popup
