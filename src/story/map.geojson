@@ -1,0 +1,158 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "chapter": "1. INTRODUCCIÓN AL BREXIT",
+        "zoom": 10,
+        "image": "img/embajada_pinoso.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p1/",
+        "description": "<P>Introducción al brexit</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03000' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p><p>En este edificio se imparte el grado de Geografía y Ordenación del Territorio. También se ubican todos los despachos del profesorado de esta titulación.<br />  Quizás te hagas estas dos preguntas: <br>¿Cuál fue el inicio de los estudios de Geografía en la UA?<br>&iquest;Cu&aacute;les son los estudios actuales de Geograf&iacute;a?  </p>"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.514683723449707,
+          38.385484555412006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "chapter": "2. TORREVIEJA",
+        "zoom": 14,
+        "image": "img/r1_p2_html_584409971155eb9d.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p2/",
+        "description": "<P>En Torrevieja bla bla bla </P><p>GRAFICO: Evolución de britáicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03133' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03133' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03133' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Segundo párrafo para más texto  </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [  
+          -0.67,
+          38.0132224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "chapter": "3. ORIHUELA",
+        "zoom": 15,
+        "image": "img/r1_p3_html_bd1cd878ebaa236b.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p3/",
+         "description": "<P>El caso de Orihuela, y más en concreto de su costa se da el caso que  bla bla bla. En Cabo Roig hay una urbanización llamada XXX <button onclick='map.panTo(new L.LatLng(-0.7239, 37.9151));'>ir a la urba</button></P><p>GRAFICO: Evolución de britáicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03099' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03099' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03099' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          -0.7526,
+          37.9003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "chapter": "4. ROJALES",
+        "zoom": 15,
+        "image": "img/r1_p4_html_56c45200220ed16c.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p4/",
+        "description": "<P>El caso de Rojales es curioso que  bla bla bla</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03113' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03113' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03113' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          -0.7179142925588632,
+          38.0781261155101
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "chapter": "5. JÁVEA/XÀBIA",
+        "zoom": 15,
+        "image": "img/r1_p5_html_6ee54535aeb7c2dd.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p5/",
+        "description": "<P>El caso de Xàbia cambiamos de comarca, ahora la Marina Alta, y   bla bla bla</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03082' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03082' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03082' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          0.17921959066564283,
+          38.78862247481037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "chapter": "6.  SAN FULGENCIO",
+        "zoom": 15,
+        "image": "img/r1_p6_html_2f3af50b04acfd7e.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p6/",
+        "description": "<P>Este pequeño municipio de la Vega Baja se caracteriza por haber pasado de una economía agrícola a bla bla bla</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03118' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03118' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03118' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.7187693416064325,
+          38.11251332998181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "chapter": "7. BENIDORM",
+        "zoom": 15,
+        "image": "img/r1_p7_html_35e0c21d0ab4757e.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p7/",
+        "description": "<P>La capital del turismo de masas de la Costa Blanca bla bla bla</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03031' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03031' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03031' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          -0.13213709266692633,
+          38.53794242417726
+        ]
+      }
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "chapter": "8. PILAR DE LA HORADADA",
+        "zoom": 15,
+        "image": "img/r1_p8_html_82cad3122bc0397f.jpg",
+        "source-credit": "Leer más",
+        "source-link": "https://www.35geofis.ua.es/r1_p8/",
+        "description": "<P>Terminamos nuestra historia con Pilar de la Horadada, uno de los últimos pueblos segregados de Orihuela </P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03901' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRAFICO: Ganancia o pérdida porcentual de británicos desde 2012</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_p.html?codine=03902' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>        <p>GRÁFICO: Ganancia o pérdida porcentual interanual de británicos</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_via.html?codine=03902' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p>      <p>Párrafo para más texto </p>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          -0.7661711024411949,
+          37.85520480125175
+        ]
+      }
+    }    
+  ]
+}
