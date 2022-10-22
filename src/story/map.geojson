@@ -10,7 +10,7 @@
         "image": "img/embajada_pinoso.jpg",
         "source-credit": "Leer más",
         "source-link": "https://www.35geofis.ua.es/r1_p1/",
-        "description": "<P>Introducción al brexit</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03000' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p><p>En este edificio se imparte el grado de Geografía y Ordenación del Territorio. También se ubican todos los despachos del profesorado de esta titulación.<br />  Quizás te hagas estas dos preguntas: <br>¿Cuál fue el inicio de los estudios de Geografía en la UA?<br>&iquest;Cu&aacute;les son los estudios actuales de Geograf&iacute;a?  </p>"
+        "description": "<P>Introducción al brexit</P><p>GRAFICO: Evolución de británicos desde el 2002</p><p><iframe id='grafico1' src='https://josemamira.github.io/dipumaps/src/brexit_grafico_total.html?codine=03000' width='350' height='400' style='border:none;'  frameborder='0' scrolling='no'></iframe></p><p>Otro párrafo  </p>"
 
       },
       "geometry": {
