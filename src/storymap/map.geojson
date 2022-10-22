@@ -1,0 +1,158 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "chapter": "1. FACULTAD DE FILOSOFÍA Y LETRAS. EDIFICIO II",
+        "zoom": 18,
+        "image": "rutas/embajada_pinoso.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p1.html",
+        "description": "En este edificio se imparte el grado de Geografía y Ordenación del Territorio. También se ubican todos los despachos del profesorado de esta titulación.<br />  Quizás te hagas estas dos preguntas: <br>¿Cuál fue el inicio de los estudios de Geografía en la UA?<br>&iquest;Cu&aacute;les son los estudios actuales de Geograf&iacute;a?  "
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.514683723449707,
+          38.385484555412006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "chapter": "2. TORRE DE CONTROL Y HANGAR",
+        "zoom": 17,
+        "image": "rutas/r1_p2_html_584409971155eb9d.jpg",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p2.html",
+        "description": "En 1919, las Líneas Aéreas Latécoère usaban a Alicante como escala en la línea de Toulouse-Casabalanca y también como línea regular de Alicante-Orán. Seguramente, Antoine de Saint-Exupéry, autor de El Principito, aterrizara aquí ya que trabajaba para esta aerolínea. Hay un capítulo de este libro dedicado a la Geografía, aquí tienes un trocito:"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5129885673522949,
+          38.3849799652513
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "chapter": "3. AROMÁTICAS Y CACTÁCEAS.",
+        "zoom": 18,
+        "image": "rutas/r1_p3_html_bd1cd878ebaa236b.jpg",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p3.html",
+        "description": "Como te hemos comentado anteriormente, una de las ramas de la Geografía Física es la Biogeografía, es decir, el estudio de la distribución de la flora y de la fauna en el planeta. Para ello, es necesario conocer los factores que determinan o condicionan esa distribución."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5130743980407715,
+          38.385484555412006
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "chapter": "4. EDIFICIOS CONSTRUIDOS ANTES DE 1980. PLATJA DE L’ALBIR",
+        "zoom": 18,
+        "image": "rutas/r1_p4_html_56c45200220ed16c.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p4.html",
+        "description": "El paisaje urbano es también abordado por la Geografía, en estudios de escala de detalle. Todos los pabellones de más baja altura y que tienen la misma estructura, al norte de la zona de las aromáticas, constituyen la parte más antigua de la UA. Fueron los pabellones que albergaron los soldados y cuartel de Rabassa cuando se creó la base aérea de la Región Aérea de Levante. Entre ellos predominan los pinos de Alepo o pino carrasco (Pinus halepensis), conífera característica y dominante en la provincia de Alicante debido a su uso en las repoblaciones forestales de las décadas de los 70 y 80 del siglo pasado. <a href='https://www.arbolesibericos.es/genre/pinus/species/pinushalepensis'>[enlace]</a> "
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5138415098190308,
+          38.38756174783217
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "chapter": "5. PLAZA DE EUROPA",
+        "zoom": 18,
+        "image": "rutas/r1_p5_html_6ee54535aeb7c2dd.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p5.html",
+        "description": "Desde la parada 4 nos vamos a dirigir hacia la Plaza de Europa. En el recorrido Pasamos por la Pinada de los cuentos. En la actualidad, esta zona es peatonal pero en los años setenta se permitía el paso de tráfico rodado.<BR> <ul> <li style='text-align: left;'>Se denomina así porque se han realizado actividades culturales de cuentacuentos en esta área.</li> <li style='text-align: left;'>La especie vegetal dominantes es el pino de Alepo o pino carrasco (<a href='http://herbarivirtual.uib.es/ca/general/441/especie/pinus-halepensis-miller'>Pinus halepensis</a>) </li> <li>Hay especies exóticas o alóctonas como: <ul> <li style='text-align: left;'><a href='https://www.arbolesibericos.es/genre/eucalyptus/species/eucalyptusglob%20ulus'>Eucaliptus globulus</a> </li> <li style='text-align: left;'><a href='https://www.arbolesibericos.es/genre/casuarina'>Casuarina equisetifolia</a></li> </ul></li></ul> "
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5164539813995361,
+          38.38508088356505
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "chapter": "6. BOSQUE ILUSTRADO",
+        "zoom": 18,
+        "image": "rutas/r1_p6_html_2f3af50b04acfd7e.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p6.html",
+        "description": "Cruzamos la carretera que bordea todo el campus de la UA y nos acercamos al Bosque Ilustrado, donde algunas especies vegetales tienen un cartel informativo.<BR> Lo cruzamos para subir por el carril bici y a nuestra izquierda observamos los procesos erosivos que se han desarrollado en el corte abierto para realizar el acceso a la otra parte del campus de la UA. Las lluvias torrenciales características del clima mediterráneo han favorecido la aparición de incisiones en la ladera o cárcavas sobre los materiales más blandos. Sin embargo, nos dejan al descubierto el material más duro que hay en superficie o costra calcárea. En realidad, éste es el material que caracteriza a todo el glacis encostrado sobre el que se ha edificado el campus universitario. La Climatología, como la Geomorfología, son ramas dentro de la Geografía.   "
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5191093683242798,
+          38.38382570202227
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "chapter": "7. RELOJ DE SOL",
+        "zoom": 18,
+        "image": "rutas/r1_p7_html_35e0c21d0ab4757e.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p7.html",
+        "description": "En nuestro recorrido desde la Bosque Ilustrado hacia Rectorado, vamos a pasar en primer lugar por una serie de edificios construidos entre 1980 y 1990, como lo fue el edificio de la Facultad de Derecho, junto a la Plaza de Europa, o el propio edificio de la Facultad de Filosofía y Letras desde el que hemos comenzado el itinerario. Recordad que la Geografía Urbana y la Geografía del paisaje son ramas de la Geografía. "
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5125996470451355,
+          38.38422938087449
+        ]
+      }
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "chapter": "8. SENDERO DE LAS ROCAS",
+        "zoom": 18,
+        "image": "rutas/r1_p8_html_82cad3122bc0397f.png",
+        "source-credit": "Leer más",
+        "source-link": "rutas/r1_p8.html",
+        "description": "Continuamos el recorrido desde el edificio de Rectorado y Servicios Generales en dirección hacia nuestra primera parada, Facultad de Filosofía y Letras. <BR>El edificio de Rectorado forma parte de las edificaciones realizadas entre 1990 y 2000, como hemos mencionado en la parada anterior. Podemos acceder al patio interior por la puerta falsa. <br> <strong>Curiosidad</strong>. Cañada Real. Una de las vías ganaderas de trashumancia pasa por la UA. Podemos ver la cartografía de detalle y la información en un panel en nuestro camino hacia el punto de inicio de la ruta geográfica, que fue colocado en 2007. Son varios los años que en el mes de octubre se realizan Jornadas reivindicando este uso y el reconocimiento de la vida rural. La Geografía rural es otra de las ramas de esta disciplina."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5137208104133606,
+          38.38491268629723
+        ]
+      }
+    }    
+  ]
+}
