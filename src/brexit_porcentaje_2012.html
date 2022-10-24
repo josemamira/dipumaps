@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -313,8 +309,8 @@ tr:nth-child(even) { background: #EEE; }
 			return meses[parseInt(monthnum) - 1] ;
 		}
 		//console.log(monthNumToName(mes));*/
-		if (ano.length == 4) { // si es un año. Si es otra cosa no hace nada
-			var newCal = '<time class="icon"><strong>'+ 'AÑO' +'</strong><span>'+ ano +'</span></time>';
+		if (ano.length == 5) { // si es un año. Si es otra cosa no hace nada
+			var newCal = '<time class="icon"><strong>'+ 'AÑO' +'</strong><span>'+ ano.substring(1, 5) +'</span></time>';
 			document.getElementById("labDate").innerHTML = newCal
 			restyleLayer(y[i].text);
 			top5(y[i].text)
