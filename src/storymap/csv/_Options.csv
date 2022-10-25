@@ -1,0 +1,21 @@
+Setting,Customize,Hints
+Storymap Info,,"For help, see tutorial in HandsOnDataViz.org"
+Storymap Title,Brexit Storymaps,
+Storymap Subtitle,La historia en un mapa<br><small>Deslizar<i class='fa fa-chevron-down'></i></small>,"Add your subtitle, or delete that portion"
+Storymap Logo,media/logoua.png,Path to a logo image
+Google Analytics Tracking ID,,Sample format: UA-5488840-29
+Map Settings,,"For help, see tutorial in HandsOnDataViz.org"
+Basemap Tiles,CartoDB.Positron,Drop-down menu for background basemap tiles
+Zoom Controls,bottomright,
+Narrative Background Color,,
+Narrative Text Color,,
+Narrative Link Color,,
+Active Chapter Background Color,,
+Media Container Height,300,"Maximum height of the image, in pixels. 200 is default. The image will be fit into the container with its proportions kept (it won't be skewed)."
+Pixels After Final Chapter,600,In pixels. At least 100
+Enable Lightbox for Images,yes,yes or no
+Credits,,"For help, see tutorial in HandsOnDataViz.org"
+Author Name,José Manuel Mira,"Appears in map credits as ""View data by..."" (or leave blank)"
+Author Email or Website,,Create link in Author Name by inserting your email or web address (or leave blank)
+Author GitHub Repo Link,https://github.com/handsondataviz/leaflet-storymaps-with-google-sheets,"Insert your code repo URL to appear as link in ""View code..."" (or leave blank)"
+Code Credit,"<a href=""https://handsondataviz.org"">HandsOnDataViz</a>","Appears in credits as ""...code by..."" (or leave blank)"
