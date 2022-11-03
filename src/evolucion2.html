@@ -413,7 +413,7 @@ tr:nth-child(even) { background: #EEE; }
 			.attr("transform",
 				  "translate(" + margin.left + "," + margin.top + ")");
     // Add X axis --> it is a date format
-    var x = d3.scaleTime()
+    var x = d3.scaleLinear()
       .domain(d3.extent(data, function(d) { return d.date; }))
       .range([ 0, width ]);
     svg.append("g")
@@ -434,6 +434,13 @@ tr:nth-child(even) { background: #EEE; }
     svg.append("g")
       .call(d3.axisLeft(y));
 
+    svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 38) + ")")
+      .style("text-anchor", "middle")
+      .text("Año");	  
+	  
     // Add the line
     svg.append("path")
       .datum(data)
