@@ -376,8 +376,8 @@ tr:nth-child(even) { background: #EEE; }
 			
 
 		lastDate = keys[keys.length - 1];
-		this._div.innerHTML = '<center><h4>ORIGEN DE LOS EXTRANJEROS</h4></center>' +  (props ?
-			'<strong>'+props.nombre +'</strong>   Total extranjeros: ' + parseInt(props['2019']) + 
+		this._div.innerHTML = '<center><h4>PORCENTAJE EXTRANJEROS (2019)</h4></center>' +  (props ?
+			'<strong>'+props.nombre +'</strong> ' + props['2019'] + ' %'+
 			//' ('+ Number(parseInt(props['2019'])*100/parseInt(props['Total Población'])).toFixed(1) +' %)<br>'+
 			'<div id="chart"></div>'
 			: '+ Info: Rat&oacute;n encima de cada municipio');
