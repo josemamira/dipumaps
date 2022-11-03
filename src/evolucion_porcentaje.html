@@ -408,7 +408,7 @@ tr:nth-child(even) { background: #EEE; }
 			.attr("transform",
 				  "translate(" + margin.left + "," + margin.top + ")");
     // Add X axis --> it is a date format
-    var x = d3.scaleTime()
+    var x = d3.scaleLinear()
       .domain(d3.extent(data, function(d) { return d.date; }))
       .range([ 0, width ]);
     svg.append("g")
@@ -421,7 +421,24 @@ tr:nth-child(even) { background: #EEE; }
 		.attr("transform", "rotate(90)")
 		.style("text-anchor", "start") ;  
 
-      
+     // add label year
+     svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 38) + ")")
+      .style("text-anchor", "middle")
+      .text("Año");
+
+  // text label for the y axis
+  svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("% extranjeros"); 
+
+            
     // Add Y axis
     var y = d3.scaleLinear()
       .domain([0, d3.max(data, function(d) { return +d.value; })])
