@@ -7,4 +7,4 @@ covid19maps
 
 Created by [José Manuel Mira Martínez](https://github.com/josemamira/)
 
-* [Español](https://josemamira.github.io/dipumaps/) - Página web principal con demostraciones de mapa
+* [Español](https://github.com/josemamira/dipumaps) - Página web principal con demostraciones de mapa (rama gh-pages)
